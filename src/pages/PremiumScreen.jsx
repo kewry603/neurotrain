@@ -15,7 +15,7 @@ export default function PremiumScreen({ onNavigate }) {
   const [muted, setMuted] = useState(isMuted());
 
   return (
-    <div className="relative flex h-[100dvh] min-h-0 w-full flex-col overflow-hidden" style={{ background: 'linear-gradient(170deg, #a8edcf 0%, #bfddff 55%, #d8d4ff 100%)' }}>
+    <div className="relative flex h-[100dvh] min-h-0 w-full flex-col overflow-hidden" style={{ background: 'linear-gradient(170deg, #6ee7b7 0%, #7dd3fc 55%, #c4b5fd 100%)' }}>
       <div
         className="pointer-events-none absolute right-[-40px] top-[-60px] h-64 w-64 rounded-full blur-3xl opacity-35"
         style={{ background: 'radial-gradient(circle, #ccfbf1, transparent)' }}

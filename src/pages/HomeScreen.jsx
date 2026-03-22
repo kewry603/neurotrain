@@ -51,7 +51,7 @@ export default function HomeScreen({ onNavigate }) {
     }`;
 
   return (
-    <div className="relative flex h-[100dvh] min-h-0 w-full flex-col overflow-hidden" style={{ background: 'linear-gradient(170deg, #a8edcf 0%, #bfddff 55%, #d8d4ff 100%)' }}>
+    <div className="relative flex h-[100dvh] min-h-0 w-full flex-col overflow-hidden" style={{ background: 'linear-gradient(170deg, #6ee7b7 0%, #7dd3fc 55%, #c4b5fd 100%)' }}>
 
       <div
         className="pointer-events-none absolute left-[-60px] top-[-80px] h-72 w-72 rounded-full blur-3xl opacity-40"
@@ -69,7 +69,7 @@ export default function HomeScreen({ onNavigate }) {
       {/* Header — tighter top padding */}
       <header className="flex items-center justify-between px-4 pb-1 pt-3 sm:px-5">
         <div>
-          <p className="text-xs font-medium uppercase tracking-widest text-slate-500">Good morning</p>
+          <p className="text-xs font-medium uppercase tracking-widest text-slate-700">Good morning</p>
           <p className="text-base font-bold text-slate-900">Mr. Melo</p>
         </div>
         <div className="flex items-center gap-2">
@@ -79,18 +79,21 @@ export default function HomeScreen({ onNavigate }) {
       </header>
 
       <div
-        className="flex min-h-0 min-w-0 flex-1 flex-col overflow-y-auto overflow-x-hidden overscroll-y-contain pb-20"
+        className="flex min-h-0 min-w-0 flex-1 flex-col gap-3 overflow-y-auto overflow-x-hidden overscroll-y-contain pb-20"
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
-        {/* Hero — compact logo + tight copy stack */}
-        <section className="flex flex-shrink-0 flex-col items-center px-4 pb-4 pt-2 sm:px-5">
-          {/* Logo — reduced from h-20/w-20 → h-14/w-14 */}
+        {/* Hero */}
+        <section className="flex flex-shrink-0 flex-col items-center px-4 pt-2 sm:px-5">
           <div className="relative mb-2 animate-float motion-reduce:animate-none">
             <div
-              className="pointer-events-none absolute inset-[-6px] rounded-full blur-xl opacity-40 animate-glow-shift motion-reduce:animate-none"
-              style={{ background: 'radial-gradient(circle, #99f6e4 0%, #5eead4 55%, transparent 75%)' }}
+              className="pointer-events-none absolute inset-[-6px] rounded-full blur-xl opacity-50 animate-glow-shift motion-reduce:animate-none"
+              style={{ background: 'radial-gradient(circle, #6ee7b7 0%, #7dd3fc 55%, transparent 75%)' }}
             />
-            <div className="relative flex h-14 w-14 items-center justify-center rounded-[40%_40%_36%_36%] border-2 border-primary/25 bg-white shadow-elevated">
+            {/* Logo — tinted glass surface instead of pure white */}
+            <div
+              className="relative flex h-14 w-14 items-center justify-center rounded-[40%_40%_36%_36%] border-2 shadow-elevated"
+              style={{ background: 'rgba(255,255,255,0.60)', borderColor: 'rgba(255,255,255,0.75)' }}
+            >
               <BrainIcon className="h-10 w-10" />
             </div>
           </div>
@@ -98,10 +101,10 @@ export default function HomeScreen({ onNavigate }) {
           <h1 className="mb-0.5 text-center text-2xl font-extrabold tracking-tight text-slate-900">
             {t('appTitle')}
           </h1>
-          <p className="mb-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+          <p className="mb-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-600">
             {t('appSubtitle')}
           </p>
-          <p className="mb-3 w-full text-center text-sm leading-snug text-slate-600">
+          <p className="mb-3 w-full text-center text-sm leading-snug text-slate-700">
             {t('appTagline')}
           </p>
 
@@ -117,14 +120,14 @@ export default function HomeScreen({ onNavigate }) {
           </button>
         </section>
 
-        {/* Cards */}
-        <div className="flex flex-shrink-0 flex-col gap-3 px-4 pb-4 sm:px-5">
+        {/* Cards — gap-3 between them, px-4 shows gradient on sides */}
+        <div className="flex flex-shrink-0 flex-col gap-3 px-4 sm:px-5">
           <DailyChallengeCard />
           <ProgressCard />
         </div>
 
         {/* Game shortcuts */}
-        <div className="relative z-20 w-full flex-shrink-0 px-4 pb-5 pt-0 sm:px-5">
+        <div className="relative z-20 w-full flex-shrink-0 px-4 pb-5 sm:px-5">
           <div className="grid w-full grid-cols-2 gap-3">
             {categoryGrid.map((row) =>
               row.map((cat) => (
@@ -135,10 +138,20 @@ export default function HomeScreen({ onNavigate }) {
                   className={categoryButtonClass(cat)}
                   style={
                     cat.active
-                      ? { background: 'rgba(13,148,136,0.12)', boxShadow: '0 2px 12px rgba(13,148,136,0.18)' }
+                      ? {
+                          background: 'rgba(255,255,255,0.55)',
+                          borderColor: 'rgba(13,148,136,0.45)',
+                          boxShadow: '0 2px 14px rgba(13,148,136,0.22)',
+                        }
                       : cat.screen
-                        ? { background: 'rgba(255,255,255,0.70)', boxShadow: '0 2px 12px rgba(80,120,180,0.10)' }
-                        : { background: 'rgba(255,255,255,0.40)' }
+                        ? {
+                            background: 'rgba(255,255,255,0.48)',
+                            backdropFilter: 'blur(8px)',
+                            WebkitBackdropFilter: 'blur(8px)',
+                            borderColor: 'rgba(255,255,255,0.65)',
+                            boxShadow: '0 2px 12px rgba(60,100,180,0.12)',
+                          }
+                        : { background: 'rgba(255,255,255,0.28)', borderColor: 'rgba(255,255,255,0.40)' }
                   }
                 >
                   {t(`homeCategories.${cat.labelKey}`)}

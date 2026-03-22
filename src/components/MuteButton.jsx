@@ -5,7 +5,8 @@ export default function MuteButton({ muted, onToggle }) {
       onClick={onToggle}
       aria-label={muted ? 'Unmute sounds' : 'Mute sounds'}
       title={muted ? 'Unmute' : 'Mute'}
-      className="flex h-12 w-12 min-h-[48px] min-w-[48px] items-center justify-center rounded-full border border-slate-200 bg-white shadow-sm transition-shadow duration-200 motion-reduce:transition-none hover:border-primary/35 hover:shadow-md"
+      className="flex h-12 w-12 min-h-[48px] min-w-[48px] items-center justify-center rounded-full border transition-shadow duration-200 motion-reduce:transition-none hover:shadow-md"
+      style={{ background: 'rgba(255,255,255,0.52)', borderColor: 'rgba(255,255,255,0.70)', boxShadow: '0 2px 10px rgba(60,100,180,0.12)' }}
     >
       {muted ? (
         <svg

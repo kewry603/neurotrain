@@ -485,7 +485,7 @@ export default function WordMemoryScreen({ onNavigate }) {
     ) : null;
 
   return (
-    <div className="relative flex h-[100dvh] min-h-0 w-full flex-col overflow-hidden" style={{ background: 'linear-gradient(170deg, #a8edcf 0%, #bfddff 55%, #d8d4ff 100%)' }}>
+    <div className="relative flex h-[100dvh] min-h-0 w-full flex-col overflow-hidden" style={{ background: 'linear-gradient(170deg, #6ee7b7 0%, #7dd3fc 55%, #c4b5fd 100%)' }}>
       <div
         className="absolute top-[-60px] right-[-60px] w-56 h-56 rounded-full blur-3xl opacity-15 pointer-events-none"
         style={{ background: 'radial-gradient(circle, #a855f7, transparent)' }}

@@ -66,9 +66,11 @@ export default function ProgressCard() {
     <div
       className="rounded-2xl px-3.5 py-3"
       style={{
-        background: 'rgba(255, 255, 255, 0.72)',
-        border: '1px solid rgba(255, 255, 255, 0.65)',
-        boxShadow: '0 4px 24px rgba(80, 120, 180, 0.14), 0 1px 4px rgba(80, 120, 180, 0.08)',
+        background: 'rgba(255, 255, 255, 0.52)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
+        border: '1px solid rgba(255, 255, 255, 0.70)',
+        boxShadow: '0 6px 28px rgba(60, 100, 180, 0.18), 0 1px 4px rgba(60, 100, 180, 0.10)',
       }}
     >
       <div className="mb-2 flex items-center justify-between">
