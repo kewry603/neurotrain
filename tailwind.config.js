@@ -48,14 +48,14 @@ export default {
         'glow-pink': '0 4px 20px rgba(8, 145, 178, 0.2)',
         'glow-blue': '0 4px 20px rgba(2, 132, 199, 0.2)',
         'glow-cyan': '0 4px 20px rgba(14, 165, 233, 0.2)',
-        'card': '0 2px 12px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04)',
+        'card': '0 4px 24px rgba(80, 120, 180, 0.14), 0 1px 4px rgba(80, 120, 180, 0.08)',
         'btn': '0 4px 14px rgba(13, 148, 136, 0.28)',
       },
       backgroundImage: {
         'app-gradient':
           'linear-gradient(170deg, #a8edcf 0%, #bfddff 55%, #d8d4ff 100%)',
         'card-gradient':
-          'linear-gradient(180deg, #f0fdf8 0%, #eef6ff 100%)',
+          'linear-gradient(135deg, rgba(255,255,255,0.82) 0%, rgba(240,253,250,0.78) 100%)',
         'btn-gradient':
           'linear-gradient(90deg, #0f766e 0%, #0d9488 45%, #14b8a6 100%)',
       },

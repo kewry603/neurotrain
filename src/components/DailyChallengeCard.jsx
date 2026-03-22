@@ -4,10 +4,17 @@ export default function DailyChallengeCard() {
   const { t } = useLanguage();
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-card-gradient px-3.5 py-3 shadow-card">
+    <div
+      className="relative overflow-hidden rounded-2xl px-3.5 py-3"
+      style={{
+        background: 'rgba(255, 255, 255, 0.72)',
+        border: '1px solid rgba(255, 255, 255, 0.65)',
+        boxShadow: '0 4px 24px rgba(80, 120, 180, 0.14), 0 1px 4px rgba(80, 120, 180, 0.08)',
+      }}
+    >
       <div
-        className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full blur-2xl opacity-30"
-        style={{ background: 'radial-gradient(circle, #99f6e4, #e0f2fe)' }}
+        className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full blur-2xl opacity-40"
+        style={{ background: 'radial-gradient(circle, #99f6e4, #bfddff)' }}
       />
 
       <div className="relative">

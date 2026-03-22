@@ -42,12 +42,12 @@ export default function HomeScreen({ onNavigate }) {
   ];
 
   const categoryButtonClass = (cat, extra = '') =>
-    `text-center text-sm font-semibold px-3 py-3 rounded-2xl transition-all duration-200 motion-reduce:transition-none min-h-[48px] w-full border-2 shadow-sm ${extra} ${
+    `text-center text-sm font-semibold px-3 py-3 rounded-2xl transition-all duration-200 motion-reduce:transition-none min-h-[48px] w-full border shadow-sm ${extra} ${
       cat.active
-        ? 'border-primary/40 bg-primary/10 text-primary shadow-md'
+        ? 'border-primary/35 bg-primary/15 text-primary shadow-md'
         : cat.screen
-          ? 'border-slate-200 bg-white text-slate-800 hover:border-primary/30 hover:bg-slate-50 cursor-pointer'
-          : 'border-slate-100 bg-slate-100 text-slate-400 cursor-default'
+          ? 'border-white/70 text-slate-800 hover:border-primary/30 cursor-pointer'
+          : 'border-white/40 text-slate-400 cursor-default'
     }`;
 
   return (
@@ -83,7 +83,7 @@ export default function HomeScreen({ onNavigate }) {
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
         {/* Hero — compact logo + tight copy stack */}
-        <section className="flex flex-shrink-0 flex-col items-center px-4 pb-3 pt-1 sm:px-5">
+        <section className="flex flex-shrink-0 flex-col items-center px-4 pb-4 pt-2 sm:px-5">
           {/* Logo — reduced from h-20/w-20 → h-14/w-14 */}
           <div className="relative mb-2 animate-float motion-reduce:animate-none">
             <div
@@ -117,15 +117,15 @@ export default function HomeScreen({ onNavigate }) {
           </button>
         </section>
 
-        {/* Cards — tighter gap */}
-        <div className="flex flex-shrink-0 flex-col gap-2.5 px-4 pb-3 sm:px-5">
+        {/* Cards */}
+        <div className="flex flex-shrink-0 flex-col gap-3 px-4 pb-4 sm:px-5">
           <DailyChallengeCard />
           <ProgressCard />
         </div>
 
         {/* Game shortcuts */}
-        <div className="relative z-20 w-full flex-shrink-0 px-4 pb-4 pt-0 sm:px-5">
-          <div className="grid w-full grid-cols-2 gap-x-2.5 gap-y-2.5">
+        <div className="relative z-20 w-full flex-shrink-0 px-4 pb-5 pt-0 sm:px-5">
+          <div className="grid w-full grid-cols-2 gap-3">
             {categoryGrid.map((row) =>
               row.map((cat) => (
                 <button
@@ -133,6 +133,13 @@ export default function HomeScreen({ onNavigate }) {
                   type="button"
                   onClick={() => goToCategory(cat.screen)}
                   className={categoryButtonClass(cat)}
+                  style={
+                    cat.active
+                      ? { background: 'rgba(13,148,136,0.12)', boxShadow: '0 2px 12px rgba(13,148,136,0.18)' }
+                      : cat.screen
+                        ? { background: 'rgba(255,255,255,0.70)', boxShadow: '0 2px 12px rgba(80,120,180,0.10)' }
+                        : { background: 'rgba(255,255,255,0.40)' }
+                  }
                 >
                   {t(`homeCategories.${cat.labelKey}`)}
                 </button>

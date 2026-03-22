@@ -63,7 +63,14 @@ export default function ProgressCard() {
   const ringPct = hydrated ? getLevelProgressPercent(totalXp) : 0;
 
   return (
-    <div className="rounded-2xl border border-slate-200/90 bg-card-gradient px-3.5 py-3 shadow-card">
+    <div
+      className="rounded-2xl px-3.5 py-3"
+      style={{
+        background: 'rgba(255, 255, 255, 0.72)',
+        border: '1px solid rgba(255, 255, 255, 0.65)',
+        boxShadow: '0 4px 24px rgba(80, 120, 180, 0.14), 0 1px 4px rgba(80, 120, 180, 0.08)',
+      }}
+    >
       <div className="mb-2 flex items-center justify-between">
         <h2 className="text-sm font-bold uppercase tracking-wider text-slate-900">{t('progress')}</h2>
         <span className="text-xs font-semibold text-primary">{t('viewDetails')} →</span>
