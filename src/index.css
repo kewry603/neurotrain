@@ -15,7 +15,7 @@
   html, body {
     margin: 0;
     padding: 0;
-    background: #0a0f1e;
+    background: #0f0c29;
     color: #f1f5f9;
     line-height: 1.55;
     -webkit-font-smoothing: antialiased;
@@ -40,13 +40,14 @@
   /* Full-bleed app shell — native mobile feel on real phones */
   #root {
     width: 100%;
-    height: 100dvh;
+    height: 100vh;
+    max-height: 100dvh;
     min-height: 0;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     position: relative;
-    background: linear-gradient(160deg, #0a0f1e 0%, #0d1f5c 45%, #1a3a9e 75%, #1d4ed8 100%);
+    background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
   }
 
   /* ── Desktop: phone-frame preview ─────────────────────────────────────────
@@ -58,7 +59,7 @@
       justify-content: center;
       align-items: flex-start;
       /* Subtle background outside the "phone" */
-      background: #060a14;
+      background: #06040f;
     }
 
     #root {
@@ -76,42 +77,76 @@
     outline: none;
   }
   :where(button, a, [role="button"], input, select, textarea):focus-visible {
-    outline: 3px solid rgba(13, 148, 136, 0.55);
+    outline: 3px solid rgba(167, 139, 250, 0.55);
     outline-offset: 2px;
   }
 }
 
 @layer components {
-  /** Primary CTA — strong teal-to-blue gradient with elegant glow */
+  /** Primary CTA — violet → pink with soft glow + press (scale only, no color shift) */
   .btn-primary {
-    @apply min-h-[52px] w-full flex items-center justify-center gap-2 rounded-2xl px-5 py-3.5 text-base font-semibold text-white transition-all duration-200 motion-reduce:transition-none active:scale-[0.96] active:brightness-90 motion-reduce:active:scale-100;
-    background: linear-gradient(90deg, #0d9488 0%, #0ea5e9 55%, #3b82f6 100%);
+    @apply min-h-[52px] w-full flex items-center justify-center gap-2 rounded-2xl px-5 py-3.5 text-base font-semibold text-white;
+    background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
     box-shadow:
-      0 0 36px rgba(14, 165, 233, 0.45),
-      0 0 12px rgba(14, 165, 233, 0.30),
-      0 6px 24px rgba(0, 0, 0, 0.35),
+      0 0 26px rgba(139, 92, 246, 0.28),
+      0 0 10px rgba(236, 72, 153, 0.18),
+      0 6px 22px rgba(0, 0, 0, 0.35),
       inset 0 1px 0 rgba(255, 255, 255, 0.18),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.18);
+      inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+    touch-action: manipulation;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
   }
   .btn-primary:hover {
-    filter: brightness(1.08);
+    filter: brightness(1.05);
     box-shadow:
-      0 0 48px rgba(14, 165, 233, 0.60),
-      0 0 18px rgba(14, 165, 233, 0.40),
-      0 6px 28px rgba(0, 0, 0, 0.35),
+      0 0 34px rgba(139, 92, 246, 0.38),
+      0 0 14px rgba(236, 72, 153, 0.26),
+      0 6px 26px rgba(0, 0, 0, 0.32),
       inset 0 1px 0 rgba(255, 255, 255, 0.22),
       inset 0 -1px 0 rgba(0, 0, 0, 0.18);
+  }
+  .btn-primary:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.1s ease;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn-primary {
+      transition: box-shadow 0.2s ease, filter 0.2s ease;
+    }
+    .btn-primary:active {
+      transform: none;
+    }
   }
   /** Secondary — dark glass button */
   .btn-secondary {
     @apply min-h-[52px] w-full flex items-center justify-center rounded-2xl px-5 py-3.5 text-base font-semibold transition-colors duration-200 active:scale-[0.99] motion-reduce:active:scale-100;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1.5px solid rgba(255, 255, 255, 0.18);
-    color: rgba(255, 255, 255, 0.85);
+    background: rgba(124, 58, 237, 0.08);
+    border: 1.5px solid rgba(167, 139, 250, 0.22);
+    color: rgba(255, 255, 255, 0.88);
   }
   .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.13);
-    border-color: rgba(255, 255, 255, 0.28);
+    background: rgba(124, 58, 237, 0.14);
+    border-color: rgba(236, 72, 153, 0.28);
+  }
+
+  /**
+   * Home category grid + bottom nav — press scale 0.97 (~0.1s), release 0.2s ease
+   */
+  .btn-micro {
+    touch-action: manipulation;
+    transition: transform 0.2s ease;
+  }
+  .btn-micro:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn-micro {
+      transition: none;
+    }
+    .btn-micro:active {
+      transform: none;
+    }
   }
 }
 
@@ -128,17 +163,17 @@
   }
   /* Vignette — darker edges for cinematic depth */
   .vignette {
-    background: radial-gradient(ellipse at 50% 45%, transparent 38%, rgba(5, 10, 30, 0.72) 100%);
+    background: radial-gradient(ellipse at 50% 45%, transparent 40%, rgba(15, 12, 41, 0.75) 100%);
   }
   .border-glow {
-    border: 1px solid rgba(14, 165, 233, 0.40);
+    border: 1px solid rgba(167, 139, 250, 0.45);
   }
   .glass {
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(139, 92, 246, 0.08);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
   /* Interactive card — smooth lift on hover, press scale */
   .card-lift {

@@ -17,10 +17,10 @@ export default {
       colors: {
         /** Soft teal primary — professional, high contrast on light surfaces */
         primary: {
-          DEFAULT: '#0d9488',
-          dark: '#0f766e',
-          light: '#14b8a6',
-          soft: '#ccfbf1',
+          DEFAULT: '#7c3aed',
+          dark: '#5b21b6',
+          light: '#a78bfa',
+          soft: '#ede9fe',
           foreground: '#ffffff',
         },
         ink: {
@@ -33,12 +33,12 @@ export default {
           card: '#ffffff',
           muted: '#e2e8f0',
         },
-        /** Kept for game accents; tuned for light UI where referenced */
+        /** Game / HUD accents — purple–pink neon */
         neon: {
-          purple: '#0d9488',
-          pink: '#0891b2',
-          blue: '#0284c7',
-          cyan: '#0ea5e9',
+          purple: '#a855f7',
+          pink: '#ec4899',
+          blue: '#8b5cf6',
+          cyan: '#e879f9',
         },
       },
       boxShadow: {
@@ -46,17 +46,17 @@ export default {
         'glow-purple': '0 0 20px rgba(139, 92, 246, 0.45)',
         'glow-pink': '0 0 20px rgba(236, 72, 153, 0.40)',
         'glow-blue': '0 0 20px rgba(59, 130, 246, 0.45)',
-        'glow-cyan': '0 0 20px rgba(14, 165, 233, 0.45)',
+        'glow-cyan': '0 0 20px rgba(232, 121, 249, 0.4)',
         'card': '0 8px 32px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.08)',
-        'btn': '0 0 24px rgba(14, 165, 233, 0.40), 0 4px 16px rgba(14, 165, 233, 0.25)',
+        'btn': '0 0 24px rgba(124, 58, 237, 0.40), 0 4px 16px rgba(236, 72, 153, 0.22)',
       },
       backgroundImage: {
         'app-gradient':
-          'linear-gradient(170deg, #0f172a 0%, #1e3a8a 60%, #1d4ed8 100%)',
+          'linear-gradient(to bottom, #0f0c29, #302b63, #24243e)',
         'card-gradient':
-          'linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.04) 100%)',
+          'linear-gradient(135deg, rgba(139,92,246,0.12) 0%, rgba(139,92,246,0.06) 100%)',
         'btn-gradient':
-          'linear-gradient(90deg, #0d9488 0%, #0ea5e9 55%, #3b82f6 100%)',
+          'linear-gradient(135deg, #8b5cf6, #ec4899)',
       },
       transitionDuration: {
         DEFAULT: '200ms',

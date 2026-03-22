@@ -1,58 +1,212 @@
 import { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
-import { SESSION_XP_REWARD } from '../utils/progression';
+import { BASE_SESSION_XP } from '../utils/progression';
+import { applyDailyStreakOpen } from '../utils/streak';
+import { computeBadgeUnlocks, normalizeUnlockedBadges } from '../utils/badges';
+import { getLocalDateString } from '../utils/streak';
+import { applySessionToDailyChallenge, normalizeDailyChallenge } from '../utils/dailyChallenge';
 
 const STORAGE_KEY = 'neurotrain-progress-v1';
 
 const ProgressContext = createContext(null);
 
-function readStoredTotalXp() {
+function sanitizeInt(n) {
+  const x = Number(n);
+  return Number.isFinite(x) && x >= 0 ? Math.floor(x) : 0;
+}
+
+/** @param {number} correct @param {number} wrong */
+function computeOverallAccuracy(correct, wrong) {
+  const den = correct + wrong;
+  if (den <= 0) return 0;
+  return Math.round((correct / den) * 1000) / 10;
+}
+
+function normalizeProgress(data) {
+  const totalXp =
+    typeof data?.totalXp === 'number' && data.totalXp >= 0 && Number.isFinite(data.totalXp)
+      ? data.totalXp
+      : 0;
+  const totalRoundsCompleted = sanitizeInt(data?.totalRoundsCompleted);
+  const totalCorrectAnswers = sanitizeInt(data?.totalCorrectAnswers);
+  const totalWrongAnswers = sanitizeInt(data?.totalWrongAnswers);
+  const totalSessionsCompleted = sanitizeInt(data?.totalSessionsCompleted);
+  const overallAccuracy = computeOverallAccuracy(totalCorrectAnswers, totalWrongAnswers);
+  const lastActiveDate =
+    typeof data?.lastActiveDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(data.lastActiveDate)
+      ? data.lastActiveDate
+      : null;
+  const currentStreak = sanitizeInt(data?.currentStreak);
+  const unlockedBadges = normalizeUnlockedBadges(data?.unlockedBadges);
+  const today = getLocalDateString();
+  const dailyChallenge = normalizeDailyChallenge(data?.dailyChallenge, today);
+  return {
+    totalXp,
+    totalRoundsCompleted,
+    totalCorrectAnswers,
+    totalWrongAnswers,
+    totalSessionsCompleted,
+    overallAccuracy,
+    lastActiveDate,
+    currentStreak,
+    unlockedBadges,
+    dailyChallenge,
+  };
+}
+
+function getDefaultProgress() {
+  return normalizeProgress({});
+}
+
+function readStoredProgress() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return 0;
+    if (!raw) return getDefaultProgress();
     const data = JSON.parse(raw);
-    const n = data?.totalXp;
-    return typeof n === 'number' && n >= 0 && Number.isFinite(n) ? n : 0;
+    return normalizeProgress(data);
   } catch {
-    return 0;
+    return getDefaultProgress();
   }
 }
 
-function writeStoredTotalXp(totalXp) {
+function writeStoredProgress(progress) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ totalXp }));
+    const {
+      totalXp,
+      totalRoundsCompleted,
+      totalCorrectAnswers,
+      totalWrongAnswers,
+      totalSessionsCompleted,
+      lastActiveDate,
+      currentStreak,
+    } = progress;
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        totalXp,
+        totalRoundsCompleted,
+        totalCorrectAnswers,
+        totalWrongAnswers,
+        totalSessionsCompleted,
+      lastActiveDate: lastActiveDate ?? null,
+      currentStreak: sanitizeInt(currentStreak),
+      unlockedBadges: normalizeUnlockedBadges(progress.unlockedBadges),
+      dailyChallenge: progress.dailyChallenge ?? normalizeDailyChallenge(null, getLocalDateString()),
+      })
+    );
   } catch {
     /* ignore quota / private mode */
   }
 }
 
 /**
- * Awards +SESSION_XP_REWARD XP for a finished training session.
- * `fingerprint` must be unique per completed session (e.g. "numbers-3") so we never
- * double-award if React re-runs effects (Strict Mode) or the UI re-renders on FINISHED.
+ * Awards dynamic XP for a finished training session (`xpAmount` from `computeSessionXpReward`).
+ * `fingerprint` must be unique per completed session so we never double-award.
+ *
+ * `recordSessionResult` uses the same fingerprint pattern for stats deduplication.
  */
 export function ProgressProvider({ children }) {
-  const [totalXp, setTotalXp] = useState(0);
+  const [progress, setProgress] = useState(getDefaultProgress);
   const [hydrated, setHydrated] = useState(false);
+  const [streakCelebration, setStreakCelebration] = useState(false);
   const awardedFingerprintsRef = useRef(new Set());
+  const statsFingerprintsRef = useRef(new Set());
 
   useEffect(() => {
-    setTotalXp(readStoredTotalXp());
+    const base = readStoredProgress();
+    const u = applyDailyStreakOpen(base);
+    let merged = {
+      ...base,
+      lastActiveDate: u.lastActiveDate,
+      currentStreak: u.currentStreak,
+    };
+    const br = computeBadgeUnlocks(merged.unlockedBadges ?? [], merged, null);
+    merged = { ...merged, unlockedBadges: br.unlockedBadges };
+    const streakChanged =
+      merged.lastActiveDate !== base.lastActiveDate || merged.currentStreak !== base.currentStreak;
+    if (streakChanged || br.changed) {
+      writeStoredProgress(merged);
+    }
+    setProgress(merged);
+    if (u.streakIncreased) setStreakCelebration(true);
     setHydrated(true);
   }, []);
 
   useEffect(() => {
-    if (!hydrated) return;
-    writeStoredTotalXp(totalXp);
-  }, [totalXp, hydrated]);
+    if (!streakCelebration) return;
+    const t = setTimeout(() => setStreakCelebration(false), 3600);
+    return () => clearTimeout(t);
+  }, [streakCelebration]);
 
-  const awardSessionXp = useCallback((fingerprint) => {
+  useEffect(() => {
+    if (!hydrated) return;
+    writeStoredProgress(progress);
+  }, [progress, hydrated]);
+
+  const awardSessionXp = useCallback((fingerprint, xpAmount) => {
     if (fingerprint == null || fingerprint === '') return;
     if (awardedFingerprintsRef.current.has(fingerprint)) return;
     awardedFingerprintsRef.current.add(fingerprint);
-    setTotalXp((x) => x + SESSION_XP_REWARD);
+    const add =
+      typeof xpAmount === 'number' && Number.isFinite(xpAmount) && xpAmount >= 0
+        ? Math.round(xpAmount)
+        : BASE_SESSION_XP;
+    setProgress((p) => ({ ...p, totalXp: p.totalXp + add }));
   }, []);
 
-  const value = { totalXp, awardSessionXp, hydrated };
+  const recordSessionResult = useCallback((payload) => {
+    const {
+      roundsCompleted = 0,
+      correctAnswers = 0,
+      wrongAnswers = 0,
+      sessionCompleted = false,
+      fingerprint,
+    } = payload ?? {};
+    if (fingerprint == null || fingerprint === '') return;
+    if (statsFingerprintsRef.current.has(fingerprint)) return;
+    statsFingerprintsRef.current.add(fingerprint);
+
+    setProgress((prev) => {
+      const totalCorrectAnswers = prev.totalCorrectAnswers + sanitizeInt(correctAnswers);
+      const totalWrongAnswers = prev.totalWrongAnswers + sanitizeInt(wrongAnswers);
+      const totalRoundsCompleted = prev.totalRoundsCompleted + sanitizeInt(roundsCompleted);
+      const totalSessionsCompleted =
+        prev.totalSessionsCompleted + (sessionCompleted ? 1 : 0);
+      const overallAccuracy = computeOverallAccuracy(totalCorrectAnswers, totalWrongAnswers);
+      const next = {
+        ...prev,
+        totalCorrectAnswers,
+        totalWrongAnswers,
+        totalRoundsCompleted,
+        totalSessionsCompleted,
+        overallAccuracy,
+      };
+      const sessionMeta = {
+        roundsCompleted,
+        correctAnswers,
+        wrongAnswers,
+        sessionCompleted,
+      };
+      const br = computeBadgeUnlocks(prev.unlockedBadges ?? [], next, sessionMeta);
+      const today = getLocalDateString();
+      const dcPrev = normalizeDailyChallenge(prev.dailyChallenge, today);
+      const { challenge: dcNext, xpBonus } = applySessionToDailyChallenge(dcPrev, sessionMeta);
+      const totalXp = next.totalXp + xpBonus;
+      return {
+        ...next,
+        totalXp,
+        unlockedBadges: br.unlockedBadges,
+        dailyChallenge: dcNext,
+      };
+    });
+  }, []);
+
+  const value = {
+    ...progress,
+    hydrated,
+    streakCelebration,
+    awardSessionXp,
+    recordSessionResult,
+  };
 
   return <ProgressContext.Provider value={value}>{children}</ProgressContext.Provider>;
 }

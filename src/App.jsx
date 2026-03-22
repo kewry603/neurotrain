@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { preloadSounds } from './utils/sound';
 import { LanguageProvider } from './i18n/LanguageContext';
 import { ProgressProvider } from './context/ProgressContext';
 import { PremiumProvider } from './context/PremiumContext';
@@ -12,6 +13,10 @@ import PremiumScreen from './pages/PremiumScreen';
 
 export default function App() {
   const [screen, setScreen] = useState('home');
+
+  useEffect(() => {
+    preloadSounds();
+  }, []);
 
   return (
     <LanguageProvider>

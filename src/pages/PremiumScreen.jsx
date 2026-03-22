@@ -15,7 +15,7 @@ export default function PremiumScreen({ onNavigate }) {
   const [muted, setMuted] = useState(isMuted());
 
   return (
-    <div className="relative flex h-[100dvh] min-h-0 w-full flex-col overflow-hidden" style={{ background: 'linear-gradient(170deg, #0f172a 0%, #1e3a8a 60%, #1d4ed8 100%)' }}>
+    <div className="relative flex h-[100dvh] min-h-0 w-full flex-col overflow-hidden" style={{ background: 'linear-gradient(to bottom, #0f0c29, #302b63, #24243e)' }}>
       <div
         className="pointer-events-none absolute right-[-40px] top-[-60px] h-64 w-64 rounded-full blur-3xl opacity-35"
         style={{ background: 'radial-gradient(circle, #ccfbf1, transparent)' }}
@@ -53,7 +53,7 @@ export default function PremiumScreen({ onNavigate }) {
         <ul className="mb-10 w-full space-y-3 text-left">
           {[
             { key: 'bulletHard', accent: 'text-primary' },
-            { key: 'bulletProgress', accent: 'text-sky-700' },
+            { key: 'bulletProgress', accent: 'text-fuchsia-300' },
             { key: 'bulletUpdates', accent: 'text-teal-700' },
             { key: 'bulletSupport', accent: 'text-slate-800' },
           ].map(({ key, accent }) => (

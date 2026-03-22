@@ -3,7 +3,7 @@ import { useLanguage } from '../i18n/LanguageContext';
 import LanguageToggle from '../components/LanguageToggle';
 import MuteButton from '../components/MuteButton';
 import { playSound, toggleMute, isMuted } from '../utils/sound';
-import { useAwardSessionXpWhenFinished } from '../hooks/useAwardSessionXpWhenFinished';
+import { useFinishSessionProgress } from '../hooks/useFinishSessionProgress';
 import { usePremium } from '../context/PremiumContext';
 import PremiumHardGateModal from '../components/PremiumHardGateModal';
 
@@ -468,9 +468,7 @@ export default function SpatialGameScreen({ onNavigate }) {
     const id = setTimeout(() => {
       const r = currentRoundRef.current;
       if (r >= TOTAL_ROUNDS) {
-        if (roundOutcomeCorrectRef.current) {
-          playSound('roundComplete');
-        }
+        playSound('sessionComplete');
         setPhase(PHASE.FINISHED);
         return;
       }
@@ -556,10 +554,18 @@ export default function SpatialGameScreen({ onNavigate }) {
   const sessionFinished = phase === PHASE.FINISHED;
   const spatialXpFingerprint =
     sessionFinished && sessionXpStamp ? `spatial-${sessionXpStamp}` : null;
-  useAwardSessionXpWhenFinished(sessionFinished, spatialXpFingerprint);
+  useFinishSessionProgress(
+    sessionFinished,
+    spatialXpFingerprint,
+    TOTAL_ROUNDS,
+    score,
+    Math.max(0, TOTAL_ROUNDS - score),
+    true,
+    difficulty ?? 'easy'
+  );
 
   return (
-    <div className="relative flex h-[100dvh] min-h-0 w-full flex-col overflow-hidden" style={{ background: 'linear-gradient(170deg, #0f172a 0%, #1e3a8a 60%, #1d4ed8 100%)' }}>
+    <div className="relative flex h-[100dvh] min-h-0 w-full flex-col overflow-hidden" style={{ background: 'linear-gradient(to bottom, #0f0c29, #302b63, #24243e)' }}>
       <div className="absolute top-[-60px] right-[-60px] w-56 h-56 rounded-full blur-3xl opacity-15 pointer-events-none"
         style={{ background: 'radial-gradient(circle, #a855f7, transparent)' }} />
       <div className="absolute bottom-[-40px] left-[-40px] w-52 h-52 rounded-full blur-3xl opacity-15 pointer-events-none"

@@ -49,11 +49,11 @@ export default function BottomNav() {
     <nav
       className="px-2 pt-3 pb-[max(1rem,env(safe-area-inset-bottom,0px))]"
       style={{
-        background: 'rgba(10, 15, 35, 0.88)',
+        background: 'rgba(15, 12, 35, 0.82)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
-        borderTop: '1px solid rgba(255,255,255,0.08)',
-        boxShadow: '0 -8px 32px rgba(0,0,0,0.30)',
+        borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+        boxShadow: '0 -8px 32px rgba(0,0,0,0.4)',
       }}
     >
       <div className="flex justify-around gap-1">
@@ -61,17 +61,17 @@ export default function BottomNav() {
           <button
             type="button"
             key={item.key}
-            className={`relative flex min-h-[52px] min-w-[52px] flex-col items-center justify-center gap-1 rounded-2xl px-3 py-2 transition-all duration-200 motion-reduce:transition-none active:scale-[0.93] ${
+            className={`btn-micro relative flex min-h-[52px] min-w-[52px] flex-col items-center justify-center gap-1 rounded-2xl px-3 py-2 motion-reduce:transition-none ${
               item.active
-                ? 'text-cyan-400'
-                : 'text-white/40 hover:text-white/65'
+                ? 'text-fuchsia-300'
+                : 'text-slate-400 hover:text-slate-300'
             }`}
             style={
               item.active
                 ? {
-                    background: 'linear-gradient(160deg, rgba(14,165,233,0.20) 0%, rgba(56,189,248,0.10) 100%)',
-                    boxShadow: '0 0 20px rgba(14,165,233,0.28), inset 0 1px 0 rgba(255,255,255,0.10)',
-                    border: '1px solid rgba(14,165,233,0.30)',
+                    background: 'linear-gradient(160deg, rgba(124,58,237,0.28) 0%, rgba(236,72,153,0.12) 100%)',
+                    boxShadow: '0 0 22px rgba(124,58,237,0.35), 0 0 12px rgba(236,72,153,0.15), inset 0 1px 0 rgba(255,255,255,0.10)',
+                    border: '1px solid rgba(167,139,250,0.35)',
                   }
                 : {}
             }
@@ -80,7 +80,7 @@ export default function BottomNav() {
             {item.active && (
               <span
                 className="absolute top-1.5 h-1 w-4 rounded-full"
-                style={{ background: 'linear-gradient(90deg, #38bdf8, #818cf8)', boxShadow: '0 0 8px rgba(56,189,248,0.60)' }}
+                style={{ background: 'linear-gradient(90deg, #8b5cf6, #ec4899)', boxShadow: '0 0 12px rgba(139,92,246,0.55)' }}
               />
             )}
             {item.icon}

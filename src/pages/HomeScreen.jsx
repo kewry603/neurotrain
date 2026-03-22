@@ -4,6 +4,7 @@ import DailyChallengeCard from '../components/DailyChallengeCard';
 import LanguageToggle from '../components/LanguageToggle';
 import MuteButton from '../components/MuteButton';
 import ProgressCard from '../components/ProgressCard';
+import BadgesSection from '../components/BadgesSection';
 import BottomNav from '../components/BottomNav';
 import { useLanguage } from '../i18n/LanguageContext';
 import { playSound, toggleMute, isMuted } from '../utils/sound';
@@ -34,7 +35,7 @@ export default function HomeScreen({ onNavigate }) {
     [
       {
         labelKey: 'memory', active: true, screen: 'memory',
-        accent: '#38bdf8',  // sky-400
+        accent: '#8b5cf6',  // violet-500 (primary accent)
         icon: (
           <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5" aria-hidden="true">
             <rect x="2" y="2" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
@@ -46,7 +47,7 @@ export default function HomeScreen({ onNavigate }) {
       },
       {
         labelKey: 'focus', active: false, screen: 'focus',
-        accent: '#2dd4bf',  // teal-400
+        accent: '#c084fc',  // purple-400
         icon: (
           <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5" aria-hidden="true">
             <circle cx="10" cy="10" r="7.5" stroke="currentColor" strokeWidth="1.5" />
@@ -59,7 +60,7 @@ export default function HomeScreen({ onNavigate }) {
     [
       {
         labelKey: 'numbers', active: false, screen: 'numbers',
-        accent: '#a78bfa',  // violet-400
+        accent: '#e879f9',  // fuchsia-400
         icon: (
           <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5" aria-hidden="true">
             <path d="M5 6h10M5 10h6M5 14h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -69,7 +70,7 @@ export default function HomeScreen({ onNavigate }) {
       },
       {
         labelKey: 'wordMemory', active: false, screen: 'wordMemory',
-        accent: '#fb923c',  // orange-400
+        accent: '#f472b6',  // pink-400
         icon: (
           <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5" aria-hidden="true">
             <path d="M4 5h12M4 9h8M4 13h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -79,11 +80,14 @@ export default function HomeScreen({ onNavigate }) {
     ],
   ];
 
-  const categoryButtonClass = (cat) =>
-    `flex flex-col items-center justify-center gap-1.5 rounded-2xl transition-all duration-200 motion-reduce:transition-none active:scale-[0.96] min-h-[64px] w-full cursor-pointer`;
+  const categoryButtonClass = () =>
+    `btn-micro flex flex-col items-center justify-center gap-1 rounded-xl min-h-[52px] w-full cursor-pointer motion-reduce:transition-none`;
 
   return (
-    <div className="relative flex h-[100dvh] min-h-0 w-full flex-col overflow-hidden" style={{ background: 'linear-gradient(170deg, #0f172a 0%, #1e3a8a 60%, #1d4ed8 100%)' }}>
+    <div
+      className="relative flex h-screen min-h-0 w-full flex-col overflow-hidden"
+      style={{ background: 'linear-gradient(to bottom, #0f0c29, #302b63, #24243e)', maxHeight: '100dvh' }}
+    >
 
       {/* Vignette — dark edges give depth like a premium screen */}
       <div className="vignette pointer-events-none absolute inset-0 z-[2]" />
@@ -91,7 +95,7 @@ export default function HomeScreen({ onNavigate }) {
       {/* Soft central ambient light — diffused, not neon */}
       <div
         className="pointer-events-none absolute left-1/2 top-[25%] h-96 w-96 -translate-x-1/2 rounded-full blur-[80px]"
-        style={{ background: 'radial-gradient(circle, rgba(56,189,248,0.10) 0%, rgba(37,99,235,0.05) 55%, transparent 75%)' }}
+        style={{ background: 'radial-gradient(circle, rgba(124,58,237,0.14) 0%, rgba(236,72,153,0.06) 55%, transparent 75%)' }}
       />
       {/* Corner accent lights */}
       <div
@@ -100,12 +104,12 @@ export default function HomeScreen({ onNavigate }) {
       />
       <div
         className="pointer-events-none absolute bottom-[22%] left-[-40px] h-44 w-44 rounded-full blur-[55px] opacity-18"
-        style={{ background: 'radial-gradient(circle, rgba(20,184,166,0.7), transparent)' }}
+        style={{ background: 'radial-gradient(circle, rgba(124,58,237,0.5), transparent)' }}
       />
 
       <header className="relative z-[3] flex items-center justify-between px-4 pb-1 pt-3 sm:px-5">
         <div>
-          <p className="text-xs font-medium uppercase tracking-widest text-white/50">Good morning</p>
+          <p className="text-xs font-medium uppercase tracking-widest text-slate-400">Good morning</p>
           <p className="text-base font-bold text-white">Mr. Melo</p>
         </div>
         <div className="flex items-center gap-2">
@@ -114,68 +118,67 @@ export default function HomeScreen({ onNavigate }) {
         </div>
       </header>
 
-      <div
-        className="relative z-[3] flex min-h-0 min-w-0 flex-1 flex-col gap-4 overflow-y-auto overflow-x-hidden overscroll-y-contain pb-20"
-        style={{ WebkitOverflowScrolling: 'touch' }}
-      >
-        {/* Hero */}
-        <section className="flex flex-shrink-0 flex-col items-center px-4 pt-3 sm:px-5">
-          {/* Logo — softer, diffused glow (not neon) */}
-          <div className="relative mb-3 animate-float motion-reduce:animate-none">
-            <div
-              className="pointer-events-none absolute inset-[-14px] rounded-full blur-2xl opacity-22 animate-glow-shift motion-reduce:animate-none"
-              style={{ background: 'radial-gradient(circle, rgba(56,189,248,0.5) 0%, rgba(99,102,241,0.3) 55%, transparent 80%)' }}
-            />
-            <div
-              className="relative flex h-14 w-14 items-center justify-center rounded-[40%_40%_36%_36%]"
-              style={{
-                background: 'rgba(255,255,255,0.07)',
-                border: '1.5px solid rgba(255,255,255,0.18)',
-                boxShadow: '0 4px 24px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.12)',
-              }}
-            >
-              <BrainIcon className="h-10 w-10" />
+      {/* Main: fills space between header and nav — no vertical scroll */}
+      <div className="relative z-[3] flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden px-4 sm:px-5">
+        <div className="flex min-h-0 flex-1 flex-col justify-between gap-2 py-1">
+          {/* Hero */}
+          <section className="flex flex-shrink-0 flex-col items-center pt-1">
+            {/* Logo — softer, diffused glow (not neon) */}
+            <div className="relative mb-2 animate-float motion-reduce:animate-none">
+              <div
+                className="pointer-events-none absolute inset-[-12px] rounded-full blur-2xl opacity-22 animate-glow-shift motion-reduce:animate-none"
+                style={{ background: 'radial-gradient(circle, rgba(167,139,250,0.35) 0%, rgba(236,72,153,0.18) 55%, transparent 80%)' }}
+              />
+              <div
+                className="relative flex h-12 w-12 items-center justify-center rounded-[40%_40%_36%_36%]"
+                style={{
+                  background: 'rgba(139,92,246,0.08)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  boxShadow: '0 4px 24px rgba(0,0,0,0.35), 0 0 18px rgba(139,92,246,0.15), inset 0 1px 0 rgba(255,255,255,0.08)',
+                }}
+              >
+                <BrainIcon className="h-9 w-9" />
+              </div>
             </div>
-          </div>
 
-          {/* Title with very subtle luminous glow */}
-          <h1
-            className="mb-1 text-center text-2xl font-extrabold tracking-tight text-white"
-            style={{ textShadow: '0 0 40px rgba(56,189,248,0.30), 0 2px 4px rgba(0,0,0,0.30)' }}
-          >
-            {t('appTitle')}
-          </h1>
-          <p className="mb-1 text-xs font-medium uppercase tracking-[0.22em] text-white/40">
-            {t('appSubtitle')}
-          </p>
-          <p className="mb-4 w-full text-center text-sm leading-relaxed text-white/60">
-            {t('appTagline')}
-          </p>
+            <h1
+              className="mb-0.5 text-center text-xl font-extrabold tracking-tight text-white sm:text-2xl"
+              style={{ textShadow: '0 0 40px rgba(124,58,237,0.35), 0 0 24px rgba(236,72,153,0.15), 0 2px 4px rgba(0,0,0,0.30)' }}
+            >
+              {t('appTitle')}
+            </h1>
+            <p className="mb-0.5 text-2xs font-medium uppercase tracking-[0.22em] text-white/30">
+              {t('appSubtitle')}
+            </p>
+            <p className="mb-2 w-full text-center text-xs leading-snug text-white/50 sm:text-sm">
+              {t('appTagline')}
+            </p>
 
-          <button
-            type="button"
-            onClick={handleStart}
-            className="btn-primary w-full !min-h-[48px] !py-3"
-          >
+            <button
+              type="button"
+              onClick={handleStart}
+              className="btn-primary w-full !min-h-[44px] !py-2.5"
+            >
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
               <polygon points="5 3 19 12 5 21 5 3" fill="currentColor" stroke="none" />
             </svg>
             {t('startTraining')}
           </button>
-        </section>
+          </section>
 
-        {/* Cards */}
-        <div className="flex flex-shrink-0 flex-col gap-3 px-4 sm:px-5">
-          <DailyChallengeCard />
-          <ProgressCard />
-        </div>
+          {/* Cards — compact on home so full layout fits one screen */}
+          <div className="flex min-h-0 shrink-0 flex-col gap-2 overflow-hidden">
+            <DailyChallengeCard compact />
+            <ProgressCard compact />
+            <BadgesSection compact />
+          </div>
 
-        {/* Game shortcuts */}
-        <div className="relative z-20 w-full flex-shrink-0 px-4 pb-6 sm:px-5">
-          <p className="mb-2.5 text-2xs font-semibold uppercase tracking-widest" style={{ color: 'rgba(56,189,248,0.55)' }}>
-            Train
-          </p>
-          <div className="grid w-full grid-cols-2 gap-3">
+          {/* Game shortcuts */}
+          <div className="relative z-20 w-full flex-shrink-0">
+            <p className="mb-1 text-2xs font-semibold uppercase tracking-widest" style={{ color: 'rgba(192,132,252,0.65)' }}>
+              Train
+            </p>
+            <div className="grid w-full grid-cols-2 gap-2">
             {categoryGrid.map((row) =>
               row.map((cat) => {
                 const accentRgb = cat.accent
@@ -186,11 +189,11 @@ export default function HomeScreen({ onNavigate }) {
                     key={cat.labelKey}
                     type="button"
                     onClick={() => goToCategory(cat.screen)}
-                    className={categoryButtonClass(cat)}
+                    className={categoryButtonClass()}
                     style={
                       cat.active
                         ? {
-                            color: cat.accent || '#38bdf8',
+                            color: cat.accent || '#8b5cf6',
                             background: `linear-gradient(135deg, rgba(${accentRgb},0.18) 0%, rgba(${accentRgb},0.08) 100%)`,
                             backdropFilter: 'blur(16px)',
                             WebkitBackdropFilter: 'blur(16px)',
@@ -215,11 +218,14 @@ export default function HomeScreen({ onNavigate }) {
                 );
               })
             )}
+            </div>
           </div>
         </div>
       </div>
 
-      <BottomNav />
+      <div className="relative z-[3] flex-shrink-0">
+        <BottomNav />
+      </div>
     </div>
   );
 }

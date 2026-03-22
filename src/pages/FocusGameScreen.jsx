@@ -3,7 +3,7 @@ import { useLanguage } from '../i18n/LanguageContext';
 import LanguageToggle from '../components/LanguageToggle';
 import MuteButton from '../components/MuteButton';
 import { playSound, toggleMute, isMuted } from '../utils/sound';
-import { useAwardSessionXpWhenFinished } from '../hooks/useAwardSessionXpWhenFinished';
+import { useFinishSessionProgress } from '../hooks/useFinishSessionProgress';
 import { usePremium } from '../context/PremiumContext';
 import PremiumHardGateModal from '../components/PremiumHardGateModal';
 
@@ -636,7 +636,15 @@ export default function FocusGameScreen({ onNavigate }) {
   const focusFinished = phase === PHASE.FINISHED;
   const focusXpFingerprint =
     focusFinished && sessionXpStamp ? `focus-${sessionXpStamp}` : null;
-  useAwardSessionXpWhenFinished(focusFinished, focusXpFingerprint);
+  useFinishSessionProgress(
+    focusFinished,
+    focusXpFingerprint,
+    TOTAL_ROUNDS,
+    correctRounds,
+    Math.max(0, TOTAL_ROUNDS - correctRounds),
+    true,
+    difficulty ?? 'easy'
+  );
 
   // ── Player selects an answer ───────────────────────────────────────────────
   const handleAnswer = useCallback((opt) => {
@@ -656,10 +664,13 @@ export default function FocusGameScreen({ onNavigate }) {
 
   // ── Continue to next round or go to final results ─────────────────────────
   const handleContinue = useCallback(() => {
-    if (lastAnswerCorrectRef.current) {
+    const isLastRound = roundRef.current >= TOTAL_ROUNDS;
+    if (isLastRound) {
+      playSound('sessionComplete');
+    } else if (lastAnswerCorrectRef.current) {
       playSound('roundComplete');
     }
-    if (roundRef.current >= TOTAL_ROUNDS) {
+    if (isLastRound) {
       setPhase(PHASE.FINISHED);
     } else {
       const next   = roundRef.current + 1;
@@ -679,7 +690,7 @@ export default function FocusGameScreen({ onNavigate }) {
 
   // ── Render ─────────────────────────────────────────────────────────────────
   return (
-    <div className="relative flex h-[100dvh] min-h-0 w-full flex-col overflow-hidden" style={{ background: 'linear-gradient(170deg, #0f172a 0%, #1e3a8a 60%, #1d4ed8 100%)' }}>
+    <div className="relative flex h-[100dvh] min-h-0 w-full flex-col overflow-hidden" style={{ background: 'linear-gradient(to bottom, #0f0c29, #302b63, #24243e)' }}>
 
       {/* Ambient blobs */}
       <div className="absolute top-[-60px] right-[-60px] w-56 h-56 rounded-full blur-3xl opacity-15 pointer-events-none"

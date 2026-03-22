@@ -6,6 +6,7 @@ import PremiumHardGateModal from '../components/PremiumHardGateModal';
 import LanguageToggle from '../components/LanguageToggle';
 import MuteButton from '../components/MuteButton';
 import { playSound, toggleMute, isMuted } from '../utils/sound';
+import { computeSessionAccuracyPercent, computeSessionXpReward } from '../utils/progression';
 
 /** Set by Home “Start Training” so difficulty pick doesn’t play `start` twice. */
 const SESSION_START_SKIP_MEMORY_KEY = 'nt_skipSessionStartOnce_memory';
@@ -26,20 +27,20 @@ const ROUNDS_PER_LEVEL   = 5;   // rounds before advancing to next level
 // ─── Difficulty configuration ─────────────────────────────────────────────────
 // `pairs` = number of matching pairs → total cards = pairs × 2 (4 / 6 / 8 cards).
 // `cols`  = CSS grid columns; deck is built only from `pairs` via `createDeck`.
-// Progression tuned for adults 40+: more pairs + slightly less memorize time.
+// Memorize bar duration (pairs unchanged). ~1s on hard; easy/medium scale with grid load.
 const DIFFICULTIES = {
   easy: {
-    id: 'easy', pairs: 2, cols: 2, memorizeMs: 5000,
+    id: 'easy', pairs: 2, cols: 2, memorizeMs: 1650,
     emoji: '🌱', color: '#10b981', glow: 'rgba(16,185,129,0.65)',
     bg: 'rgba(16,185,129,0.1)', gridLabel: '2×2',
   },
   medium: {
-    id: 'medium', pairs: 3, cols: 3, memorizeMs: 4000,
+    id: 'medium', pairs: 3, cols: 3, memorizeMs: 1350,
     emoji: '⚡', color: '#f59e0b', glow: 'rgba(245,158,11,0.65)',
     bg: 'rgba(245,158,11,0.1)', gridLabel: '3×2',
   },
   hard: {
-    id: 'hard', pairs: 4, cols: 4, memorizeMs: 3000,
+    id: 'hard', pairs: 4, cols: 4, memorizeMs: 1000,
     emoji: '🔥', color: '#ef4444', glow: 'rgba(239,68,68,0.65)',
     bg: 'rgba(239,68,68,0.1)', gridLabel: '4×2',
   },
@@ -57,7 +58,7 @@ const ALL_CARD_TYPES = [
   { id: 'moon',      emoji: '🌙', color: '#3b82f6', glow: 'rgba(59,130,246,0.65)',  bg: 'rgba(59,130,246,0.13)'  },
   { id: 'crystal',   emoji: '🔮', color: '#8b5cf6', glow: 'rgba(139,92,246,0.65)',  bg: 'rgba(139,92,246,0.13)'  },
   { id: 'target',    emoji: '🎯', color: '#ef4444', glow: 'rgba(239,68,68,0.65)',   bg: 'rgba(239,68,68,0.13)'   },
-  { id: 'wave',      emoji: '🌊', color: '#0ea5e9', glow: 'rgba(14,165,233,0.65)',  bg: 'rgba(14,165,233,0.13)'  },
+  { id: 'wave',      emoji: '🌊', color: '#a855f7', glow: 'rgba(124,58,237,0.65)',  bg: 'rgba(124,58,237,0.13)'  },
   { id: 'butterfly', emoji: '🦋', color: '#d946ef', glow: 'rgba(217,70,239,0.65)',  bg: 'rgba(217,70,239,0.13)'  },
   { id: 'snowflake', emoji: '❄️', color: '#7dd3fc', glow: 'rgba(125,211,252,0.65)', bg: 'rgba(125,211,252,0.13)' },
   { id: 'trophy',    emoji: '🏆', color: '#fbbf24', glow: 'rgba(251,191,36,0.65)',  bg: 'rgba(251,191,36,0.13)'  },
@@ -342,7 +343,7 @@ function SuccessFlash({ roundInLevel, difficulty, seconds, moves, efficiency, t 
         {/* Stats */}
         <div className="grid w-full grid-cols-3 gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-3">
           {[
-            { val: fmt(seconds),                  label: t('game.time'),       cls: 'text-sky-700'   },
+            { val: fmt(seconds),                  label: t('game.time'),       cls: 'text-violet-300'   },
             { val: String(moves).padStart(2,'0'), label: t('game.moves'),      cls: 'text-primary'   },
             { val: `${effLabel} ${efficiency}%`,  label: t('game.efficiency'), cls: 'text-emerald-700' },
           ].map(({ val, label, cls }) => (
@@ -546,7 +547,7 @@ function ProgressBar({ value, max }) {
 // ─── Main game screen ─────────────────────────────────────────────────────────
 export default function MemoryGameScreen({ onNavigate }) {
   const { t } = useLanguage();
-  const { awardSessionXp } = useProgress();
+  const { awardSessionXp, recordSessionResult } = useProgress();
   /** Premium: Hard difficulty requires `isPremium` — checked on level pick and on in-run level-up to Hard. */
   const { isPremium } = usePremium();
   const [muted, setMuted] = useState(isMuted());
@@ -575,9 +576,10 @@ export default function MemoryGameScreen({ onNavigate }) {
   const feedbackTimer    = useRef(null);
   const roundInLevelRef  = useRef(1);   // synchronous access to current round
   const levelUpTargetRef = useRef(null); // next difficulty id, set before levelUpFlash
-  /** Memory Matrix has no single “session end” screen — we grant +10 XP every 8 cleared boards. */
+  /** Memory Matrix has no single “session end” screen — we grant performance XP every 8 cleared boards. */
   const sessionXpStampRef = useRef(0);
   const memoryRoundsTowardXpRef = useRef(0);
+  const mismatchCountSinceXpRef = useRef(0);
   const prevSuccessFlashRef = useRef(false);
 
   const diff         = difficulty ? DIFFICULTIES[difficulty] : null;
@@ -586,18 +588,36 @@ export default function MemoryGameScreen({ onNavigate }) {
   const staggerMs    = cards.length > 0 ? Math.floor(280 / cards.length) : 0;
   const cardVariant  = diff?.cols === 2 ? 'lg' : diff?.cols >= 5 ? 'sm' : 'md';
 
-  // Every time a grid is fully cleared, successFlash pulses; count 8 clears → +10 XP (same rule as an 8-round session).
+  // Every time a grid is fully cleared, successFlash pulses; count 8 clears → XP + global stats (8 “rounds”, mismatches as wrong).
   useEffect(() => {
     if (successFlash && !prevSuccessFlashRef.current) {
       prevSuccessFlashRef.current = true;
       memoryRoundsTowardXpRef.current += 1;
       if (memoryRoundsTowardXpRef.current >= 8) {
         memoryRoundsTowardXpRef.current -= 8;
-        awardSessionXp(`memory-${sessionXpStampRef.current}-${Date.now()}`);
+        const batchFp = `memory-${sessionXpStampRef.current}-${Date.now()}`;
+        const wrong = mismatchCountSinceXpRef.current;
+        mismatchCountSinceXpRef.current = 0;
+        const correct = 8;
+        const accuracyPercent = computeSessionAccuracyPercent(8, correct, wrong);
+        const isPerfect = wrong === 0;
+        const xp = computeSessionXpReward({
+          accuracyPercent,
+          difficultyId: difficulty ?? 'easy',
+          isPerfect,
+        });
+        awardSessionXp(batchFp, xp);
+        recordSessionResult({
+          fingerprint: batchFp,
+          roundsCompleted: 8,
+          correctAnswers: correct,
+          wrongAnswers: wrong,
+          sessionCompleted: true,
+        });
       }
     }
     if (!successFlash) prevSuccessFlashRef.current = false;
-  }, [successFlash, awardSessionXp]);
+  }, [successFlash, difficulty, awardSessionXp, recordSessionResult]);
 
   // ── Phase 1: memorize → countdown ──────────────────────────────────────────
   useEffect(() => {
@@ -763,6 +783,7 @@ export default function MemoryGameScreen({ onNavigate }) {
     }
     sessionXpStampRef.current = Date.now();
     memoryRoundsTowardXpRef.current = 0;
+    mismatchCountSinceXpRef.current = 0;
     roundInLevelRef.current = 1;
     setDifficulty(diffId);
     setRoundInLevel(1);
@@ -786,6 +807,7 @@ export default function MemoryGameScreen({ onNavigate }) {
   const goToSelect = useCallback(() => {
     if (feedbackTimer.current) clearTimeout(feedbackTimer.current);
     memoryRoundsTowardXpRef.current = 0;
+    mismatchCountSinceXpRef.current = 0;
     roundInLevelRef.current = 1;
     setPhase(PHASE.SELECT);
     setCards([]);
@@ -845,6 +867,7 @@ export default function MemoryGameScreen({ onNavigate }) {
         setLocked(false);
       } else {
         playSound('wrong');
+        mismatchCountSinceXpRef.current += 1;
         setMismatch(next);
         showFeedback('mismatch', t('game.tryAgain'));
         setTimeout(() => {
@@ -863,7 +886,7 @@ export default function MemoryGameScreen({ onNavigate }) {
       : 0;
 
   return (
-    <div className="relative flex h-[100dvh] min-h-0 w-full flex-col overflow-hidden" style={{ background: 'linear-gradient(170deg, #0f172a 0%, #1e3a8a 60%, #1d4ed8 100%)' }}>
+    <div className="relative flex h-[100dvh] min-h-0 w-full flex-col overflow-hidden" style={{ background: 'linear-gradient(to bottom, #0f0c29, #302b63, #24243e)' }}>
 
       {/* Ambient blobs */}
       <div className="absolute top-[-60px] right-[-60px] w-56 h-56 rounded-full blur-3xl opacity-20 pointer-events-none"
@@ -934,7 +957,7 @@ export default function MemoryGameScreen({ onNavigate }) {
       <div className="flex items-center justify-between px-4 py-2 mx-4 mb-1 glass rounded-2xl flex-shrink-0">
         {[
           { val: fmt(seconds), label: t('game.time'),
-            cls: timerRunning ? 'text-neon-cyan text-glow-cyan' : 'text-white/30', w: 'min-w-[52px]' },
+            cls: timerRunning ? 'text-fuchsia-400 text-glow-cyan' : 'text-slate-500', w: 'min-w-[52px]' },
           { val: String(moves).padStart(2,'0'), label: t('game.moves'),
             cls: 'text-neon-pink text-glow-pink', w: 'min-w-[40px]' },
           { val: score, label: t('game.score'),
@@ -960,7 +983,7 @@ export default function MemoryGameScreen({ onNavigate }) {
 
       {/* ── Phase display ── */}
       <div className="flex-shrink-0 h-14 flex items-center mb-1">
-        {phase === PHASE.MEMORIZE  && <MemorizeBanner  t={t} duration={diff?.memorizeMs ?? 4000} />}
+        {phase === PHASE.MEMORIZE  && <MemorizeBanner  t={t} duration={diff?.memorizeMs ?? 1000} />}
         {phase === PHASE.COUNTDOWN && <CountdownDisplay num={countdownNum} t={t} />}
         {phase === PHASE.PLAYING   && (
           <div className="w-full">

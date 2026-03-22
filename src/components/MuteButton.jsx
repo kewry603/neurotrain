@@ -6,7 +6,7 @@ export default function MuteButton({ muted, onToggle }) {
       aria-label={muted ? 'Unmute sounds' : 'Mute sounds'}
       title={muted ? 'Unmute' : 'Mute'}
       className="flex h-12 w-12 min-h-[48px] min-w-[48px] items-center justify-center rounded-full transition-all duration-200 motion-reduce:transition-none"
-      style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.14)', boxShadow: '0 2px 12px rgba(0,0,0,0.20)' }}
+      style={{ background: 'rgba(139,92,246,0.08)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 2px 12px rgba(0,0,0,0.25)' }}
     >
       {muted ? (
         <svg
@@ -24,7 +24,7 @@ export default function MuteButton({ muted, onToggle }) {
         </svg>
       ) : (
         <svg
-          className="h-5 w-5 text-sky-400"
+          className="h-5 w-5 text-fuchsia-400"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"

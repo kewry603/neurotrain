@@ -1,5 +1,5 @@
 /**
- * BrainIcon — head silhouette with brain detail (light theme / teal accent)
+ * BrainIcon — head silhouette with brain detail (purple / pink neon accent)
  */
 export default function BrainIcon({ className = '' }) {
   const HEAD =
@@ -15,20 +15,19 @@ export default function BrainIcon({ className = '' }) {
     >
       <defs>
         <linearGradient id="hGrad" x1="24" y1="0" x2="24" y2="48" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#0d9488" stopOpacity="0.95" />
-          <stop offset="100%" stopColor="#0f766e" stopOpacity="0.55" />
+          <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.95" />
+          <stop offset="100%" stopColor="#5b21b6" stopOpacity="0.55" />
         </linearGradient>
 
         <linearGradient id="bGrad" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#0d9488" />
-          <stop offset="50%" stopColor="#14b8a6" />
-          <stop offset="100%" stopColor="#0284c7" />
+          <stop offset="0%" stopColor="#8b5cf6" />
+          <stop offset="100%" stopColor="#ec4899" />
         </linearGradient>
 
         <radialGradient id="bAura" cx="50%" cy="48%" r="52%">
-          <stop offset="0%" stopColor="#14b8a6" stopOpacity="0.45" />
-          <stop offset="52%" stopColor="#0d9488" stopOpacity="0.18" />
-          <stop offset="100%" stopColor="#0284c7" stopOpacity="0" />
+          <stop offset="0%" stopColor="#e879f9" stopOpacity="0.45" />
+          <stop offset="52%" stopColor="#8b5cf6" stopOpacity="0.18" />
+          <stop offset="100%" stopColor="#ec4899" stopOpacity="0" />
         </radialGradient>
 
         <filter id="sg" x="-20%" y="-20%" width="140%" height="140%">
@@ -56,7 +55,7 @@ export default function BrainIcon({ className = '' }) {
         </clipPath>
       </defs>
 
-      <path d={HEAD} fill="rgba(13,148,136,0.08)" />
+      <path d={HEAD} fill="rgba(124,58,237,0.08)" />
 
       <ellipse
         cx="24"
@@ -78,14 +77,14 @@ export default function BrainIcon({ className = '' }) {
       />
       <path
         d="M15 16 C14 19, 15 23, 16 26"
-        stroke="#0d9488"
+        stroke="#8b5cf6"
         strokeWidth="1.0"
         strokeLinecap="round"
         opacity="0.8"
       />
       <path
         d="M14 27 C16 29, 18 29, 18 27"
-        stroke="#14b8a6"
+        stroke="#c026d3"
         strokeWidth="1.0"
         strokeLinecap="round"
         opacity="0.75"
@@ -100,14 +99,14 @@ export default function BrainIcon({ className = '' }) {
       />
       <path
         d="M33 16 C34 19, 33 23, 32 26"
-        stroke="#0284c7"
+        stroke="#a855f7"
         strokeWidth="1.0"
         strokeLinecap="round"
         opacity="0.8"
       />
       <path
         d="M34 27 C32 29, 30 29, 30 27"
-        stroke="#0ea5e9"
+        stroke="#ec4899"
         strokeWidth="1.0"
         strokeLinecap="round"
         opacity="0.75"
@@ -118,23 +117,23 @@ export default function BrainIcon({ className = '' }) {
         y1="10"
         x2="24"
         y2="29"
-        stroke="rgba(13,148,136,0.35)"
+        stroke="rgba(139,92,246,0.35)"
         strokeWidth="0.85"
         strokeDasharray="1.8 2.1"
       />
 
-      <line x1="17" y1="19" x2="24" y2="15" stroke="#0d9488" strokeWidth="0.75" opacity="0.45" />
-      <line x1="31" y1="19" x2="24" y2="15" stroke="#0284c7" strokeWidth="0.75" opacity="0.45" />
-      <line x1="17" y1="19" x2="24" y2="24" stroke="#14b8a6" strokeWidth="0.70" opacity="0.4" />
-      <line x1="31" y1="19" x2="24" y2="24" stroke="#0ea5e9" strokeWidth="0.70" opacity="0.4" />
-      <line x1="24" y1="15" x2="24" y2="24" stroke="#0d9488" strokeWidth="0.75" opacity="0.45" />
+      <line x1="17" y1="19" x2="24" y2="15" stroke="#8b5cf6" strokeWidth="0.75" opacity="0.45" />
+      <line x1="31" y1="19" x2="24" y2="15" stroke="#c026d3" strokeWidth="0.75" opacity="0.45" />
+      <line x1="17" y1="19" x2="24" y2="24" stroke="#e879f9" strokeWidth="0.70" opacity="0.4" />
+      <line x1="31" y1="19" x2="24" y2="24" stroke="#ec4899" strokeWidth="0.70" opacity="0.4" />
+      <line x1="24" y1="15" x2="24" y2="24" stroke="#7c3aed" strokeWidth="0.75" opacity="0.45" />
 
-      <circle cx="24" cy="15" r="2.1" fill="#0d9488" filter="url(#ng)" className="brain-node-pulse" />
+      <circle cx="24" cy="15" r="2.1" fill="#8b5cf6" filter="url(#ng)" className="brain-node-pulse" />
       <circle
         cx="24"
         cy="24"
         r="1.7"
-        fill="#14b8a6"
+        fill="#ec4899"
         filter="url(#ng)"
         className="brain-node-pulse"
         style={{ animationDelay: '0.9s' }}
@@ -143,7 +142,7 @@ export default function BrainIcon({ className = '' }) {
         cx="17"
         cy="19"
         r="1.6"
-        fill="#14b8a6"
+        fill="#e879f9"
         filter="url(#ng)"
         className="brain-node-pulse"
         style={{ animationDelay: '0.4s' }}
@@ -152,7 +151,7 @@ export default function BrainIcon({ className = '' }) {
         cx="31"
         cy="19"
         r="1.6"
-        fill="#0284c7"
+        fill="#c026d3"
         filter="url(#ng)"
         className="brain-node-pulse"
         style={{ animationDelay: '1.3s' }}
