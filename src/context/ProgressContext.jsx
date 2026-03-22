@@ -4,6 +4,7 @@ import { applyDailyStreakOpen } from '../utils/streak';
 import { computeBadgeUnlocks, normalizeUnlockedBadges } from '../utils/badges';
 import { getLocalDateString } from '../utils/streak';
 import { applySessionToDailyChallenge, normalizeDailyChallenge } from '../utils/dailyChallenge';
+import { normalizeAchievementFlags } from '../utils/achievements';
 
 const STORAGE_KEY = 'neurotrain-progress-v1';
 
@@ -36,9 +37,11 @@ function normalizeProgress(data) {
       ? data.lastActiveDate
       : null;
   const currentStreak = sanitizeInt(data?.currentStreak);
+  const bestStreak = sanitizeInt(data?.bestStreak);
   const unlockedBadges = normalizeUnlockedBadges(data?.unlockedBadges);
   const today = getLocalDateString();
   const dailyChallenge = normalizeDailyChallenge(data?.dailyChallenge, today);
+  const achievementFlags = normalizeAchievementFlags(data?.achievementFlags);
   return {
     totalXp,
     totalRoundsCompleted,
@@ -48,8 +51,10 @@ function normalizeProgress(data) {
     overallAccuracy,
     lastActiveDate,
     currentStreak,
+    bestStreak,
     unlockedBadges,
     dailyChallenge,
+    achievementFlags,
   };
 }
 
@@ -78,6 +83,7 @@ function writeStoredProgress(progress) {
       totalSessionsCompleted,
       lastActiveDate,
       currentStreak,
+      bestStreak,
     } = progress;
     localStorage.setItem(
       STORAGE_KEY,
@@ -89,8 +95,10 @@ function writeStoredProgress(progress) {
         totalSessionsCompleted,
       lastActiveDate: lastActiveDate ?? null,
       currentStreak: sanitizeInt(currentStreak),
+      bestStreak: sanitizeInt(bestStreak),
       unlockedBadges: normalizeUnlockedBadges(progress.unlockedBadges),
       dailyChallenge: progress.dailyChallenge ?? normalizeDailyChallenge(null, getLocalDateString()),
+      achievementFlags: normalizeAchievementFlags(progress.achievementFlags),
       })
     );
   } catch {
@@ -118,6 +126,7 @@ export function ProgressProvider({ children }) {
       ...base,
       lastActiveDate: u.lastActiveDate,
       currentStreak: u.currentStreak,
+      bestStreak: Math.max(sanitizeInt(base.bestStreak), sanitizeInt(u.currentStreak)),
     };
     const br = computeBadgeUnlocks(merged.unlockedBadges ?? [], merged, null);
     merged = { ...merged, unlockedBadges: br.unlockedBadges };
@@ -160,7 +169,12 @@ export function ProgressProvider({ children }) {
       wrongAnswers = 0,
       sessionCompleted = false,
       fingerprint,
+      difficultyId: rawDifficulty,
     } = payload ?? {};
+    const difficultyId =
+      rawDifficulty != null && rawDifficulty !== ''
+        ? String(rawDifficulty).toLowerCase()
+        : '';
     if (fingerprint == null || fingerprint === '') return;
     if (statsFingerprintsRef.current.has(fingerprint)) return;
     statsFingerprintsRef.current.add(fingerprint);
@@ -172,6 +186,11 @@ export function ProgressProvider({ children }) {
       const totalSessionsCompleted =
         prev.totalSessionsCompleted + (sessionCompleted ? 1 : 0);
       const overallAccuracy = computeOverallAccuracy(totalCorrectAnswers, totalWrongAnswers);
+      let achievementFlags = { ...normalizeAchievementFlags(prev.achievementFlags) };
+      if (sessionCompleted) {
+        if (difficultyId === 'hard') achievementFlags.hardSessionComplete = true;
+        if (difficultyId === 'expert') achievementFlags.expertSessionComplete = true;
+      }
       const next = {
         ...prev,
         totalCorrectAnswers,
@@ -179,6 +198,7 @@ export function ProgressProvider({ children }) {
         totalRoundsCompleted,
         totalSessionsCompleted,
         overallAccuracy,
+        achievementFlags,
       };
       const sessionMeta = {
         roundsCompleted,
@@ -200,12 +220,27 @@ export function ProgressProvider({ children }) {
     });
   }, []);
 
+  const mergeAchievementFlags = useCallback((partial) => {
+    setProgress((prev) => {
+      const cur = normalizeAchievementFlags(prev.achievementFlags);
+      const next = { ...cur };
+      if (partial && typeof partial === 'object') {
+        if (partial.wellnessArticleOpened) next.wellnessArticleOpened = true;
+        if (partial.premiumEver) next.premiumEver = true;
+        if (partial.hardSessionComplete) next.hardSessionComplete = true;
+        if (partial.expertSessionComplete) next.expertSessionComplete = true;
+      }
+      return { ...prev, achievementFlags: next };
+    });
+  }, []);
+
   const value = {
     ...progress,
     hydrated,
     streakCelebration,
     awardSessionXp,
     recordSessionResult,
+    mergeAchievementFlags,
   };
 
   return <ProgressContext.Provider value={value}>{children}</ProgressContext.Provider>;

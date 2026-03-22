@@ -10,6 +10,10 @@ import NumbersGameScreen from './pages/NumbersGameScreen';
 import SpatialGameScreen from './pages/SpatialGameScreen';
 import WordMemoryScreen from './pages/WordMemoryScreen';
 import PremiumScreen from './pages/PremiumScreen';
+import GamesScreen from './pages/GamesScreen';
+import StatsScreen from './pages/StatsScreen';
+import MindWellnessScreen from './pages/MindWellnessScreen';
+import AchievementsScreen from './pages/AchievementsScreen';
 
 export default function App() {
   const [screen, setScreen] = useState('home');
@@ -22,13 +26,17 @@ export default function App() {
     <LanguageProvider>
       <ProgressProvider>
         <PremiumProvider>
-          {screen === 'home'       && <HomeScreen        onNavigate={setScreen} />}
+          {screen === 'home'       && <HomeScreen        onNavigate={setScreen} activeNav="home" />}
+          {screen === 'games'      && <GamesScreen       onNavigate={setScreen} activeNav="games" />}
+          {screen === 'stats'      && <StatsScreen       onNavigate={setScreen} activeNav="stats" />}
+          {screen === 'achievements' && <AchievementsScreen onNavigate={setScreen} activeNav="achievements" />}
+          {screen === 'premium'    && <PremiumScreen     onNavigate={setScreen} activeNav="premium" />}
+          {screen === 'wellness'   && <MindWellnessScreen onNavigate={setScreen} activeNav="wellness" />}
           {screen === 'memory'     && <MemoryGameScreen  onNavigate={setScreen} />}
           {screen === 'focus'      && <FocusGameScreen   onNavigate={setScreen} />}
           {screen === 'numbers'    && <NumbersGameScreen onNavigate={setScreen} />}
           {screen === 'spatial'    && <SpatialGameScreen onNavigate={setScreen} />}
           {screen === 'wordMemory' && <WordMemoryScreen  onNavigate={setScreen} />}
-          {screen === 'premium'    && <PremiumScreen     onNavigate={setScreen} />}
         </PremiumProvider>
       </ProgressProvider>
     </LanguageProvider>

@@ -1,7 +1,9 @@
 import { useLanguage } from '../i18n/LanguageContext';
+import BottomNav from '../components/BottomNav';
 import LanguageToggle from '../components/LanguageToggle';
 import MuteButton from '../components/MuteButton';
 import { usePremium } from '../context/PremiumContext';
+import { useProgress } from '../context/ProgressContext';
 import { playSound, toggleMute, isMuted } from '../utils/sound';
 import { useState } from 'react';
 
@@ -9,9 +11,10 @@ import { useState } from 'react';
  * Premium info / placeholder — no payments yet.
  * Demo control lets testers toggle Premium to verify Hard gating end-to-end.
  */
-export default function PremiumScreen({ onNavigate }) {
+export default function PremiumScreen({ onNavigate, activeNav = 'premium' }) {
   const { t } = useLanguage();
   const { isPremium, setPremium } = usePremium();
+  const { mergeAchievementFlags } = useProgress();
   const [muted, setMuted] = useState(isMuted());
 
   return (
@@ -25,10 +28,12 @@ export default function PremiumScreen({ onNavigate }) {
         style={{ background: 'radial-gradient(circle, #e0f2fe, transparent)' }}
       />
 
-      <header className="relative z-10 flex flex-shrink-0 items-center justify-between px-4 pb-3 pt-6 sm:px-5">
+      <header className="relative z-10 flex flex-shrink-0 items-center justify-between px-4 pb-3 pt-[max(1.5rem,env(safe-area-inset-top,0px))] sm:px-5">
         <button
           type="button"
-          onClick={() => onNavigate('home')}
+          onClick={() => {
+            if (typeof onNavigate === 'function') onNavigate('home');
+          }}
           className="flex min-h-[48px] items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition-colors hover:bg-slate-50"
         >
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
@@ -42,7 +47,7 @@ export default function PremiumScreen({ onNavigate }) {
         </div>
       </header>
 
-      <div className="relative z-10 flex flex-1 flex-col overflow-y-auto px-4 pb-10 pt-2 sm:px-5">
+      <div className="app-scroll relative z-10 flex min-h-0 flex-1 flex-col overflow-y-auto px-4 pt-2 pb-4 sm:px-5">
         <h1 className="mb-3 px-1 text-center text-3xl font-extrabold leading-tight text-slate-900">
           {t('premium.title')}
         </h1>
@@ -73,6 +78,7 @@ export default function PremiumScreen({ onNavigate }) {
               type="button"
               onClick={() => {
                 setPremium(true);
+                mergeAchievementFlags({ premiumEver: true });
                 playSound('tap');
               }}
               className="btn-primary shadow-btn"
@@ -99,6 +105,10 @@ export default function PremiumScreen({ onNavigate }) {
         <p className="mt-10 w-full px-2 text-center text-sm leading-relaxed text-slate-500">
           {t('premium.supportFooter')}
         </p>
+      </div>
+
+      <div className="relative z-10 flex-shrink-0 pb-[env(safe-area-inset-bottom,0px)]">
+        <BottomNav activeKey={activeNav} onNavigate={onNavigate} />
       </div>
     </div>
   );

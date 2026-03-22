@@ -28,9 +28,10 @@ export function getAccuracyBonusXp(accuracyPercent) {
   return 0;
 }
 
-/** @param {string} difficultyId `'easy' | 'medium' | 'hard'` */
+/** @param {string} difficultyId `'easy' | 'medium' | 'hard' | 'expert'` */
 export function getDifficultyBonusXp(difficultyId) {
   const id = String(difficultyId ?? 'easy').toLowerCase();
+  if (id === 'expert') return 6;
   if (id === 'hard') return 4;
   if (id === 'medium') return 2;
   return 0;

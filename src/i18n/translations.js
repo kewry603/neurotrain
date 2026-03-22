@@ -53,6 +53,65 @@ export const translations = {
         desc: "Finish a session with no mistakes.",
       },
     },
+    achievements: {
+      title: "Achievements",
+      subtitle: "Unlock badges as you train and explore the app.",
+      progressLabel: "Your progress",
+      progressHint: "Train, read wellness articles, and hit daily goals to unlock more.",
+      locked: "Locked",
+      viewAll: "View all achievements",
+      items: {
+        ach_first_session: {
+          title: "First session",
+          desc: "Complete any training session once.",
+        },
+        ach_streak_3: {
+          title: "3-day streak",
+          desc: "Reach a 3-day activity streak.",
+        },
+        ach_streak_7: {
+          title: "7-day streak",
+          desc: "Reach a 7-day streak (current or best).",
+        },
+        ach_games_10: {
+          title: "10 sessions",
+          desc: "Complete 10 training sessions in total.",
+        },
+        ach_first_hard: {
+          title: "Hard mode cleared",
+          desc: "Finish a full session on Hard difficulty.",
+        },
+        ach_first_expert: {
+          title: "Expert mode cleared",
+          desc: "Finish a full session on Expert difficulty.",
+        },
+        ach_premium: {
+          title: "Premium member",
+          desc: "Activate Premium (or have activated it before).",
+        },
+        ach_wellness_read: {
+          title: "Wellness reader",
+          desc: "Open a Mind & Wellness article.",
+        },
+        ach_accuracy_ace: {
+          title: "Accuracy ace",
+          desc: "Earn the Accuracy ace badge (90%+ in a session).",
+        },
+        ach_perfect_session: {
+          title: "Flawless run",
+          desc: "Earn the Flawless run badge (no mistakes in a session).",
+        },
+        ach_daily_challenge: {
+          title: "Daily goal",
+          desc: "Complete today’s daily challenge.",
+        },
+        ach_xp_100: {
+          title: "100 XP",
+          desc: "Reach 100 total XP.",
+        },
+      },
+    },
+    statsOpenAchievements: "Achievements",
     viewDetails: "View Details",
     readyLabel: "Ready",
     /** Home training category pills (Memory, Focus, …) */
@@ -65,10 +124,95 @@ export const translations = {
     },
     nav: {
       home: "Home",
-      train: "Train",
+      games: "Games",
       stats: "Stats",
-      profile: "Profile",
+      achievements: "Awards",
+      wellness: "Wellness",
+      premium: "Premium",
     },
+    homeMindWellnessTitle: "Mind & Wellness",
+    homeMindWellnessSubtitle: "Tips, habits, and science for your brain.",
+    wellness: {
+      title: "Mind & Wellness",
+      subtitle: "Short reads you can use today — some articles are free, others unlock with Premium.",
+      readMore: "Read more",
+      premiumBadge: "Premium",
+      backToList: "Articles",
+      premiumLockedTitle: "Premium article",
+      premiumLockedMessage: "This article is included with NeuroTrain Premium. Upgrade to read the full piece.",
+      categories: {
+        memory: "Memory Improvement",
+        focus: "Focus & Attention",
+        mental: "Mental Health Tips",
+        habits: "Daily Brain Habits",
+      },
+      articles: {
+        memory_sleep: {
+          title: "Sleep strengthens memory",
+          desc: "Your brain replays and stores what you learned while you rest.",
+          body:
+            "Research shows that sleep is when much of memory consolidation happens. During deep sleep stages, the hippocampus replays patterns from the day, helping move information into longer-term storage.\n\nAim for a consistent bedtime, dim screens an hour before bed, and keep your room cool and dark. Even modest sleep debt can reduce attention and recall the next day.\n\nThink of sleep as part of training — not separate from it.",
+        },
+        memory_chunk: {
+          title: "Chunk information to remember more",
+          desc: "Group items into meaningful bundles to lighten cognitive load.",
+          body:
+            "Chunking means combining separate bits into fewer, meaningful units — like remembering a phone number as three groups instead of ten digits.\n\nNames, steps, and lists become easier when each chunk has a simple label you already know. Practice recalling chunks aloud or in writing to strengthen them.\n\nStart small: pick one list you use often and reorganize it into 3–5 chunks. Rehearse once a day for a week and notice the difference.",
+        },
+        focus_pomodoro: {
+          title: "Use focused work sprints",
+          desc: "Short bursts with breaks beat endless multitasking.",
+          body:
+            "The Pomodoro Technique alternates focused intervals (often 25 minutes) with short breaks. It matches how attention naturally rises and falls.\n\nBefore each sprint, write one clear outcome. During the sprint, silence notifications and keep a notepad for stray thoughts so you do not derail.\n\nAdjust lengths to your energy — the goal is rhythm, not rigidity. Even two sprints a day can sharpen daily progress.",
+        },
+        focus_distraction: {
+          title: "Design your environment for focus",
+          desc: "Reduce digital pulls before they steal your attention.",
+          body:
+            "Attention is finite. Every ping competes with the task in front of you. Design friction: log out of social apps, use grayscale mode, or place your phone in another room during deep work.\n\nBatch shallow tasks (email, messages) into dedicated windows so they do not fragment your day.\n\nEnd each week by noting what distracted you most — then change one environmental detail for the next week.",
+        },
+        mental_stress: {
+          title: "Stress and your brain",
+          desc: "Chronic stress can dull working memory and decision-making.",
+          body:
+            "Short bursts of stress can sharpen reaction time, but ongoing stress floods the system with hormones that make it harder to concentrate and remember flexibly.\n\nSimple daily resets help: slow breathing for two minutes, a short walk after lunch, or naming three things you see and hear to ground attention.\n\nPair stress care with sleep and movement — they are the foundation cognitive training builds on.",
+        },
+        mental_gratitude: {
+          title: "Gratitude as a focus tool",
+          desc: "Brief gratitude practice can shift mood and attention.",
+          body:
+            "Writing down three specific good things — even small ones — trains your mind to notice positives without denying stress. Over time this can soften rumination.\n\nTry the same time each day, keep entries short, and vary the details so the practice stays fresh.\n\nIt is not about toxic positivity; it is about giving your attention a balanced diet.",
+        },
+        habits_morning: {
+          title: "Start the day with clarity",
+          desc: "A light morning routine primes attention before demands pile up.",
+          body:
+            "Before diving into messages, take five minutes for water, light movement, or a single priority written on paper. This sets intention before the world pulls you in every direction.\n\nKeep the routine tiny on hard days — consistency matters more than length.\n\nStack the habit after something you already do (coffee, brushing teeth) so it sticks.",
+        },
+        habits_consistency: {
+          title: "Consistency beats intensity",
+          desc: "Small daily actions compound more than rare heroic efforts.",
+          body:
+            "Brains adapt through repetition. Ten minutes of practice most days outperforms a long session once a month.\n\nTrack streaks lightly — missing a day is normal. Return the next day without shame.\n\nPick one brain habit (sleep, walk, one training round) and protect it for four weeks. Notice how steadiness changes how you feel, not just scores.",
+        },
+      },
+    },
+    gamesTitle: "Games",
+    gamesSubtitle: "Choose a training mode to begin.",
+    gamesPickGame: "Train",
+    homeTrainSection: "Train",
+    homePremiumCardTitle: "NeuroTrain Premium",
+    homePremiumCardSubtitle: "Unlock Hard mode and more benefits.",
+    statsTitle: "Your stats",
+    statsSubtitle: "Training progress at a glance.",
+    statsCurrentStreak: "Current streak",
+    statsBestStreak: "Best streak",
+    statsSessions: "Sessions completed",
+    statsRounds: "Rounds completed",
+    statsLevelSub: "Player level {n}",
+    statsPremiumStatus: "Premium",
+    statsPremiumActive: "Active",
+    statsPremiumFree: "Not active — open Premium to learn more",
     game: {
       title: "Memory Matrix",
       level: "Level",
@@ -100,9 +244,12 @@ export const translations = {
       easyDesc: "4 cards · 5 sec to memorize",
       mediumDesc: "6 cards · 4 sec to memorize",
       hardDesc: "8 cards · 3 sec to memorize",
+      expert: "Expert",
+      expertDesc: "10 cards · 5×2 grid · faster memorize",
       easyTag: "Beginner",
       mediumTag: "Challenge",
-      hardTag: "Expert",
+      hardTag: "Pro",
+      expertTag: "Expert",
       greatJob: "Great Job!",
       roundCompleted: "Round {round} complete",
       nextRound: "Next round starting…",
@@ -133,9 +280,12 @@ export const translations = {
       easyDesc:     "3–4 shapes · 2 sec preview",
       mediumDesc:   "5–7 shapes · 3 sec preview",
       hardDesc:     "8–10 shapes · 3.6 sec preview",
+      expert:         "Expert",
+      expertDesc:     "11–14 shapes · shorter preview · faster hide",
       easyTag:      "Beginner",
       mediumTag:    "Challenge",
-      hardTag:      "Expert",
+      hardTag:      "Pro",
+      expertTag:    "Expert",
     },
     numbers: {
       title:            "Remember the Sequence",
@@ -304,6 +454,65 @@ export const translations = {
         desc: "Termina una sesión sin errores.",
       },
     },
+    achievements: {
+      title: "Logros",
+      subtitle: "Desbloquea insignias mientras entrenas y exploras la app.",
+      progressLabel: "Tu progreso",
+      progressHint: "Entrena, lee bienestar y cumple el reto diario para desbloquear más.",
+      locked: "Bloqueado",
+      viewAll: "Ver todos los logros",
+      items: {
+        ach_first_session: {
+          title: "Primera sesión",
+          desc: "Completa una sesión de entrenamiento.",
+        },
+        ach_streak_3: {
+          title: "Racha de 3 días",
+          desc: "Alcanza una racha de 3 días de actividad.",
+        },
+        ach_streak_7: {
+          title: "Racha de 7 días",
+          desc: "Alcanza 7 días de racha (actual o récord).",
+        },
+        ach_games_10: {
+          title: "10 sesiones",
+          desc: "Completa 10 sesiones en total.",
+        },
+        ach_first_hard: {
+          title: "Modo difícil",
+          desc: "Termina una sesión completa en dificultad Difícil.",
+        },
+        ach_first_expert: {
+          title: "Modo experto",
+          desc: "Termina una sesión completa en dificultad Experto.",
+        },
+        ach_premium: {
+          title: "Miembro Premium",
+          desc: "Activa Premium (o haberlo activado antes).",
+        },
+        ach_wellness_read: {
+          title: "Lector de bienestar",
+          desc: "Abre un artículo de Mente y bienestar.",
+        },
+        ach_accuracy_ace: {
+          title: "As del acierto",
+          desc: "Gana la insignia de precisión (90%+ en una sesión).",
+        },
+        ach_perfect_session: {
+          title: "Sin fallos",
+          desc: "Gana la insignia Sin fallos (cero errores en una sesión).",
+        },
+        ach_daily_challenge: {
+          title: "Reto diario",
+          desc: "Completa el reto diario de hoy.",
+        },
+        ach_xp_100: {
+          title: "100 XP",
+          desc: "Alcanza 100 XP en total.",
+        },
+      },
+    },
+    statsOpenAchievements: "Logros",
     viewDetails: "Ver Detalles",
     readyLabel: "Listo",
     homeCategories: {
@@ -315,10 +524,95 @@ export const translations = {
     },
     nav: {
       home: "Inicio",
-      train: "Entrenar",
+      games: "Juegos",
       stats: "Estadísticas",
-      profile: "Perfil",
+      achievements: "Logros",
+      wellness: "Bienestar",
+      premium: "Premium",
     },
+    homeMindWellnessTitle: "Mente y bienestar",
+    homeMindWellnessSubtitle: "Hábitos, consejos y ciencia para tu cerebro.",
+    wellness: {
+      title: "Mente y bienestar",
+      subtitle: "Lecturas breves para hoy: algunas son gratis; otras con Premium.",
+      readMore: "Leer más",
+      premiumBadge: "Premium",
+      backToList: "Artículos",
+      premiumLockedTitle: "Artículo Premium",
+      premiumLockedMessage: "Este artículo está incluido en NeuroTrain Premium. Mejora tu plan para leerlo completo.",
+      categories: {
+        memory: "Mejora de la memoria",
+        focus: "Enfoque y atención",
+        mental: "Salud mental",
+        habits: "Hábitos cerebrales diarios",
+      },
+      articles: {
+        memory_sleep: {
+          title: "El sueño refuerza la memoria",
+          desc: "Tu cerebro consolida lo aprendido mientras descansas.",
+          body:
+            "La investigación muestra que el sueño es clave para consolidar recuerdos. En fases profundas, el cerebro repite patrones del día y ayuda a guardarlos a largo plazo.\n\nBusca una hora de dormir estable, reduce pantallas antes de acostarte y mantén la habitación oscura y fresca. Incluso pocas horas menos de sueño pueden bajar atención y recuerdo al día siguiente.\n\nPiensa en el sueño como parte del entrenamiento, no como algo aparte.",
+        },
+        memory_chunk: {
+          title: "Agrupa información para recordar más",
+          desc: "Junta datos en bloques con sentido para aligerar la carga mental.",
+          body:
+            "Fragmentar (chunking) significa unir piezas en menos unidades con significado — como un teléfono en tres grupos en lugar de diez dígitos.\n\nNombres, pasos y listas son más fáciles cuando cada bloque tiene una etiqueta simple. Practica en voz alta o por escrito.\n\nEmpieza con una lista que uses a menudo y divídela en 3–5 bloques. Repasa un poco cada día durante una semana.",
+        },
+        focus_pomodoro: {
+          title: "Trabaja en intervalos enfocados",
+          desc: "Rachas cortas con pausas vencen al multitarea interminable.",
+          body:
+            "La técnica Pomodoro alterna bloques de concentración (a menudo 25 min) con descansos breves. Se alinea con cómo sube y baja la atención.\n\nAntes de cada bloque, escribe un resultado claro. Silencia avisos y anota distracciones en un papel para no cambiar de tarea.\n\nAjusta tiempos a tu energía: busca ritmo, no rigidez. Incluso dos bloques al día pueden marcar diferencia.",
+        },
+        focus_distraction: {
+          title: "Diseña tu entorno para enfocarte",
+          desc: "Reduce estímulos digitales antes de que roben tu atención.",
+          body:
+            "La atención es limitada. Cada notificación compite con lo que haces. Añade fricción: cierra sesión en redes, modo escala de grises o deja el móvil en otra habitación.\n\nAgrupa tareas superficiales (correo, mensajes) en ventanas dedicadas.\n\nCada semana anota qué te distrajo más y cambia un detalle del entorno la siguiente.",
+        },
+        mental_stress: {
+          title: "Estrés y cerebro",
+          desc: "El estrés prolongado puede empañar memoria de trabajo y decisiones.",
+          body:
+            "El estrés breve puede agudizar reacciones, pero el prolongado satura hormonas que dificultan concentrarse y recordar con flexibilidad.\n\nPequeños reinicios ayudan: respiración lenta dos minutos, un paseo tras comer o nombrar tres cosas que ves y oyes.\n\nCombina esto con sueño y movimiento: son la base sobre la que se apoya el entrenamiento cognitivo.",
+        },
+        mental_gratitude: {
+          title: "Gratitud como herramienta de foco",
+          desc: "Una práctica breve de gratitud puede cambiar el estado de ánimo y la atención.",
+          body:
+            "Escribir tres cosas buenas — aunque pequeñas — entrena a notar lo positivo sin negar el estrés. Con el tiempo puede reducir rumiación.\n\nHazlo a la misma hora, entradas cortas, y varía detalles para que no se vuelva automático.\n\nNo es toxicidad positiva; es dar a la atención una dieta más equilibrada.",
+        },
+        habits_morning: {
+          title: "Empieza el día con claridad",
+          desc: "Una rutina ligera prepara la atención antes de que lleguen las demandas.",
+          body:
+            "Antes de mensajes, dedica cinco minutos a agua, movimiento suave o una prioridad escrita. Fija intención antes de que todo tire de ti.\n\nEn días difíciles, mantén la rutina mínima: importa la constancia, no la duración.\n\nEnlázala después de algo que ya haces (café, cepillarse) para que perdure.",
+        },
+        habits_consistency: {
+          title: "La constancia vence a la intensidad",
+          desc: "Pequeñas acciones diarias se acumulan más que esfuerzos raros y enormes.",
+          body:
+            "El cerebro se adapta con repetición. Diez minutos la mayoría de los días superan una sesión larga una vez al mes.\n\nLleva rachas sin culpa si falta un día: vuelve al siguiente.\n\nElige un hábito cerebral (sueño, caminar, una ronda de juego) y protégelo cuatro semanas. Observa cómo el ritmo cambia cómo te sientes, no solo el puntaje.",
+        },
+      },
+    },
+    gamesTitle: "Juegos",
+    gamesSubtitle: "Elige un modo de entrenamiento.",
+    gamesPickGame: "Entrenar",
+    homeTrainSection: "Entrenar",
+    homePremiumCardTitle: "NeuroTrain Premium",
+    homePremiumCardSubtitle: "Desbloquea el modo Difícil y más ventajas.",
+    statsTitle: "Tus estadísticas",
+    statsSubtitle: "Resumen de tu progreso.",
+    statsCurrentStreak: "Racha actual",
+    statsBestStreak: "Mejor racha",
+    statsSessions: "Sesiones completadas",
+    statsRounds: "Rondas completadas",
+    statsLevelSub: "Nivel de jugador {n}",
+    statsPremiumStatus: "Premium",
+    statsPremiumActive: "Activo",
+    statsPremiumFree: "Inactivo — abre Premium para más información",
     game: {
       title: "Matriz de Memoria",
       level: "Nivel",
@@ -350,9 +644,12 @@ export const translations = {
       easyDesc: "4 cartas · 5 seg para memorizar",
       mediumDesc: "6 cartas · 4 seg para memorizar",
       hardDesc: "8 cartas · 3 seg para memorizar",
+      expert: "Experto",
+      expertDesc: "10 cartas · cuadrícula 5×2 · memorización más rápida",
       easyTag: "Principiante",
       mediumTag: "Desafío",
-      hardTag: "Experto",
+      hardTag: "Pro",
+      expertTag: "Experto",
       greatJob: "¡Buen trabajo!",
       roundCompleted: "Ronda {round} completa",
       nextRound: "Siguiente ronda…",
@@ -383,9 +680,12 @@ export const translations = {
       easyDesc:     "3–4 figuras · 2 seg para ver",
       mediumDesc:   "5–7 figuras · 3 seg para ver",
       hardDesc:     "8–10 figuras · 3,6 seg para ver",
+      expert:         "Experto",
+      expertDesc:     "11–14 figuras · vista más corta · ocultar más rápido",
       easyTag:      "Principiante",
       mediumTag:    "Desafío",
-      hardTag:      "Experto",
+      hardTag:      "Pro",
+      expertTag:    "Experto",
     },
     numbers: {
       title:            "Recuerda la Secuencia",

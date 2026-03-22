@@ -103,14 +103,14 @@ function DifficultyOverlay({ onSelect, onBack, t }) {
   const tagKey = { easy: 'wordMemory.easyTag', medium: 'wordMemory.mediumTag', hard: 'wordMemory.hardTag' };
   return (
     <div
-      className="absolute inset-0 z-30 flex flex-col"
+      className="absolute inset-0 z-30 flex min-h-0 flex-col overflow-hidden"
       style={{ background: 'rgba(18,14,46,0.97)', backdropFilter: 'blur(16px)' }}
     >
       <div
         className="absolute top-[-60px] left-1/2 -translate-x-1/2 w-80 h-80 rounded-full blur-3xl opacity-20 pointer-events-none"
         style={{ background: 'radial-gradient(circle, #a855f7, #3b82f6)' }}
       />
-      <div className="relative z-10 px-5 pt-5">
+      <div className="relative z-10 flex-shrink-0 px-5 pt-[max(1.25rem,env(safe-area-inset-top,0px))]">
         <button
           type="button"
           onClick={onBack}
@@ -501,7 +501,7 @@ export default function WordMemoryScreen({ onNavigate }) {
         style={{ background: 'radial-gradient(circle, #3b82f6, transparent)' }}
       />
 
-      <header className="flex items-center justify-between px-4 pt-6 pb-2 flex-shrink-0">
+      <header className="flex flex-shrink-0 items-center justify-between px-4 pb-2 pt-[max(1rem,env(safe-area-inset-top,0px))]">
         <button
           type="button"
           onClick={() => onNavigate('home')}
@@ -542,7 +542,7 @@ export default function WordMemoryScreen({ onNavigate }) {
         {phase === PHASE.SELECT && <DifficultyOverlay onSelect={beginSession} onBack={() => onNavigate('home')} t={t} />}
 
         {phase === PHASE.READY && diff && (
-          <div className="flex-1 flex flex-col items-center justify-center text-center gap-5 px-2">
+          <div className="flex w-full flex-col items-center gap-5 px-2 py-6 text-center">
             <div className="text-5xl opacity-90">🧠</div>
             <div>
               <h2
@@ -568,7 +568,7 @@ export default function WordMemoryScreen({ onNavigate }) {
         )}
 
         {phase === PHASE.PREVIEW && diff && (
-          <div className="flex-1 flex flex-col items-center justify-center gap-4 min-h-0">
+          <div className="flex min-h-0 w-full flex-col items-center gap-4 py-4">
             <p className="text-white/40 text-[10px] uppercase tracking-widest text-center">{t('wordMemory.memorizeWords')}</p>
             <p className="w-full text-center text-xs text-white/35">{t('wordMemory.previewSubtitle')}</p>
             <div className="flex w-full flex-col gap-2.5">

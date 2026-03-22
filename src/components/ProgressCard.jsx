@@ -54,7 +54,7 @@ function CircularProgress({ percent, size = 52 }) {
   );
 }
 
-export default function ProgressCard({ compact = false }) {
+export default function ProgressCard({ compact = false, onViewDetails }) {
   const { t } = useLanguage();
   const {
     totalXp,
@@ -82,9 +82,22 @@ export default function ProgressCard({ compact = false }) {
         boxShadow: '0 6px 28px rgba(0, 0, 0, 0.30), inset 0 1px 0 rgba(255,255,255,0.06)',
       }}
     >
-      <div className="mb-2 flex items-center justify-between">
+      <div className="mb-2 flex items-center justify-between gap-2">
         <h2 className="text-sm font-bold uppercase tracking-wider text-white/90">{t('progress')}</h2>
-        <span className="text-xs font-semibold" style={{ color: '#e879f9' }}>{t('viewDetails')} →</span>
+        {typeof onViewDetails === 'function' ? (
+          <button
+            type="button"
+            onClick={onViewDetails}
+            className="min-h-[44px] shrink-0 rounded-lg px-1 text-xs font-semibold text-fuchsia-300/95 transition-colors hover:text-fuchsia-200"
+            style={{ color: '#e879f9' }}
+          >
+            {t('viewDetails')} →
+          </button>
+        ) : (
+          <span className="text-xs font-semibold" style={{ color: '#e879f9' }}>
+            {t('viewDetails')} →
+          </span>
+        )}
       </div>
 
       <div

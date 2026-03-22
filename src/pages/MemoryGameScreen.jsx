@@ -44,8 +44,13 @@ const DIFFICULTIES = {
     emoji: '🔥', color: '#ef4444', glow: 'rgba(239,68,68,0.65)',
     bg: 'rgba(239,68,68,0.1)', gridLabel: '4×2',
   },
+  expert: {
+    id: 'expert', pairs: 5, cols: 5, memorizeMs: 750,
+    emoji: '💎', color: '#a855f7', glow: 'rgba(168,85,247,0.65)',
+    bg: 'rgba(168,85,247,0.1)', gridLabel: '5×2',
+  },
 };
-const DIFF_ORDER = ['easy', 'medium', 'hard'];
+const DIFF_ORDER = ['easy', 'medium', 'hard', 'expert'];
 
 // ─── Card pool ────────────────────────────────────────────────────────────────
 const ALL_CARD_TYPES = [
@@ -192,14 +197,14 @@ function DifficultyOverlay({ onSelect, onBack, t }) {
   const tagKey = { easy: 'easyTag', medium: 'mediumTag', hard: 'hardTag' };
 
   return (
-    <div className="absolute inset-0 z-30 flex flex-col bg-white/98 backdrop-blur-md"
+    <div className="absolute inset-0 z-30 flex min-h-0 flex-col overflow-hidden bg-white/98 backdrop-blur-md"
     >
       <div className="pointer-events-none absolute left-1/2 top-[-60px] h-80 w-80 -translate-x-1/2 rounded-full
         blur-3xl opacity-30"
         style={{ background: 'radial-gradient(circle, #ccfbf1, #e0f2fe)' }} />
 
       {/* Back to home */}
-      <div className="relative z-10 px-5 pt-5">
+      <div className="relative z-10 flex-shrink-0 px-5 pt-[max(1.25rem,env(safe-area-inset-top,0px))]">
         <button onClick={onBack}
           className="flex min-h-[48px] items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition-colors hover:bg-slate-50">
           <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24"
@@ -210,7 +215,7 @@ function DifficultyOverlay({ onSelect, onBack, t }) {
         </button>
       </div>
 
-      <div className="relative flex flex-1 flex-col items-center justify-center gap-8 px-5">
+      <div className="app-scroll relative flex min-h-0 flex-1 flex-col items-center gap-8 overflow-y-auto px-5 py-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))]">
         <div className="flex flex-col items-center gap-2 text-center">
           <div className="text-4xl animate-float">🧠</div>
           <h2 className="text-3xl font-extrabold text-slate-900">
@@ -299,11 +304,11 @@ function SuccessFlash({ roundInLevel, difficulty, seconds, moves, efficiency, t 
     efficiency >= 70 ? '⭐' :
     efficiency >= 50 ? '👍' : '🔁';
 
-  const isMaxLevel   = difficulty === 'hard';
+  const isMaxLevel   = difficulty === 'expert';
   const isLastRound  = roundInLevel >= ROUNDS_PER_LEVEL;
   const levelingUp   = isLastRound && !isMaxLevel;
 
-  // Label for "Round X / 5 complete" or "Round X complete" (hard mode, endless)
+  // Label for "Round X / 5 complete" or "Round X complete" (expert: endless)
   const roundLabel = isMaxLevel
     ? String(roundInLevel)
     : `${roundInLevel}/5`;
@@ -587,6 +592,7 @@ export default function MemoryGameScreen({ onNavigate }) {
   const isGameLocked = phase !== PHASE.PLAYING;
   const staggerMs    = cards.length > 0 ? Math.floor(280 / cards.length) : 0;
   const cardVariant  = diff?.cols === 2 ? 'lg' : diff?.cols >= 5 ? 'sm' : 'md';
+  const gridGap      = diff?.cols === 6 ? '4px' : diff?.cols === 5 ? '6px' : '10px';
 
   // Every time a grid is fully cleared, successFlash pulses; count 8 clears → XP + global stats (8 “rounds”, mismatches as wrong).
   useEffect(() => {
@@ -613,6 +619,7 @@ export default function MemoryGameScreen({ onNavigate }) {
           correctAnswers: correct,
           wrongAnswers: wrong,
           sessionCompleted: true,
+          difficultyId: difficulty ?? 'easy',
         });
       }
     }
@@ -663,7 +670,7 @@ export default function MemoryGameScreen({ onNavigate }) {
     const timer = setTimeout(() => {
       // Round wrap chime — skip when this win triggers a difficulty jump (`levelUp` plays instead).
       const willLevelUp =
-        roundInLevelRef.current >= ROUNDS_PER_LEVEL && difficulty !== 'hard';
+        roundInLevelRef.current >= ROUNDS_PER_LEVEL && difficulty !== 'expert';
       if (!willLevelUp) {
         playSound('roundComplete');
       }
@@ -718,10 +725,10 @@ export default function MemoryGameScreen({ onNavigate }) {
   const startNextRound = useCallback(() => {
     if (feedbackTimer.current) clearTimeout(feedbackTimer.current);
 
-    if (roundInLevelRef.current >= ROUNDS_PER_LEVEL && difficulty !== 'hard') {
+    if (roundInLevelRef.current >= ROUNDS_PER_LEVEL && difficulty !== 'expert') {
       const nextDiffId = DIFF_ORDER[DIFF_ORDER.indexOf(difficulty) + 1];
-      // Premium gate: cannot enter Hard without Premium — stay on current tier, restart its round cycle.
-      if (nextDiffId === 'hard' && !isPremium) {
+      // Premium gate: Hard and Expert require Premium — stay on tier, restart round cycle.
+      if ((nextDiffId === 'hard' || nextDiffId === 'expert') && !isPremium) {
         setShowPremiumHardGate(true);
         roundInLevelRef.current = 1;
         setRoundInLevel(1);
@@ -766,8 +773,8 @@ export default function MemoryGameScreen({ onNavigate }) {
 
   // ── Full reset (used by difficulty select + restart) ────────────────────────
   const handleSelectDifficulty = useCallback((diffId) => {
-    // Premium gate: block starting a Hard session without Premium (overlay stays open).
-    if (diffId === 'hard' && !isPremium) {
+    // Premium gate: Hard and Expert sessions require Premium.
+    if ((diffId === 'hard' || diffId === 'expert') && !isPremium) {
       setShowPremiumHardGate(true);
       return;
     }
@@ -895,7 +902,7 @@ export default function MemoryGameScreen({ onNavigate }) {
         style={{ background: 'radial-gradient(circle, #3b82f6, transparent)' }} />
 
       {/* ── Header ── */}
-      <header className="flex items-center justify-between px-4 pt-6 pb-2 flex-shrink-0">
+      <header className="flex flex-shrink-0 items-center justify-between px-4 pb-2 pt-[max(1rem,env(safe-area-inset-top,0px))]">
         <button onClick={() => onNavigate('home')}
           className="flex items-center gap-1.5 glass rounded-full px-3 py-1.5
             text-white/60 hover:text-white transition-all text-xs font-semibold">
@@ -932,9 +939,9 @@ export default function MemoryGameScreen({ onNavigate }) {
               </button>
             )}
           </div>
-          {/* Round dots (easy/medium: 5 dots; hard: just round number) */}
+          {/* Round dots (easy/medium/hard: 5 dots; expert: endless round #) */}
           <div className="flex items-center gap-2">
-            {difficulty !== 'hard' ? (
+            {difficulty !== 'expert' ? (
               <>
                 <RoundDots roundInLevel={roundInLevel} color={diff.color} glow={diff.glow} />
                 <span className="text-white/35 text-[9px] font-semibold">
@@ -998,8 +1005,8 @@ export default function MemoryGameScreen({ onNavigate }) {
       </div>
 
       {/* ── Card grid ── */}
-      <div className="flex-1 flex flex-col justify-center px-4 min-h-0">
-        <div className="relative">
+      <div className="app-scroll flex min-h-0 flex-1 flex-col justify-start overflow-y-auto px-4 py-1">
+        <div className="relative my-auto w-full min-h-0">
           {phase === PHASE.COUNTDOWN && (
             <div className="absolute inset-0 rounded-2xl z-10 pointer-events-none"
               style={{ background: 'rgba(18,14,46,0.35)', backdropFilter: 'blur(1px)' }} />
@@ -1008,7 +1015,7 @@ export default function MemoryGameScreen({ onNavigate }) {
             <div className="grid w-full"
               style={{
                 gridTemplateColumns: `repeat(${diff?.cols ?? 4}, 1fr)`,
-                gap: diff?.cols === 6 ? '4px' : '10px',
+                gap: gridGap,
               }}
             >
               {cards.map((card, index) => {

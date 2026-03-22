@@ -97,12 +97,12 @@ function DifficultyOverlay({ onSelect, onBack, t }) {
   const tagKey = { easy: 'spatial.easyTag', medium: 'spatial.mediumTag', hard: 'spatial.hardTag' };
 
   return (
-    <div className="absolute inset-0 z-30 flex flex-col"
+    <div className="absolute inset-0 z-30 flex min-h-0 flex-col overflow-hidden"
       style={{ background: 'rgba(18,14,46,0.97)', backdropFilter: 'blur(16px)' }}>
       <div className="absolute top-[-60px] left-1/2 -translate-x-1/2 w-80 h-80 rounded-full blur-3xl opacity-20 pointer-events-none"
         style={{ background: 'radial-gradient(circle, #a855f7, #3b82f6)' }} />
 
-      <div className="relative z-10 px-5 pt-5">
+      <div className="relative z-10 flex-shrink-0 px-5 pt-[max(1.25rem,env(safe-area-inset-top,0px))]">
         <button type="button" onClick={onBack}
           className="flex items-center gap-1.5 glass rounded-full px-3 py-1.5 text-white/60 hover:text-white transition-all text-xs font-semibold">
           <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
@@ -112,7 +112,7 @@ function DifficultyOverlay({ onSelect, onBack, t }) {
         </button>
       </div>
 
-      <div className="flex-1 flex flex-col items-center justify-center px-5 gap-5 relative">
+      <div className="app-scroll relative flex min-h-0 flex-1 flex-col items-center gap-5 overflow-y-auto px-5 py-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))]">
         <div className="flex flex-col items-center gap-2 text-center">
           <div className="text-4xl animate-float">🎯</div>
           <h2 className="font-display font-black text-2xl text-transparent bg-clip-text"

@@ -46,6 +46,7 @@ export function useFinishSessionProgress(
       correctAnswers,
       wrongAnswers,
       sessionCompleted,
+      difficultyId: difficultyId ?? 'easy',
     });
   }, [
     isFinished,

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import BrainIcon from '../components/BrainIcon';
 import DailyChallengeCard from '../components/DailyChallengeCard';
 import LanguageToggle from '../components/LanguageToggle';
@@ -6,17 +6,37 @@ import MuteButton from '../components/MuteButton';
 import ProgressCard from '../components/ProgressCard';
 import BadgesSection from '../components/BadgesSection';
 import BottomNav from '../components/BottomNav';
+import TrainingGameGrid from '../components/TrainingGameGrid';
 import { useLanguage } from '../i18n/LanguageContext';
 import { playSound, toggleMute, isMuted } from '../utils/sound';
 
 /** If set, MemoryGameScreen skips its own `start` so we don’t double with hero CTA. */
 const SESSION_START_SKIP_MEMORY_KEY = 'nt_skipSessionStartOnce_memory';
 
-export default function HomeScreen({ onNavigate }) {
+export default function HomeScreen({ onNavigate, activeNav = 'home' }) {
   const { t } = useLanguage();
   const [muted, setMuted] = useState(isMuted());
 
   const handleMute = () => setMuted(toggleMute());
+
+  const handleGoPremium = useCallback(() => {
+    if (typeof onNavigate !== 'function') return;
+    playSound('tap');
+    onNavigate('premium');
+  }, [onNavigate]);
+
+  const handleMindWellness = useCallback(() => {
+    if (typeof onNavigate !== 'function') return;
+    playSound('tap');
+    onNavigate('wellness');
+  }, [onNavigate]);
+
+  const handleAchievements = useCallback(() => {
+    if (typeof onNavigate !== 'function') return;
+    playSound('tap');
+    onNavigate('achievements');
+  }, [onNavigate]);
+
   const handleStart = () => {
     try {
       sessionStorage.setItem(SESSION_START_SKIP_MEMORY_KEY, '1');
@@ -27,61 +47,6 @@ export default function HomeScreen({ onNavigate }) {
     onNavigate('memory');
   };
 
-  const goToCategory = (screen) => {
-    if (screen && typeof onNavigate === 'function') onNavigate(screen);
-  };
-
-  const categoryGrid = [
-    [
-      {
-        labelKey: 'memory', active: true, screen: 'memory',
-        accent: '#8b5cf6',  // violet-500 (primary accent)
-        icon: (
-          <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5" aria-hidden="true">
-            <rect x="2" y="2" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
-            <rect x="12" y="2" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
-            <rect x="2" y="12" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
-            <rect x="12" y="12" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
-          </svg>
-        ),
-      },
-      {
-        labelKey: 'focus', active: false, screen: 'focus',
-        accent: '#c084fc',  // purple-400
-        icon: (
-          <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5" aria-hidden="true">
-            <circle cx="10" cy="10" r="7.5" stroke="currentColor" strokeWidth="1.5" />
-            <circle cx="10" cy="10" r="3.5" stroke="currentColor" strokeWidth="1.5" />
-            <circle cx="10" cy="10" r="1.5" fill="currentColor" />
-          </svg>
-        ),
-      },
-    ],
-    [
-      {
-        labelKey: 'numbers', active: false, screen: 'numbers',
-        accent: '#e879f9',  // fuchsia-400
-        icon: (
-          <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5" aria-hidden="true">
-            <path d="M5 6h10M5 10h6M5 14h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            <path d="M14 13l2 2-2 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        ),
-      },
-      {
-        labelKey: 'wordMemory', active: false, screen: 'wordMemory',
-        accent: '#f472b6',  // pink-400
-        icon: (
-          <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5" aria-hidden="true">
-            <path d="M4 5h12M4 9h8M4 13h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
-        ),
-      },
-    ],
-  ];
-
-  const categoryButtonClass = () =>
-    `btn-micro flex flex-col items-center justify-center gap-1 rounded-xl min-h-[52px] w-full cursor-pointer motion-reduce:transition-none`;
 
   return (
     <div
@@ -107,7 +72,7 @@ export default function HomeScreen({ onNavigate }) {
         style={{ background: 'radial-gradient(circle, rgba(124,58,237,0.5), transparent)' }}
       />
 
-      <header className="relative z-[3] flex items-center justify-between px-4 pb-1 pt-3 sm:px-5">
+      <header className="relative z-[3] flex flex-shrink-0 items-center justify-between px-4 pb-1 pt-[max(0.75rem,env(safe-area-inset-top,0px))] sm:px-5">
         <div>
           <p className="text-xs font-medium uppercase tracking-widest text-slate-400">Good morning</p>
           <p className="text-base font-bold text-white">Mr. Melo</p>
@@ -118,9 +83,9 @@ export default function HomeScreen({ onNavigate }) {
         </div>
       </header>
 
-      {/* Main: fills space between header and nav — no vertical scroll */}
-      <div className="relative z-[3] flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden px-4 sm:px-5">
-        <div className="flex min-h-0 flex-1 flex-col justify-between gap-2 py-1">
+      {/* Main: scroll when content exceeds viewport (small phones / large text) */}
+      <div className="app-scroll relative z-[3] flex min-h-0 min-w-0 flex-1 flex-col overflow-y-auto overflow-x-hidden px-4 sm:px-5">
+        <div className="flex w-full min-h-0 flex-col gap-4 py-2 pb-[max(1rem,env(safe-area-inset-bottom,0px))]">
           {/* Hero */}
           <section className="flex flex-shrink-0 flex-col items-center pt-1">
             {/* Logo — softer, diffused glow (not neon) */}
@@ -166,65 +131,75 @@ export default function HomeScreen({ onNavigate }) {
           </button>
           </section>
 
-          {/* Cards — compact on home so full layout fits one screen */}
-          <div className="flex min-h-0 shrink-0 flex-col gap-2 overflow-hidden">
+          {/* Premium — native button so taps register reliably in Capacitor/WebView */}
+          <button
+            type="button"
+            onClick={handleGoPremium}
+            className="card-lift relative z-[5] flex w-full min-h-[56px] touch-manipulation items-center justify-between gap-3 rounded-2xl px-4 py-3 text-left motion-reduce:transition-none"
+            style={{
+              background: 'linear-gradient(135deg, rgba(124,58,237,0.22) 0%, rgba(236,72,153,0.1) 100%)',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+              border: '1px solid rgba(167,139,250,0.35)',
+              boxShadow: '0 6px 28px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255,255,255,0.08)',
+            }}
+          >
+            <div className="min-w-0 flex-1">
+              <p className="text-xs font-bold uppercase tracking-wider text-white/95">{t('homePremiumCardTitle')}</p>
+              <p className="mt-0.5 text-2xs leading-snug text-white/50">{t('homePremiumCardSubtitle')}</p>
+            </div>
+            <span className="flex-shrink-0 text-lg font-semibold text-fuchsia-300/90" aria-hidden="true">
+              →
+            </span>
+          </button>
+
+          {/* Mind & Wellness */}
+          <button
+            type="button"
+            onClick={handleMindWellness}
+            className="card-lift relative z-[5] flex w-full min-h-[56px] touch-manipulation items-center justify-between gap-3 rounded-2xl px-4 py-3 text-left motion-reduce:transition-none"
+            style={{
+              background: 'linear-gradient(135deg, rgba(45,212,191,0.12) 0%, rgba(124,58,237,0.08) 100%)',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+              border: '1px solid rgba(45,212,191,0.28)',
+              boxShadow: '0 6px 28px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255,255,255,0.06)',
+            }}
+          >
+            <div className="min-w-0 flex-1">
+              <p className="text-xs font-bold uppercase tracking-wider text-white/95">{t('homeMindWellnessTitle')}</p>
+              <p className="mt-0.5 text-2xs leading-snug text-white/50">{t('homeMindWellnessSubtitle')}</p>
+            </div>
+            <span className="flex-shrink-0 text-lg font-semibold text-teal-300/90" aria-hidden="true">
+              →
+            </span>
+          </button>
+
+          {/* Cards */}
+          <div className="flex shrink-0 flex-col gap-2">
             <DailyChallengeCard compact />
-            <ProgressCard compact />
-            <BadgesSection compact />
+            <ProgressCard compact onViewDetails={typeof onNavigate === 'function' ? () => onNavigate('stats') : undefined} />
+            <div>
+              <BadgesSection compact />
+              {typeof onNavigate === 'function' && (
+                <button
+                  type="button"
+                  onClick={handleAchievements}
+                  className="mt-1.5 w-full py-1.5 text-center text-2xs font-semibold text-amber-200/90 transition-colors hover:text-amber-100"
+                >
+                  {t('achievements.viewAll')} →
+                </button>
+              )}
+            </div>
           </div>
 
           {/* Game shortcuts */}
-          <div className="relative z-20 w-full flex-shrink-0">
-            <p className="mb-1 text-2xs font-semibold uppercase tracking-widest" style={{ color: 'rgba(192,132,252,0.65)' }}>
-              Train
-            </p>
-            <div className="grid w-full grid-cols-2 gap-2">
-            {categoryGrid.map((row) =>
-              row.map((cat) => {
-                const accentRgb = cat.accent
-                  ? cat.accent.replace('#', '').match(/.{2}/g).map(h => parseInt(h, 16)).join(',')
-                  : '255,255,255';
-                return (
-                  <button
-                    key={cat.labelKey}
-                    type="button"
-                    onClick={() => goToCategory(cat.screen)}
-                    className={categoryButtonClass()}
-                    style={
-                      cat.active
-                        ? {
-                            color: cat.accent || '#8b5cf6',
-                            background: `linear-gradient(135deg, rgba(${accentRgb},0.18) 0%, rgba(${accentRgb},0.08) 100%)`,
-                            backdropFilter: 'blur(16px)',
-                            WebkitBackdropFilter: 'blur(16px)',
-                            border: `1px solid rgba(${accentRgb},0.42)`,
-                            boxShadow: `0 0 22px rgba(${accentRgb},0.24), 0 4px 16px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.10)`,
-                          }
-                        : {
-                            color: cat.accent || 'rgba(255,255,255,0.75)',
-                            background: 'linear-gradient(135deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.04) 100%)',
-                            backdropFilter: 'blur(16px)',
-                            WebkitBackdropFilter: 'blur(16px)',
-                            border: '1px solid rgba(255,255,255,0.13)',
-                            boxShadow: '0 4px 20px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.07)',
-                          }
-                    }
-                  >
-                    <span style={{ opacity: cat.active ? 1 : 0.80 }}>{cat.icon}</span>
-                    <span className="text-xs font-semibold tracking-wide" style={{ opacity: cat.active ? 1 : 0.80 }}>
-                      {t(`homeCategories.${cat.labelKey}`)}
-                    </span>
-                  </button>
-                );
-              })
-            )}
-            </div>
-          </div>
+          <TrainingGameGrid onNavigate={onNavigate} sectionLabel={t('homeTrainSection')} showSpatial={false} />
         </div>
       </div>
 
-      <div className="relative z-[3] flex-shrink-0">
-        <BottomNav />
+      <div className="relative z-[3] flex-shrink-0 pb-[env(safe-area-inset-bottom,0px)]">
+        <BottomNav activeKey={activeNav} onNavigate={onNavigate} />
       </div>
     </div>
   );

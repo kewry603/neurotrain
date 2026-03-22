@@ -43,9 +43,13 @@ const DIFFICULTIES = {
     id: 'hard', count: [8, 10], previewMs: 3600,
     emoji: '🔥', color: '#ef4444', glow: 'rgba(239,68,68,0.65)',
   },
+  expert: {
+    id: 'expert', count: [11, 14], previewMs: 2800, hideMs: 380,
+    emoji: '💎', color: '#a855f7', glow: 'rgba(168,85,247,0.65)',
+  },
 };
 
-const DIFF_ORDER  = ['easy', 'medium', 'hard'];
+const DIFF_ORDER  = ['easy', 'medium', 'hard', 'expert'];
 const SHAPE_TYPES = ['circle', 'square', 'triangle'];
 const COLOR_KEYS  = ['red', 'blue', 'green', 'yellow', 'purple'];
 
@@ -240,16 +244,16 @@ function ShapeIcon({ shape, color, size }) {
 
 // ─── DifficultyOverlay ────────────────────────────────────────────────────────
 function DifficultyOverlay({ onSelect, onBack, t }) {
-  const tagKey = { easy: 'focus.easyTag', medium: 'focus.mediumTag', hard: 'focus.hardTag' };
+  const tagKey = { easy: 'focus.easyTag', medium: 'focus.mediumTag', hard: 'focus.hardTag', expert: 'focus.expertTag' };
   return (
-    <div className="absolute inset-0 z-30 flex flex-col"
+    <div className="absolute inset-0 z-30 flex min-h-0 flex-col overflow-hidden"
       style={{ background: 'rgba(18,14,46,0.97)', backdropFilter: 'blur(16px)' }}>
 
       <div className="absolute top-[-60px] left-1/2 -translate-x-1/2 w-80 h-80 rounded-full
         blur-3xl opacity-20 pointer-events-none"
         style={{ background: 'radial-gradient(circle, #a855f7, #3b82f6)' }} />
 
-      <div className="relative z-10 px-5 pt-5">
+      <div className="relative z-10 flex-shrink-0 px-5 pt-[max(1.25rem,env(safe-area-inset-top,0px))]">
         <button onClick={onBack}
           className="flex items-center gap-1.5 glass rounded-full px-3 py-1.5
             text-white/60 hover:text-white transition-all text-xs font-semibold">
@@ -261,7 +265,7 @@ function DifficultyOverlay({ onSelect, onBack, t }) {
         </button>
       </div>
 
-      <div className="flex-1 flex flex-col items-center justify-center px-5 gap-5 relative">
+      <div className="app-scroll relative flex min-h-0 flex-1 flex-col items-center gap-5 overflow-y-auto px-5 py-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))]">
         <div className="flex flex-col items-center gap-2 text-center">
           <div className="text-4xl animate-float">⚡</div>
           <h2 className="font-display font-black text-2xl text-transparent bg-clip-text"
@@ -583,16 +587,18 @@ export default function FocusGameScreen({ onNavigate }) {
     return () => clearTimeout(timer);
   }, [phase, diff]);
 
-  // ── HIDE → QUESTION after the blank-screen pause ──────────────────────────
+  // ── HIDE → QUESTION after the blank-screen pause (Expert: shorter hide) ───
   useEffect(() => {
-    if (phase !== PHASE.HIDE) return;
-    const timer = setTimeout(() => setPhase(PHASE.QUESTION), HIDE_MS);
+    if (phase !== PHASE.HIDE || !difficulty) return;
+    const d = DIFFICULTIES[difficulty];
+    const ms = d?.hideMs ?? HIDE_MS;
+    const timer = setTimeout(() => setPhase(PHASE.QUESTION), ms);
     return () => clearTimeout(timer);
-  }, [phase]);
+  }, [phase, difficulty]);
 
   // ── Start (or restart) a full session ─────────────────────────────────────
   const startSession = useCallback((diffId) => {
-    if (diffId === 'hard' && !isPremium) {
+    if ((diffId === 'hard' || diffId === 'expert') && !isPremium) {
       setShowPremiumHardGate(true);
       return;
     }
