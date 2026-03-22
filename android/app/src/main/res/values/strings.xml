@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">NeuroTrain</string>
+    <string name="title_activity_main">NeuroTrain</string>
+    <string name="package_name">com.neurotrain.app</string>
+    <string name="custom_url_scheme">com.neurotrain.app</string>
+</resources>
