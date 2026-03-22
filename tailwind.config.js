@@ -53,9 +53,9 @@ export default {
       },
       backgroundImage: {
         'app-gradient':
-          'linear-gradient(170deg, #cef0e6 0%, #dceeff 50%, #ece9ff 100%)',
+          'linear-gradient(170deg, #a8edcf 0%, #bfddff 55%, #d8d4ff 100%)',
         'card-gradient':
-          'linear-gradient(180deg, #ffffff 0%, #f5fdfc 100%)',
+          'linear-gradient(180deg, #f0fdf8 0%, #eef6ff 100%)',
         'btn-gradient':
           'linear-gradient(90deg, #0f766e 0%, #0d9488 45%, #14b8a6 100%)',
       },

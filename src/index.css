@@ -16,7 +16,7 @@
     margin: 0;
     padding: 0;
     /* Mobile: matches app gradient top stop */
-    background: #d8f3ed;
+    background: #a8edcf;
     color: #0f172a;
     line-height: 1.55;
     -webkit-font-smoothing: antialiased;
@@ -37,7 +37,7 @@
     /* Stacking context so absolute overlays inside screens are clipped correctly */
     position: relative;
     /* Gradient applied here directly — not via Tailwind, so it's always active */
-    background: linear-gradient(170deg, #cef0e6 0%, #dceeff 50%, #ece9ff 100%);
+    background: linear-gradient(170deg, #a8edcf 0%, #bfddff 55%, #d8d4ff 100%);
   }
 
   /* ── Desktop: phone-frame preview ─────────────────────────────────────────

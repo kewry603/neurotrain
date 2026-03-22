@@ -51,7 +51,7 @@ export default function HomeScreen({ onNavigate }) {
     }`;
 
   return (
-    <div className="relative flex h-[100dvh] min-h-0 w-full flex-col overflow-hidden bg-transparent">
+    <div className="relative flex h-[100dvh] min-h-0 w-full flex-col overflow-hidden" style={{ background: 'linear-gradient(170deg, #a8edcf 0%, #bfddff 55%, #d8d4ff 100%)' }}>
 
       <div
         className="pointer-events-none absolute left-[-60px] top-[-80px] h-72 w-72 rounded-full blur-3xl opacity-40"
