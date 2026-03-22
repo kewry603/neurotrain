@@ -679,7 +679,7 @@ export default function FocusGameScreen({ onNavigate }) {
 
   // ── Render ─────────────────────────────────────────────────────────────────
   return (
-    <div className="relative flex h-[100dvh] min-h-0 w-full flex-col overflow-hidden" style={{ background: 'linear-gradient(170deg, #6ee7b7 0%, #7dd3fc 55%, #c4b5fd 100%)' }}>
+    <div className="relative flex h-[100dvh] min-h-0 w-full flex-col overflow-hidden" style={{ background: 'linear-gradient(170deg, #0f172a 0%, #1e3a8a 60%, #1d4ed8 100%)' }}>
 
       {/* Ambient blobs */}
       <div className="absolute top-[-60px] right-[-60px] w-56 h-56 rounded-full blur-3xl opacity-15 pointer-events-none"

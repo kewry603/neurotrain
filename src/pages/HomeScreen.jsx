@@ -42,35 +42,35 @@ export default function HomeScreen({ onNavigate }) {
   ];
 
   const categoryButtonClass = (cat, extra = '') =>
-    `text-center text-sm font-semibold px-3 py-3 rounded-2xl transition-all duration-200 motion-reduce:transition-none min-h-[48px] w-full border shadow-sm ${extra} ${
+    `text-center text-sm font-semibold px-3 py-3 rounded-2xl transition-all duration-200 motion-reduce:transition-none min-h-[48px] w-full ${extra} ${
       cat.active
-        ? 'border-primary/35 bg-primary/15 text-primary shadow-md'
+        ? 'text-cyan-300'
         : cat.screen
-          ? 'border-white/70 text-slate-800 hover:border-primary/30 cursor-pointer'
-          : 'border-white/40 text-slate-400 cursor-default'
+          ? 'text-white/85 hover:text-white cursor-pointer'
+          : 'text-white/35 cursor-default'
     }`;
 
   return (
-    <div className="relative flex h-[100dvh] min-h-0 w-full flex-col overflow-hidden" style={{ background: 'linear-gradient(170deg, #6ee7b7 0%, #7dd3fc 55%, #c4b5fd 100%)' }}>
+    <div className="relative flex h-[100dvh] min-h-0 w-full flex-col overflow-hidden" style={{ background: 'linear-gradient(170deg, #0f172a 0%, #1e3a8a 60%, #1d4ed8 100%)' }}>
 
+      {/* Central radial glow */}
       <div
-        className="pointer-events-none absolute left-[-60px] top-[-80px] h-72 w-72 rounded-full blur-3xl opacity-40"
-        style={{ background: 'radial-gradient(circle, #ccfbf1, transparent)' }}
+        className="pointer-events-none absolute left-1/2 top-[30%] h-80 w-80 -translate-x-1/2 rounded-full blur-3xl"
+        style={{ background: 'radial-gradient(circle, rgba(56,189,248,0.18) 0%, rgba(37,99,235,0.10) 50%, transparent 70%)' }}
       />
       <div
-        className="pointer-events-none absolute right-[-80px] top-[28%] h-64 w-64 rounded-full blur-3xl opacity-35"
-        style={{ background: 'radial-gradient(circle, #e0f2fe, transparent)' }}
+        className="pointer-events-none absolute right-[-60px] top-[-40px] h-64 w-64 rounded-full blur-3xl opacity-30"
+        style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.5), transparent)' }}
       />
       <div
-        className="pointer-events-none absolute bottom-[18%] left-[-40px] h-48 w-48 rounded-full blur-3xl opacity-30"
-        style={{ background: 'radial-gradient(circle, #d1fae5, transparent)' }}
+        className="pointer-events-none absolute bottom-[20%] left-[-50px] h-56 w-56 rounded-full blur-3xl opacity-25"
+        style={{ background: 'radial-gradient(circle, rgba(20,184,166,0.5), transparent)' }}
       />
 
-      {/* Header — tighter top padding */}
       <header className="flex items-center justify-between px-4 pb-1 pt-3 sm:px-5">
         <div>
-          <p className="text-xs font-medium uppercase tracking-widest text-slate-700">Good morning</p>
-          <p className="text-base font-bold text-slate-900">Mr. Melo</p>
+          <p className="text-xs font-medium uppercase tracking-widest text-white/50">Good morning</p>
+          <p className="text-base font-bold text-white">Mr. Melo</p>
         </div>
         <div className="flex items-center gap-2">
           <MuteButton muted={muted} onToggle={handleMute} />
@@ -89,22 +89,21 @@ export default function HomeScreen({ onNavigate }) {
               className="pointer-events-none absolute inset-[-6px] rounded-full blur-xl opacity-50 animate-glow-shift motion-reduce:animate-none"
               style={{ background: 'radial-gradient(circle, #6ee7b7 0%, #7dd3fc 55%, transparent 75%)' }}
             />
-            {/* Logo — tinted glass surface instead of pure white */}
             <div
               className="relative flex h-14 w-14 items-center justify-center rounded-[40%_40%_36%_36%] border-2 shadow-elevated"
-              style={{ background: 'rgba(255,255,255,0.60)', borderColor: 'rgba(255,255,255,0.75)' }}
+              style={{ background: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.20)' }}
             >
               <BrainIcon className="h-10 w-10" />
             </div>
           </div>
 
-          <h1 className="mb-0.5 text-center text-2xl font-extrabold tracking-tight text-slate-900">
+          <h1 className="mb-0.5 text-center text-2xl font-extrabold tracking-tight text-white">
             {t('appTitle')}
           </h1>
-          <p className="mb-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-600">
+          <p className="mb-1 text-xs font-semibold uppercase tracking-[0.18em] text-white/55">
             {t('appSubtitle')}
           </p>
-          <p className="mb-3 w-full text-center text-sm leading-snug text-slate-700">
+          <p className="mb-3 w-full text-center text-sm leading-snug text-white/70">
             {t('appTagline')}
           </p>
 
@@ -139,19 +138,22 @@ export default function HomeScreen({ onNavigate }) {
                   style={
                     cat.active
                       ? {
-                          background: 'rgba(255,255,255,0.55)',
-                          borderColor: 'rgba(13,148,136,0.45)',
-                          boxShadow: '0 2px 14px rgba(13,148,136,0.22)',
+                          background: 'rgba(14,165,233,0.18)',
+                          border: '1px solid rgba(14,165,233,0.45)',
+                          boxShadow: '0 0 18px rgba(14,165,233,0.25)',
                         }
                       : cat.screen
                         ? {
-                            background: 'rgba(255,255,255,0.48)',
-                            backdropFilter: 'blur(8px)',
-                            WebkitBackdropFilter: 'blur(8px)',
-                            borderColor: 'rgba(255,255,255,0.65)',
-                            boxShadow: '0 2px 12px rgba(60,100,180,0.12)',
+                            background: 'rgba(255,255,255,0.07)',
+                            backdropFilter: 'blur(12px)',
+                            WebkitBackdropFilter: 'blur(12px)',
+                            border: '1px solid rgba(255,255,255,0.14)',
+                            boxShadow: '0 4px 16px rgba(0,0,0,0.20)',
                           }
-                        : { background: 'rgba(255,255,255,0.28)', borderColor: 'rgba(255,255,255,0.40)' }
+                        : {
+                            background: 'rgba(255,255,255,0.03)',
+                            border: '1px solid rgba(255,255,255,0.07)',
+                          }
                   }
                 >
                   {t(`homeCategories.${cat.labelKey}`)}

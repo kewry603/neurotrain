@@ -46,7 +46,16 @@ export default function BottomNav() {
   const { t } = useLanguage();
 
   return (
-    <nav className="border-t border-slate-200/90 bg-white/95 px-2 pt-3 pb-[max(1rem,env(safe-area-inset-bottom,0px))] shadow-[0_-4px_20px_rgba(15,23,42,0.06)]">
+    <nav
+      className="px-2 pt-3 pb-[max(1rem,env(safe-area-inset-bottom,0px))]"
+      style={{
+        background: 'rgba(10, 15, 35, 0.88)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        borderTop: '1px solid rgba(255,255,255,0.08)',
+        boxShadow: '0 -8px 32px rgba(0,0,0,0.30)',
+      }}
+    >
       <div className="flex justify-around gap-1">
         {navItems.map((item) => (
           <button
@@ -54,9 +63,10 @@ export default function BottomNav() {
             key={item.key}
             className={`flex min-h-[52px] min-w-[52px] flex-col items-center justify-center gap-1 rounded-2xl px-3 py-2 transition-colors duration-200 motion-reduce:transition-none ${
               item.active
-                ? 'bg-primary/10 text-primary shadow-sm'
-                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800'
+                ? 'text-cyan-400'
+                : 'text-white/40 hover:text-white/70'
             }`}
+            style={item.active ? { background: 'rgba(14,165,233,0.14)', boxShadow: '0 0 16px rgba(14,165,233,0.20)' } : {}}
           >
             {item.icon}
             <span className="text-2xs font-semibold uppercase tracking-widest">

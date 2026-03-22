@@ -8,14 +8,14 @@ export default function LanguageToggle() {
       type="button"
       onClick={toggleLang}
       aria-label="Toggle language"
-      className="flex min-h-[48px] items-center gap-2 rounded-full border px-4 text-sm font-semibold tracking-widest transition-shadow duration-200 motion-reduce:transition-none hover:shadow-md"
-      style={{ background: 'rgba(255,255,255,0.52)', borderColor: 'rgba(255,255,255,0.70)', boxShadow: '0 2px 10px rgba(60,100,180,0.12)' }}
+      className="flex min-h-[48px] items-center gap-2 rounded-full px-4 text-sm font-semibold tracking-widest transition-all duration-200 motion-reduce:transition-none"
+      style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.14)', boxShadow: '0 2px 12px rgba(0,0,0,0.20)' }}
     >
-      <span className={lang === 'en' ? 'font-bold text-primary' : 'text-slate-400'}>
+      <span className={lang === 'en' ? 'font-bold text-sky-400' : 'text-white/40'}>
         EN
       </span>
-      <span className="text-slate-300">/</span>
-      <span className={lang === 'es' ? 'font-bold text-primary' : 'text-slate-400'}>
+      <span className="text-white/25">/</span>
+      <span className={lang === 'es' ? 'font-bold text-sky-400' : 'text-white/40'}>
         ES
       </span>
     </button>

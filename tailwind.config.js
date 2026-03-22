@@ -42,22 +42,21 @@ export default {
         },
       },
       boxShadow: {
-        /** Subtle elevation (light theme) */
-        'elevated': '0 8px 24px rgba(15, 23, 42, 0.08), 0 2px 8px rgba(15, 23, 42, 0.04)',
-        'glow-purple': '0 4px 20px rgba(13, 148, 136, 0.22)',
-        'glow-pink': '0 4px 20px rgba(8, 145, 178, 0.2)',
-        'glow-blue': '0 4px 20px rgba(2, 132, 199, 0.2)',
-        'glow-cyan': '0 4px 20px rgba(14, 165, 233, 0.2)',
-        'card': '0 4px 24px rgba(80, 120, 180, 0.14), 0 1px 4px rgba(80, 120, 180, 0.08)',
-        'btn': '0 4px 14px rgba(13, 148, 136, 0.28)',
+        'elevated': '0 8px 32px rgba(0, 0, 0, 0.30), 0 2px 8px rgba(0, 0, 0, 0.20)',
+        'glow-purple': '0 0 20px rgba(139, 92, 246, 0.45)',
+        'glow-pink': '0 0 20px rgba(236, 72, 153, 0.40)',
+        'glow-blue': '0 0 20px rgba(59, 130, 246, 0.45)',
+        'glow-cyan': '0 0 20px rgba(14, 165, 233, 0.45)',
+        'card': '0 8px 32px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.08)',
+        'btn': '0 0 24px rgba(14, 165, 233, 0.40), 0 4px 16px rgba(14, 165, 233, 0.25)',
       },
       backgroundImage: {
         'app-gradient':
-          'linear-gradient(170deg, #a8edcf 0%, #bfddff 55%, #d8d4ff 100%)',
+          'linear-gradient(170deg, #0f172a 0%, #1e3a8a 60%, #1d4ed8 100%)',
         'card-gradient':
-          'linear-gradient(135deg, rgba(255,255,255,0.82) 0%, rgba(240,253,250,0.78) 100%)',
+          'linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.04) 100%)',
         'btn-gradient':
-          'linear-gradient(90deg, #0f766e 0%, #0d9488 45%, #14b8a6 100%)',
+          'linear-gradient(90deg, #0d9488 0%, #0ea5e9 55%, #3b82f6 100%)',
       },
       transitionDuration: {
         DEFAULT: '200ms',

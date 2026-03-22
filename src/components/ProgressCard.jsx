@@ -8,17 +8,17 @@ import {
 
 function StatBadge({ value, label, color }) {
   const colorMap = {
-    purple: 'text-primary font-bold',
-    pink: 'text-sky-700 font-bold',
-    cyan: 'text-teal-700 font-bold',
-    blue: 'text-sky-600 font-bold',
+    purple: 'text-violet-300 font-bold',
+    pink: 'text-pink-300 font-bold',
+    cyan: 'text-cyan-300 font-bold',
+    blue: 'text-sky-300 font-bold',
   };
   return (
     <div className="flex flex-col items-center gap-0.5">
       <span className={`text-lg font-bold ${colorMap[color] ?? 'text-ink'}`}>
         {value}
       </span>
-      <span className="text-center text-[9px] font-semibold uppercase tracking-widest text-slate-500">
+      <span className="text-center text-[9px] font-semibold uppercase tracking-widest text-white/50">
         {label}
       </span>
     </div>
@@ -32,7 +32,7 @@ function CircularProgress({ percent, size = 52 }) {
 
   return (
     <svg width={size} height={size} className="rotate-[-90deg]">
-      <circle cx={size / 2} cy={size / 2} r={r} strokeWidth="6" stroke="#e2e8f0" fill="none" />
+      <circle cx={size / 2} cy={size / 2} r={r} strokeWidth="6" stroke="rgba(255,255,255,0.12)" fill="none" />
       <circle
         cx={size / 2}
         cy={size / 2}
@@ -66,24 +66,24 @@ export default function ProgressCard() {
     <div
       className="rounded-2xl px-3.5 py-3"
       style={{
-        background: 'rgba(255, 255, 255, 0.52)',
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
-        border: '1px solid rgba(255, 255, 255, 0.70)',
-        boxShadow: '0 6px 28px rgba(60, 100, 180, 0.18), 0 1px 4px rgba(60, 100, 180, 0.10)',
+        background: 'rgba(255, 255, 255, 0.07)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        border: '1px solid rgba(255, 255, 255, 0.13)',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255,255,255,0.08)',
       }}
     >
       <div className="mb-2 flex items-center justify-between">
-        <h2 className="text-sm font-bold uppercase tracking-wider text-slate-900">{t('progress')}</h2>
-        <span className="text-xs font-semibold text-primary">{t('viewDetails')} →</span>
+        <h2 className="text-sm font-bold uppercase tracking-wider text-white">{t('progress')}</h2>
+        <span className="text-xs font-semibold text-sky-400">{t('viewDetails')} →</span>
       </div>
 
       <div className="flex items-center gap-4">
         <div className="relative flex-shrink-0">
           <CircularProgress percent={ringPct} size={52} />
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-base font-extrabold leading-none text-slate-900">{level}</span>
-            <span className="text-[9px] font-semibold uppercase tracking-wider text-slate-500">
+            <span className="text-base font-extrabold leading-none text-white">{level}</span>
+            <span className="text-[9px] font-semibold uppercase tracking-wider text-white/50">
               {t('progressPlayerLevel')}
             </span>
           </div>
