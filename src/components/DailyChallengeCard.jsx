@@ -5,7 +5,7 @@ export default function DailyChallengeCard() {
 
   return (
     <div
-      className="relative overflow-hidden rounded-2xl px-3.5 py-3 transition-transform duration-150 active:scale-[0.985] motion-reduce:active:scale-100"
+      className="card-lift relative overflow-hidden rounded-2xl px-3.5 py-3 motion-reduce:active:scale-100"
       style={{
         background: 'rgba(255, 255, 255, 0.10)',
         backdropFilter: 'blur(24px)',
@@ -15,14 +15,14 @@ export default function DailyChallengeCard() {
       }}
     >
       <div
-        className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full blur-2xl opacity-40"
-        style={{ background: 'radial-gradient(circle, #99f6e4, #bfddff)' }}
+        className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full blur-2xl opacity-30"
+        style={{ background: 'radial-gradient(circle, rgba(45,212,191,0.8), rgba(56,189,248,0.5))' }}
       />
 
       <div className="relative">
         <div className="mb-1.5 flex items-center justify-between gap-3">
           <div>
-            <p className="text-2xs font-semibold uppercase tracking-widest text-white/50">
+            <p className="text-2xs font-semibold uppercase tracking-widest" style={{ color: 'rgba(45,212,191,0.70)' }}>
               {t('dailyChallenge')}
             </p>
             <h3 className="text-base font-bold leading-tight text-white">{t('dailyChallengeLabel')}</h3>

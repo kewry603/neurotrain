@@ -84,13 +84,23 @@
 @layer components {
   /** Primary CTA — strong teal-to-blue gradient with elegant glow */
   .btn-primary {
-    @apply min-h-[52px] w-full flex items-center justify-center gap-2 rounded-2xl px-5 py-3.5 text-base font-semibold text-white transition-all duration-200 motion-reduce:transition-none active:scale-[0.97] active:brightness-95 motion-reduce:active:scale-100;
+    @apply min-h-[52px] w-full flex items-center justify-center gap-2 rounded-2xl px-5 py-3.5 text-base font-semibold text-white transition-all duration-200 motion-reduce:transition-none active:scale-[0.96] active:brightness-90 motion-reduce:active:scale-100;
     background: linear-gradient(90deg, #0d9488 0%, #0ea5e9 55%, #3b82f6 100%);
-    box-shadow: 0 0 28px rgba(14, 165, 233, 0.35), 0 4px 20px rgba(14, 165, 233, 0.20), 0 1px 0 rgba(255,255,255,0.15) inset;
+    box-shadow:
+      0 0 36px rgba(14, 165, 233, 0.45),
+      0 0 12px rgba(14, 165, 233, 0.30),
+      0 6px 24px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.18);
   }
   .btn-primary:hover {
-    filter: brightness(1.07);
-    box-shadow: 0 0 38px rgba(14, 165, 233, 0.50), 0 4px 24px rgba(14, 165, 233, 0.30), 0 1px 0 rgba(255,255,255,0.15) inset;
+    filter: brightness(1.08);
+    box-shadow:
+      0 0 48px rgba(14, 165, 233, 0.60),
+      0 0 18px rgba(14, 165, 233, 0.40),
+      0 6px 28px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.18);
   }
   /** Secondary — dark glass button */
   .btn-secondary {
@@ -129,6 +139,16 @@
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.12);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+  /* Interactive card — smooth lift on hover, press scale */
+  .card-lift {
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+  .card-lift:hover {
+    transform: translateY(-2px) scale(1.008);
+  }
+  .card-lift:active {
+    transform: scale(0.985);
   }
   /* Horizontal strips (e.g. Numbers game) without visible scrollbar */
   .scrollbar-hide {

@@ -46,8 +46,8 @@ function CircularProgress({ percent, size = 52 }) {
       />
       <defs>
         <linearGradient id="progressGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#0f766e" />
-          <stop offset="100%" stopColor="#14b8a6" />
+          <stop offset="0%" stopColor="#2dd4bf" />
+          <stop offset="100%" stopColor="#38bdf8" />
         </linearGradient>
       </defs>
     </svg>
@@ -64,7 +64,7 @@ export default function ProgressCard() {
 
   return (
     <div
-      className="rounded-2xl px-3.5 py-3 transition-transform duration-150 active:scale-[0.985] motion-reduce:active:scale-100"
+      className="card-lift rounded-2xl px-3.5 py-3 motion-reduce:active:scale-100"
       style={{
         background: 'rgba(255, 255, 255, 0.065)',
         backdropFilter: 'blur(20px)',
@@ -74,8 +74,8 @@ export default function ProgressCard() {
       }}
     >
       <div className="mb-2 flex items-center justify-between">
-        <h2 className="text-sm font-bold uppercase tracking-wider text-white">{t('progress')}</h2>
-        <span className="text-xs font-semibold text-sky-400">{t('viewDetails')} →</span>
+        <h2 className="text-sm font-bold uppercase tracking-wider text-white/90">{t('progress')}</h2>
+        <span className="text-xs font-semibold" style={{ color: '#38bdf8' }}>{t('viewDetails')} →</span>
       </div>
 
       <div className="flex items-center gap-4">

@@ -32,23 +32,55 @@ export default function HomeScreen({ onNavigate }) {
 
   const categoryGrid = [
     [
-      { labelKey: 'memory', active: true, screen: 'memory' },
-      { labelKey: 'focus', active: false, screen: 'focus' },
+      {
+        labelKey: 'memory', active: true, screen: 'memory',
+        accent: '#38bdf8',  // sky-400
+        icon: (
+          <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5" aria-hidden="true">
+            <rect x="2" y="2" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+            <rect x="12" y="2" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+            <rect x="2" y="12" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+            <rect x="12" y="12" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+          </svg>
+        ),
+      },
+      {
+        labelKey: 'focus', active: false, screen: 'focus',
+        accent: '#2dd4bf',  // teal-400
+        icon: (
+          <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5" aria-hidden="true">
+            <circle cx="10" cy="10" r="7.5" stroke="currentColor" strokeWidth="1.5" />
+            <circle cx="10" cy="10" r="3.5" stroke="currentColor" strokeWidth="1.5" />
+            <circle cx="10" cy="10" r="1.5" fill="currentColor" />
+          </svg>
+        ),
+      },
     ],
     [
-      { labelKey: 'numbers', active: false, screen: 'numbers' },
-      { labelKey: 'wordMemory', active: false, screen: 'wordMemory' },
+      {
+        labelKey: 'numbers', active: false, screen: 'numbers',
+        accent: '#a78bfa',  // violet-400
+        icon: (
+          <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5" aria-hidden="true">
+            <path d="M5 6h10M5 10h6M5 14h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            <path d="M14 13l2 2-2 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        ),
+      },
+      {
+        labelKey: 'wordMemory', active: false, screen: 'wordMemory',
+        accent: '#fb923c',  // orange-400
+        icon: (
+          <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5" aria-hidden="true">
+            <path d="M4 5h12M4 9h8M4 13h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
+        ),
+      },
     ],
   ];
 
-  const categoryButtonClass = (cat, extra = '') =>
-    `text-center text-sm font-semibold px-3 py-3 rounded-2xl transition-all duration-150 motion-reduce:transition-none active:scale-[0.96] min-h-[48px] w-full ${extra} ${
-      cat.active
-        ? 'text-cyan-300'
-        : cat.screen
-          ? 'text-white/85 hover:text-white cursor-pointer'
-          : 'text-white/35 cursor-default'
-    }`;
+  const categoryButtonClass = (cat) =>
+    `flex flex-col items-center justify-center gap-1.5 rounded-2xl transition-all duration-200 motion-reduce:transition-none active:scale-[0.96] min-h-[64px] w-full cursor-pointer`;
 
   return (
     <div className="relative flex h-[100dvh] min-h-0 w-full flex-col overflow-hidden" style={{ background: 'linear-gradient(170deg, #0f172a 0%, #1e3a8a 60%, #1d4ed8 100%)' }}>
@@ -140,41 +172,48 @@ export default function HomeScreen({ onNavigate }) {
 
         {/* Game shortcuts */}
         <div className="relative z-20 w-full flex-shrink-0 px-4 pb-6 sm:px-5">
-          <p className="mb-2 text-2xs font-semibold uppercase tracking-widest text-white/35">
+          <p className="mb-2.5 text-2xs font-semibold uppercase tracking-widest" style={{ color: 'rgba(56,189,248,0.55)' }}>
             Train
           </p>
           <div className="grid w-full grid-cols-2 gap-3">
             {categoryGrid.map((row) =>
-              row.map((cat) => (
-                <button
-                  key={cat.labelKey}
-                  type="button"
-                  onClick={() => goToCategory(cat.screen)}
-                  className={categoryButtonClass(cat)}
-                  style={
-                    cat.active
-                      ? {
-                          background: 'rgba(14,165,233,0.14)',
-                          border: '1px solid rgba(14,165,233,0.38)',
-                          boxShadow: '0 0 20px rgba(14,165,233,0.18), 0 4px 16px rgba(0,0,0,0.22)',
-                        }
-                      : cat.screen
+              row.map((cat) => {
+                const accentRgb = cat.accent
+                  ? cat.accent.replace('#', '').match(/.{2}/g).map(h => parseInt(h, 16)).join(',')
+                  : '255,255,255';
+                return (
+                  <button
+                    key={cat.labelKey}
+                    type="button"
+                    onClick={() => goToCategory(cat.screen)}
+                    className={categoryButtonClass(cat)}
+                    style={
+                      cat.active
                         ? {
-                            background: 'rgba(255,255,255,0.05)',
+                            color: cat.accent || '#38bdf8',
+                            background: `linear-gradient(135deg, rgba(${accentRgb},0.18) 0%, rgba(${accentRgb},0.08) 100%)`,
                             backdropFilter: 'blur(16px)',
                             WebkitBackdropFilter: 'blur(16px)',
-                            border: '1px solid rgba(255,255,255,0.10)',
-                            boxShadow: '0 4px 20px rgba(0,0,0,0.25)',
+                            border: `1px solid rgba(${accentRgb},0.42)`,
+                            boxShadow: `0 0 22px rgba(${accentRgb},0.24), 0 4px 16px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.10)`,
                           }
                         : {
-                            background: 'rgba(255,255,255,0.02)',
-                            border: '1px solid rgba(255,255,255,0.06)',
+                            color: cat.accent || 'rgba(255,255,255,0.75)',
+                            background: 'linear-gradient(135deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.04) 100%)',
+                            backdropFilter: 'blur(16px)',
+                            WebkitBackdropFilter: 'blur(16px)',
+                            border: '1px solid rgba(255,255,255,0.13)',
+                            boxShadow: '0 4px 20px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.07)',
                           }
-                  }
-                >
-                  {t(`homeCategories.${cat.labelKey}`)}
-                </button>
-              ))
+                    }
+                  >
+                    <span style={{ opacity: cat.active ? 1 : 0.80 }}>{cat.icon}</span>
+                    <span className="text-xs font-semibold tracking-wide" style={{ opacity: cat.active ? 1 : 0.80 }}>
+                      {t(`homeCategories.${cat.labelKey}`)}
+                    </span>
+                  </button>
+                );
+              })
             )}
           </div>
         </div>

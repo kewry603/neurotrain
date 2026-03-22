@@ -61,13 +61,28 @@ export default function BottomNav() {
           <button
             type="button"
             key={item.key}
-            className={`flex min-h-[52px] min-w-[52px] flex-col items-center justify-center gap-1 rounded-2xl px-3 py-2 transition-colors duration-200 motion-reduce:transition-none ${
+            className={`relative flex min-h-[52px] min-w-[52px] flex-col items-center justify-center gap-1 rounded-2xl px-3 py-2 transition-all duration-200 motion-reduce:transition-none active:scale-[0.93] ${
               item.active
                 ? 'text-cyan-400'
-                : 'text-white/40 hover:text-white/70'
+                : 'text-white/40 hover:text-white/65'
             }`}
-            style={item.active ? { background: 'rgba(14,165,233,0.14)', boxShadow: '0 0 16px rgba(14,165,233,0.20)' } : {}}
+            style={
+              item.active
+                ? {
+                    background: 'linear-gradient(160deg, rgba(14,165,233,0.20) 0%, rgba(56,189,248,0.10) 100%)',
+                    boxShadow: '0 0 20px rgba(14,165,233,0.28), inset 0 1px 0 rgba(255,255,255,0.10)',
+                    border: '1px solid rgba(14,165,233,0.30)',
+                  }
+                : {}
+            }
           >
+            {/* Active indicator dot above icon */}
+            {item.active && (
+              <span
+                className="absolute top-1.5 h-1 w-4 rounded-full"
+                style={{ background: 'linear-gradient(90deg, #38bdf8, #818cf8)', boxShadow: '0 0 8px rgba(56,189,248,0.60)' }}
+              />
+            )}
             {item.icon}
             <span className="text-2xs font-semibold uppercase tracking-widest">
               {t(`nav.${item.key}`)}
