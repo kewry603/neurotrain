@@ -15,13 +15,26 @@
   html, body {
     margin: 0;
     padding: 0;
-    background: #0f172a;
+    background: #0a0f1e;
     color: #f1f5f9;
     line-height: 1.55;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
     min-height: 100dvh;
+  }
+
+  /* Subtle film grain overlay — fixed, covers all screens */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.032;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
   }
 
   /* Full-bleed app shell — native mobile feel on real phones */
@@ -33,7 +46,7 @@
     flex-direction: column;
     overflow: hidden;
     position: relative;
-    background: linear-gradient(170deg, #0f172a 0%, #1e3a8a 60%, #1d4ed8 100%);
+    background: linear-gradient(160deg, #0a0f1e 0%, #0d1f5c 45%, #1a3a9e 75%, #1d4ed8 100%);
   }
 
   /* ── Desktop: phone-frame preview ─────────────────────────────────────────
@@ -69,15 +82,15 @@
 }
 
 @layer components {
-  /** Primary CTA — strong teal-to-blue gradient with glow */
+  /** Primary CTA — strong teal-to-blue gradient with elegant glow */
   .btn-primary {
-    @apply min-h-[52px] w-full flex items-center justify-center gap-2 rounded-2xl px-5 py-3.5 text-base font-semibold text-white transition-transform duration-200 motion-reduce:transition-none active:scale-[0.98] motion-reduce:active:scale-100;
+    @apply min-h-[52px] w-full flex items-center justify-center gap-2 rounded-2xl px-5 py-3.5 text-base font-semibold text-white transition-all duration-200 motion-reduce:transition-none active:scale-[0.97] active:brightness-95 motion-reduce:active:scale-100;
     background: linear-gradient(90deg, #0d9488 0%, #0ea5e9 55%, #3b82f6 100%);
-    box-shadow: 0 0 24px rgba(14, 165, 233, 0.40), 0 4px 16px rgba(14, 165, 233, 0.25);
+    box-shadow: 0 0 28px rgba(14, 165, 233, 0.35), 0 4px 20px rgba(14, 165, 233, 0.20), 0 1px 0 rgba(255,255,255,0.15) inset;
   }
   .btn-primary:hover {
-    filter: brightness(1.08);
-    box-shadow: 0 0 32px rgba(14, 165, 233, 0.55), 0 4px 20px rgba(14, 165, 233, 0.35);
+    filter: brightness(1.07);
+    box-shadow: 0 0 38px rgba(14, 165, 233, 0.50), 0 4px 24px rgba(14, 165, 233, 0.30), 0 1px 0 rgba(255,255,255,0.15) inset;
   }
   /** Secondary — dark glass button */
   .btn-secondary {
@@ -102,6 +115,10 @@
   }
   .text-glow-cyan {
     font-weight: 700;
+  }
+  /* Vignette — darker edges for cinematic depth */
+  .vignette {
+    background: radial-gradient(ellipse at 50% 45%, transparent 38%, rgba(5, 10, 30, 0.72) 100%);
   }
   .border-glow {
     border: 1px solid rgba(14, 165, 233, 0.40);

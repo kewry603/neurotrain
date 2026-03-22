@@ -64,13 +64,13 @@ export default function ProgressCard() {
 
   return (
     <div
-      className="rounded-2xl px-3.5 py-3"
+      className="rounded-2xl px-3.5 py-3 transition-transform duration-150 active:scale-[0.985] motion-reduce:active:scale-100"
       style={{
-        background: 'rgba(255, 255, 255, 0.07)',
+        background: 'rgba(255, 255, 255, 0.065)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255, 255, 255, 0.13)',
-        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255,255,255,0.08)',
+        border: '1px solid rgba(255, 255, 255, 0.11)',
+        boxShadow: '0 6px 28px rgba(0, 0, 0, 0.28), 0 1px 0 rgba(255,255,255,0.08) inset',
       }}
     >
       <div className="mb-2 flex items-center justify-between">

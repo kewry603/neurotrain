@@ -5,13 +5,13 @@ export default function DailyChallengeCard() {
 
   return (
     <div
-      className="relative overflow-hidden rounded-2xl px-3.5 py-3"
+      className="relative overflow-hidden rounded-2xl px-3.5 py-3 transition-transform duration-150 active:scale-[0.985] motion-reduce:active:scale-100"
       style={{
-        background: 'rgba(255, 255, 255, 0.07)',
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255, 255, 255, 0.13)',
-        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255,255,255,0.08)',
+        background: 'rgba(255, 255, 255, 0.10)',
+        backdropFilter: 'blur(24px)',
+        WebkitBackdropFilter: 'blur(24px)',
+        border: '1px solid rgba(255, 255, 255, 0.16)',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.30), 0 1px 0 rgba(255,255,255,0.10) inset',
       }}
     >
       <div
