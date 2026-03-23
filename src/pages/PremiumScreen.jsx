@@ -47,20 +47,24 @@ export default function PremiumScreen({ onNavigate, activeNav = 'premium' }) {
         </div>
       </header>
 
-      <div className="app-scroll relative z-10 flex min-h-0 flex-1 flex-col overflow-y-auto px-4 pt-2 pb-4 sm:px-5">
-        <h1 className="mb-3 px-1 text-center text-3xl font-extrabold leading-tight text-slate-900">
+      <div className="app-scroll relative z-10 flex min-h-0 flex-1 flex-col overflow-y-auto px-4 pt-2 pb-6 sm:px-5">
+        <h1
+          className="font-display mb-3 px-1 text-center text-3xl font-extrabold leading-tight text-white"
+          style={{ textShadow: '0 2px 20px rgba(0,0,0,0.45), 0 0 40px rgba(124,58,237,0.15)' }}
+        >
           {t('premium.title')}
         </h1>
-        <p className="mb-8 w-full text-center text-base leading-relaxed text-slate-600">
+        <p className="mb-8 w-full text-center text-base leading-relaxed text-white/80">
           {t('premium.subtitle')}
         </p>
 
-        <ul className="mb-10 w-full space-y-3 text-left">
+        <ul className="mb-8 w-full space-y-3 text-left">
           {[
-            { key: 'bulletHard', accent: 'text-primary' },
-            { key: 'bulletProgress', accent: 'text-fuchsia-300' },
-            { key: 'bulletUpdates', accent: 'text-teal-700' },
-            { key: 'bulletSupport', accent: 'text-slate-800' },
+            { key: 'bulletHard', accent: 'text-violet-600' },
+            { key: 'bulletExpert', accent: 'text-fuchsia-600' },
+            { key: 'bulletWellness', accent: 'text-teal-700' },
+            { key: 'bulletProgress', accent: 'text-sky-700' },
+            { key: 'bulletFuture', accent: 'text-slate-800' },
           ].map(({ key, accent }) => (
             <li
               key={key}
@@ -72,39 +76,63 @@ export default function PremiumScreen({ onNavigate, activeNav = 'premium' }) {
           ))}
         </ul>
 
-        <div className="mt-auto w-full space-y-4">
-          {!isPremium ? (
-            <button
-              type="button"
-              onClick={() => {
-                setPremium(true);
-                mergeAchievementFlags({ premiumEver: true });
-                playSound('tap');
-              }}
-              className="btn-primary shadow-btn"
-            >
-              {t('premium.goPremium')}
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={() => {
-                setPremium(false);
-                playSound('tap');
-              }}
-              className="btn-secondary"
-            >
-              {t('premium.disablePreview')}
-            </button>
-          )}
-          <p className="text-center text-2xs font-semibold uppercase tracking-widest text-slate-400">
-            {t('premium.devNote')}
-          </p>
-        </div>
-
-        <p className="mt-10 w-full px-2 text-center text-sm leading-relaxed text-slate-500">
+        <p className="mt-auto w-full px-2 pb-2 text-center text-sm leading-relaxed text-white/55">
           {t('premium.supportFooter')}
         </p>
+      </div>
+
+      {/* Prominent CTA — fixed above bottom nav, consistent with app chrome */}
+      <div
+        className="relative z-10 flex-shrink-0 px-4 pb-2 pt-5 sm:px-5"
+        style={{
+          borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+          background: 'linear-gradient(180deg, rgba(15, 12, 35, 0.2) 0%, rgba(15, 12, 35, 0.92) 35%)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+          boxShadow: '0 -12px 40px rgba(0,0,0,0.35)',
+        }}
+      >
+        {!isPremium ? (
+          <button
+            type="button"
+            onClick={() => {
+              setPremium(true);
+              mergeAchievementFlags({ premiumEver: true });
+              playSound('tap');
+            }}
+            className="btn-primary shadow-btn flex min-h-[56px] w-full touch-manipulation items-center justify-center rounded-2xl px-6 py-4 text-base font-bold tracking-wide"
+          >
+            {t('premium.unlockCta')}
+          </button>
+        ) : (
+          <button
+            type="button"
+            disabled
+            aria-disabled="true"
+            className="flex min-h-[56px] w-full cursor-default touch-manipulation items-center justify-center rounded-2xl border border-emerald-400/35 px-6 py-4 text-base font-bold tracking-wide text-emerald-100"
+            style={{
+              background: 'linear-gradient(160deg, rgba(16, 185, 129, 0.22) 0%, rgba(15, 23, 42, 0.5) 100%)',
+              boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08)',
+            }}
+          >
+            {t('premium.premiumActiveCta')}
+          </button>
+        )}
+        <p className="mt-3 text-center text-2xs font-semibold uppercase tracking-widest text-white/40">
+          {t('premium.devNote')}
+        </p>
+        {isPremium && (
+          <button
+            type="button"
+            onClick={() => {
+              setPremium(false);
+              playSound('tap');
+            }}
+            className="mt-3 w-full min-h-[44px] rounded-xl py-2 text-center text-sm font-semibold text-white/55 transition-colors hover:text-white/80"
+          >
+            {t('premium.disablePreview')}
+          </button>
+        )}
       </div>
 
       <div className="relative z-10 flex-shrink-0 pb-[env(safe-area-inset-bottom,0px)]">

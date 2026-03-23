@@ -203,6 +203,11 @@ export const translations = {
     homeTrainSection: "Train",
     homePremiumCardTitle: "NeuroTrain Premium",
     homePremiumCardSubtitle: "Unlock Hard mode and more benefits.",
+    homePremiumPromoTitle: "Go further with Premium",
+    homePremiumPromoBullet1: "Unlock Hard & Expert modes",
+    homePremiumPromoBullet2: "Access full Mind & Wellness content",
+    homePremiumPromoBullet3: "Boost your progress",
+    homePremiumPromoCta: "Go Premium",
     statsTitle: "Your stats",
     statsSubtitle: "Training progress at a glance.",
     statsCurrentStreak: "Current streak",
@@ -386,18 +391,27 @@ export const translations = {
     premium: {
       hardLockedTitle: "Hard mode",
       hardLockedMessage: "Hard mode is available in Premium",
-      goPremium: "Go Premium",
+      goPremium: "Unlock Premium — start free preview",
+      unlockCta: "Unlock Premium",
+      premiumActiveCta: "Premium Active",
       close: "Not now",
-      title: "Unlock Your Full Potential",
-      subtitle: "Improve your memory, stay sharp, and support NeuroTrain",
-      bulletHard: "Unlock Hard Mode in all games",
-      bulletProgress: "Track your progress in detail",
-      bulletUpdates: "Get future updates and features",
-      bulletSupport: "Support NeuroTrain ❤️",
-      supportFooter: "Your support helps us improve NeuroTrain for everyone",
-      devNote: "Preview (no payment yet)",
+      title: "NeuroTrain Premium",
+      subtitle:
+        "Go beyond the basics: harder training modes, more to read, and a clearer view of how you’re improving — with new Premium perks on the roadmap.",
+      bulletHard:
+        "Hard Mode — unlock the toughest standard difficulty in every game: tighter timers, larger sets, and bigger challenges.",
+      bulletExpert:
+        "Expert Mode — where available (e.g. Memory & Flash Focus), push to the maximum difficulty for peak training.",
+      bulletWellness:
+        "More Mind & Wellness — read the full premium article library: habits, focus, sleep, and mental fitness.",
+      bulletProgress:
+        "Advanced progress — bigger XP rewards on Hard & Expert, with streaks, level, and achievements that grow as you level up.",
+      bulletFuture:
+        "Future Premium features — be first in line for new modes, content, and training tools as we ship them.",
+      supportFooter: "Thank you for helping us build NeuroTrain — every Premium member supports future updates.",
+      devNote: "Preview activation — no payment required yet",
       enablePreview: "Enable Premium (preview)",
-      disablePreview: "Disable Premium (preview)",
+      disablePreview: "Turn off Premium preview",
     },
   },
   es: {
@@ -603,6 +617,11 @@ export const translations = {
     homeTrainSection: "Entrenar",
     homePremiumCardTitle: "NeuroTrain Premium",
     homePremiumCardSubtitle: "Desbloquea el modo Difícil y más ventajas.",
+    homePremiumPromoTitle: "Llévalo más lejos con Premium",
+    homePremiumPromoBullet1: "Desbloquea modos Difícil y Experto",
+    homePremiumPromoBullet2: "Accede a todo el contenido de Mente y bienestar",
+    homePremiumPromoBullet3: "Impulsa tu progreso",
+    homePremiumPromoCta: "Hazte Premium",
     statsTitle: "Tus estadísticas",
     statsSubtitle: "Resumen de tu progreso.",
     statsCurrentStreak: "Racha actual",
@@ -786,18 +805,27 @@ export const translations = {
     premium: {
       hardLockedTitle: "Modo Difícil",
       hardLockedMessage: "El modo Difícil está disponible en Premium",
-      goPremium: "Hazte Premium",
+      goPremium: "Desbloquear Premium — vista previa gratis",
+      unlockCta: "Desbloquear Premium",
+      premiumActiveCta: "Premium activo",
       close: "Ahora no",
-      title: "Desbloquea tu máximo potencial",
-      subtitle: "Mejora tu memoria, mantente ágil y apoya a NeuroTrain",
-      bulletHard: "Desbloquea el modo Difícil en todos los juegos",
-      bulletProgress: "Sigue tu progreso en detalle",
-      bulletUpdates: "Recibe futuras actualidades y funciones",
-      bulletSupport: "Apoya a NeuroTrain ❤️",
-      supportFooter: "Tu apoyo nos ayuda a mejorar NeuroTrain para todos",
-      devNote: "Vista previa (sin pago aún)",
+      title: "NeuroTrain Premium",
+      subtitle:
+        "Pasa del entrenamiento básico: modos más exigentes, más lecturas y una visión más clara de tu progreso — con más ventajas Premium en camino.",
+      bulletHard:
+        "Modo Difícil — desbloquea la dificultad estándar más alta en cada juego: tiempos más ajustados, más elementos y mayor reto.",
+      bulletExpert:
+        "Modo Experto — donde esté disponible (p. ej. Memoria y Flash Focus), entrena al máximo nivel de dificultad.",
+      bulletWellness:
+        "Más Mente y bienestar — accede a toda la biblioteca premium: hábitos, enfoque, sueño y salud mental.",
+      bulletProgress:
+        "Progreso avanzado — más XP en Difícil y Experto, con rachas, nivel y logros que crecen contigo.",
+      bulletFuture:
+        "Funciones Premium futuras — prioridad para nuevos modos, contenido y herramientas de entrenamiento.",
+      supportFooter: "Gracias por ayudarnos a mejorar NeuroTrain — cada miembro Premium apoya las próximas actualizaciones.",
+      devNote: "Activación de vista previa — aún sin pago",
       enablePreview: "Activar Premium (vista previa)",
-      disablePreview: "Desactivar Premium (vista previa)",
+      disablePreview: "Desactivar vista previa Premium",
     },
   },
 };

@@ -6,7 +6,7 @@ import { useProgress } from '../context/ProgressContext';
 import { usePremium } from '../context/PremiumContext';
 import { getLevelFromTotalXp } from '../utils/progression';
 import { toggleMute, isMuted, playSound } from '../utils/sound';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 function MetricCard({ label, value, sub }) {
   return (
@@ -40,6 +40,16 @@ export default function StatsScreen({ onNavigate, activeNav = 'stats' }) {
     totalXp,
   } = useProgress();
   const [muted, setMuted] = useState(isMuted());
+
+  const handleOpenAchievements = useCallback(() => {
+    if (typeof onNavigate !== 'function') return;
+    try {
+      playSound('tap');
+    } catch {
+      /* sound must not block navigation */
+    }
+    onNavigate('achievements');
+  }, [onNavigate]);
 
   const level = hydrated ? getLevelFromTotalXp(totalXp) : 1;
   const dash = '—';
@@ -83,11 +93,8 @@ export default function StatsScreen({ onNavigate, activeNav = 'stats' }) {
 
         <button
           type="button"
-          onClick={() => {
-            playSound('tap');
-            onNavigate('achievements');
-          }}
-          className="mb-4 w-full min-h-[44px] rounded-xl px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-fuchsia-200 transition-colors hover:text-white"
+          onClick={handleOpenAchievements}
+          className="mb-4 w-full min-h-[44px] touch-manipulation rounded-xl px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-fuchsia-200 transition-colors hover:text-white"
           style={{
             background: 'linear-gradient(135deg, rgba(251,191,36,0.12) 0%, rgba(236,72,153,0.1) 100%)',
             border: '1px solid rgba(251,191,36,0.28)',

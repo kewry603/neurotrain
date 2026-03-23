@@ -8,6 +8,7 @@ import BadgesSection from '../components/BadgesSection';
 import BottomNav from '../components/BottomNav';
 import TrainingGameGrid from '../components/TrainingGameGrid';
 import { useLanguage } from '../i18n/LanguageContext';
+import { usePremium } from '../context/PremiumContext';
 import { playSound, toggleMute, isMuted } from '../utils/sound';
 
 /** If set, MemoryGameScreen skips its own `start` so we don’t double with hero CTA. */
@@ -15,6 +16,7 @@ const SESSION_START_SKIP_MEMORY_KEY = 'nt_skipSessionStartOnce_memory';
 
 export default function HomeScreen({ onNavigate, activeNav = 'home' }) {
   const { t } = useLanguage();
+  const { isPremium } = usePremium();
   const [muted, setMuted] = useState(isMuted());
 
   const handleMute = () => setMuted(toggleMute());
@@ -131,28 +133,6 @@ export default function HomeScreen({ onNavigate, activeNav = 'home' }) {
           </button>
           </section>
 
-          {/* Premium — native button so taps register reliably in Capacitor/WebView */}
-          <button
-            type="button"
-            onClick={handleGoPremium}
-            className="card-lift relative z-[5] flex w-full min-h-[56px] touch-manipulation items-center justify-between gap-3 rounded-2xl px-4 py-3 text-left motion-reduce:transition-none"
-            style={{
-              background: 'linear-gradient(135deg, rgba(124,58,237,0.22) 0%, rgba(236,72,153,0.1) 100%)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              border: '1px solid rgba(167,139,250,0.35)',
-              boxShadow: '0 6px 28px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255,255,255,0.08)',
-            }}
-          >
-            <div className="min-w-0 flex-1">
-              <p className="text-xs font-bold uppercase tracking-wider text-white/95">{t('homePremiumCardTitle')}</p>
-              <p className="mt-0.5 text-2xs leading-snug text-white/50">{t('homePremiumCardSubtitle')}</p>
-            </div>
-            <span className="flex-shrink-0 text-lg font-semibold text-fuchsia-300/90" aria-hidden="true">
-              →
-            </span>
-          </button>
-
           {/* Mind & Wellness */}
           <button
             type="button"
@@ -177,6 +157,47 @@ export default function HomeScreen({ onNavigate, activeNav = 'home' }) {
 
           {/* Cards */}
           <div className="flex shrink-0 flex-col gap-2">
+            {!isPremium && (
+              <div
+                className="rounded-2xl px-4 py-3"
+                style={{
+                  background: 'rgba(139, 92, 246, 0.08)',
+                  backdropFilter: 'blur(20px)',
+                  WebkitBackdropFilter: 'blur(20px)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  boxShadow: '0 6px 28px rgba(0, 0, 0, 0.30), inset 0 1px 0 rgba(255,255,255,0.06)',
+                }}
+              >
+                <p className="text-xs font-bold uppercase tracking-wider text-white/90">{t('homePremiumPromoTitle')}</p>
+                <ul className="mt-2 space-y-1.5 text-2xs leading-snug text-white/65">
+                  <li className="flex gap-2">
+                    <span className="text-fuchsia-300/90" aria-hidden>
+                      ✓
+                    </span>
+                    <span>{t('homePremiumPromoBullet1')}</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-fuchsia-300/90" aria-hidden>
+                      ✓
+                    </span>
+                    <span>{t('homePremiumPromoBullet2')}</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-fuchsia-300/90" aria-hidden>
+                      ✓
+                    </span>
+                    <span>{t('homePremiumPromoBullet3')}</span>
+                  </li>
+                </ul>
+                <button
+                  type="button"
+                  onClick={handleGoPremium}
+                  className="btn-primary mt-3 w-full !min-h-[44px] touch-manipulation !py-2.5 text-sm font-bold"
+                >
+                  {t('homePremiumPromoCta')}
+                </button>
+              </div>
+            )}
             <DailyChallengeCard compact />
             <ProgressCard compact onViewDetails={typeof onNavigate === 'function' ? () => onNavigate('stats') : undefined} />
             <div>
