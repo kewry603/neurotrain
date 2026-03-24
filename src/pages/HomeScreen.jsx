@@ -49,7 +49,6 @@ export default function HomeScreen({ onNavigate, activeNav = 'home' }) {
     onNavigate('memory');
   };
 
-
   return (
     <div
       className="relative flex h-screen min-h-0 w-full flex-col overflow-hidden"

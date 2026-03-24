@@ -356,6 +356,7 @@
 .numbers-difficulty-enter:nth-child(1) { animation-delay: 0ms;   }
 .numbers-difficulty-enter:nth-child(2) { animation-delay: 70ms;  }
 .numbers-difficulty-enter:nth-child(3) { animation-delay: 140ms; }
+.numbers-difficulty-enter:nth-child(4) { animation-delay: 210ms; }
 
 /* ── Success flash — overlay entrance ───────────────────────────── */
 @keyframes successFlashIn {
@@ -416,7 +417,8 @@
   .diff-card-enter:nth-child(3),
   .numbers-difficulty-enter:nth-child(1),
   .numbers-difficulty-enter:nth-child(2),
-  .numbers-difficulty-enter:nth-child(3) {
+  .numbers-difficulty-enter:nth-child(3),
+  .numbers-difficulty-enter:nth-child(4) {
     animation-delay: 0ms !important;
   }
 

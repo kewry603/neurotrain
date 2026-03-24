@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <defs>
+    <linearGradient id="hGrad" x1="24" y1="0" x2="24" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#5b21b6" stop-opacity="0.55" />
+    </linearGradient>
+    <linearGradient id="bGrad" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#8b5cf6" />
+      <stop offset="100%" stop-color="#ec4899" />
+    </linearGradient>
+    <radialGradient id="bAura" cx="50%" cy="48%" r="52%">
+      <stop offset="0%" stop-color="#e879f9" stop-opacity="0.45" />
+      <stop offset="52%" stop-color="#8b5cf6" stop-opacity="0.18" />
+      <stop offset="100%" stop-color="#ec4899" stop-opacity="0" />
+    </radialGradient>
+    <clipPath id="hClip">
+      <path d="M24 3 C17 3, 8 7, 8 17 C8 27, 14 34, 20 37 C21 38, 21 40, 21 44 L27 44 C27 40, 27 38, 28 37 C34 34, 40 27, 40 17 C40 7, 31 3, 24 3 Z" />
+    </clipPath>
+  </defs>
+  <path d="M24 3 C17 3, 8 7, 8 17 C8 27, 14 34, 20 37 C21 38, 21 40, 21 44 L27 44 C27 40, 27 38, 28 37 C34 34, 40 27, 40 17 C40 7, 31 3, 24 3 Z" fill="rgba(124,58,237,0.08)" />
+  <ellipse cx="24" cy="19" rx="12" ry="10" fill="url(#bAura)" clip-path="url(#hClip)" />
+  <path d="M24 10 C18 10, 13 13, 13 19 C13 25, 16 28, 20 29 L24 29" stroke="url(#bGrad)" stroke-width="1.9" stroke-linecap="round" />
+  <path d="M15 16 C14 19, 15 23, 16 26" stroke="#8b5cf6" stroke-width="1.0" stroke-linecap="round" opacity="0.8" />
+  <path d="M14 27 C16 29, 18 29, 18 27" stroke="#c026d3" stroke-width="1.0" stroke-linecap="round" opacity="0.75" />
+  <path d="M24 10 C30 10, 35 13, 35 19 C35 25, 32 28, 28 29 L24 29" stroke="url(#bGrad)" stroke-width="1.9" stroke-linecap="round" />
+  <path d="M33 16 C34 19, 33 23, 32 26" stroke="#a855f7" stroke-width="1.0" stroke-linecap="round" opacity="0.8" />
+  <path d="M34 27 C32 29, 30 29, 30 27" stroke="#ec4899" stroke-width="1.0" stroke-linecap="round" opacity="0.75" />
+  <line x1="24" y1="10" x2="24" y2="29" stroke="rgba(139,92,246,0.35)" stroke-width="0.85" stroke-dasharray="1.8 2.1" />
+  <line x1="17" y1="19" x2="24" y2="15" stroke="#8b5cf6" stroke-width="0.75" opacity="0.45" />
+  <line x1="31" y1="19" x2="24" y2="15" stroke="#c026d3" stroke-width="0.75" opacity="0.45" />
+  <line x1="17" y1="19" x2="24" y2="24" stroke="#e879f9" stroke-width="0.70" opacity="0.4" />
+  <line x1="31" y1="19" x2="24" y2="24" stroke="#ec4899" stroke-width="0.70" opacity="0.4" />
+  <line x1="24" y1="15" x2="24" y2="24" stroke="#7c3aed" stroke-width="0.75" opacity="0.45" />
+  <circle cx="24" cy="15" r="2.1" fill="#8b5cf6" />
+  <circle cx="24" cy="24" r="1.7" fill="#ec4899" />
+  <circle cx="17" cy="19" r="1.6" fill="#e879f9" />
+  <circle cx="31" cy="19" r="1.6" fill="#c026d3" />
+  <path d="M24 3 C17 3, 8 7, 8 17 C8 27, 14 34, 20 37 C21 38, 21 40, 21 44 L27 44 C27 40, 27 38, 28 37 C34 34, 40 27, 40 17 C40 7, 31 3, 24 3 Z" stroke="url(#hGrad)" stroke-width="1.6" fill="none" />
+</svg>

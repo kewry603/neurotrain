@@ -54,9 +54,30 @@ export default function PremiumScreen({ onNavigate, activeNav = 'premium' }) {
         >
           {t('premium.title')}
         </h1>
-        <p className="mb-8 w-full text-center text-base leading-relaxed text-white/80">
+        <p className="mb-4 w-full text-center text-base leading-relaxed text-white/80">
           {t('premium.subtitle')}
         </p>
+
+        <button
+          type="button"
+          onClick={() => {
+            playSound('tap');
+            if (typeof onNavigate === 'function') onNavigate('about');
+          }}
+          className="card-lift mb-8 flex w-full min-h-[52px] touch-manipulation items-center justify-center gap-2 rounded-2xl border border-violet-400/35 px-5 py-3.5 text-center shadow-lg transition-transform motion-reduce:transition-none active:scale-[0.99] motion-reduce:active:scale-100"
+          style={{
+            background: 'linear-gradient(135deg, rgba(124,58,237,0.35) 0%, rgba(59,130,246,0.22) 50%, rgba(236,72,153,0.12) 100%)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            boxShadow:
+              '0 0 28px rgba(124,58,237,0.35), 0 8px 28px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.12)',
+          }}
+        >
+          <span className="font-display text-sm font-bold tracking-wide text-white">{t('premium.aboutLink')}</span>
+          <svg className="h-4 w-4 flex-shrink-0 text-white/90" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden>
+            <path d="M9 18l6-6-6-6" />
+          </svg>
+        </button>
 
         <ul className="mb-8 w-full space-y-3 text-left">
           {[

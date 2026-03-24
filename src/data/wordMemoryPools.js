@@ -1,7 +1,7 @@
 /**
  * Verbal memory word pools — concrete, calm vocabulary for adults.
  * Words are chosen for recognition & recall, not grammar or spelling drills.
- * Pools must stay large enough for: 5 targets + 4 distractors = 9 unique words per hard round.
+ * Pools must stay large enough for expert: 6 targets + 5 distractors = 11 unique words per round.
  */
 
 export const WORD_POOL_EN = [

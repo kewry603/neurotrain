@@ -194,7 +194,7 @@ function MemoryCard({ card, isFaceUp, isMatched, isMismatch, isJustMatched,
 
 // ─── Difficulty selection overlay ─────────────────────────────────────────────
 function DifficultyOverlay({ onSelect, onBack, t }) {
-  const tagKey = { easy: 'easyTag', medium: 'mediumTag', hard: 'hardTag' };
+  const tagKey = { easy: 'easyTag', medium: 'mediumTag', hard: 'hardTag', expert: 'expertTag' };
 
   return (
     <div className="absolute inset-0 z-30 flex min-h-0 flex-col overflow-hidden bg-white/98 backdrop-blur-md"

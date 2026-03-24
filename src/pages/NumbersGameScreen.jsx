@@ -12,11 +12,11 @@ import PremiumHardGateModal from '../components/PremiumHardGateModal';
 const TOTAL_ROUNDS = 8;
 
 /**
- * Level progression after a full session (8 rounds): Easy → Medium → Hard only.
+ * Level progression after a full session (8 rounds): Easy → Medium → Hard → Expert.
  * Used on the session-complete overlay: "Go to Medium" / "Go to Hard" calls
  * `beginSession(nextId)` so the next difficulty starts at PREVIEW without SELECT.
  */
-const NEXT_DIFFICULTY_AFTER_SESSION = { easy: 'medium', medium: 'hard' };
+const NEXT_DIFFICULTY_AFTER_SESSION = { easy: 'medium', medium: 'hard', hard: 'expert' };
 
 /**
  * How long the brief success / error flash stays on screen before the game
@@ -63,9 +63,14 @@ const DIFFICULTIES = {
     inputLimitMs: 22000,
     emoji: '🔥', color: '#ef4444', glow: 'rgba(239,68,68,0.65)',
   },
+  expert: {
+    id: 'expert', length: 6, previewMs: 1500,
+    inputLimitMs: 18000,
+    emoji: '💎', color: '#a855f7', glow: 'rgba(168,85,247,0.65)',
+  },
 };
 
-const DIFF_ORDER = ['easy', 'medium', 'hard'];
+const DIFF_ORDER = ['easy', 'medium', 'hard', 'expert'];
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
 function shuffle(arr) {
@@ -100,7 +105,12 @@ function digitStripMetrics(len) {
 
 // ─── Difficulty overlay (instructions + level rows — not playing cards) ───────
 function DifficultyOverlay({ onSelect, onBack, t }) {
-  const tagKey = { easy: 'numbers.easyTag', medium: 'numbers.mediumTag', hard: 'numbers.hardTag' };
+  const tagKey = {
+    easy: 'numbers.easyTag',
+    medium: 'numbers.mediumTag',
+    hard: 'numbers.hardTag',
+    expert: 'numbers.expertTag',
+  };
 
   return (
     <div className="absolute inset-0 z-30 flex min-h-0 flex-col overflow-hidden"
@@ -459,7 +469,13 @@ function SessionCompleteOverlay({
   const stars = score >= TOTAL_ROUNDS - 1 ? 3 : score >= Math.ceil(TOTAL_ROUNDS / 2) ? 2 : 1;
   const nextId = NEXT_DIFFICULTY_AFTER_SESSION[completedLevelId];
   const nextLabel =
-    nextId === 'medium' ? t('numbers.goToMedium') : nextId === 'hard' ? t('numbers.goToHard') : null;
+    nextId === 'medium'
+      ? t('numbers.goToMedium')
+      : nextId === 'hard'
+        ? t('numbers.goToHard')
+        : nextId === 'expert'
+          ? t('numbers.goToExpert')
+          : null;
 
   const primaryGradient =
     'w-full py-3 rounded-2xl font-display font-bold text-sm tracking-widest uppercase text-white transition-transform duration-200 active:scale-95';
@@ -695,7 +711,7 @@ export default function NumbersGameScreen({ onNavigate }) {
 
   /** Starts a brand-new 8-round session for the chosen difficulty. */
   const beginSession = useCallback((diffId, options = {}) => {
-    if (diffId === 'hard' && !isPremium) {
+    if ((diffId === 'hard' || diffId === 'expert') && !isPremium) {
       setShowPremiumHardGate(true);
       return;
     }
@@ -731,7 +747,7 @@ export default function NumbersGameScreen({ onNavigate }) {
     const id = difficultyRef.current;
     const next = id ? NEXT_DIFFICULTY_AFTER_SESSION[id] : null;
     if (next) {
-      if (next === 'hard' && !isPremium) {
+      if ((next === 'hard' || next === 'expert') && !isPremium) {
         setShowPremiumHardGate(true);
         return;
       }

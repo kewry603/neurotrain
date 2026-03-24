@@ -1,62 +1,58 @@
 import { useLanguage } from '../i18n/LanguageContext';
 
-/** Same game shortcuts as Home — keeps navigation consistent. */
-const CATEGORY_GRID = [
-  [
-    {
-      labelKey: 'memory',
-      active: true,
-      screen: 'memory',
-      accent: '#8b5cf6',
-      icon: (
-        <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5" aria-hidden="true">
-          <rect x="2" y="2" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
-          <rect x="12" y="2" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
-          <rect x="2" y="12" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
-          <rect x="12" y="12" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
-        </svg>
-      ),
-    },
-    {
-      labelKey: 'focus',
-      active: false,
-      screen: 'focus',
-      accent: '#c084fc',
-      icon: (
-        <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5" aria-hidden="true">
-          <circle cx="10" cy="10" r="7.5" stroke="currentColor" strokeWidth="1.5" />
-          <circle cx="10" cy="10" r="3.5" stroke="currentColor" strokeWidth="1.5" />
-          <circle cx="10" cy="10" r="1.5" fill="currentColor" />
-        </svg>
-      ),
-    },
-  ],
-  [
-    {
-      labelKey: 'numbers',
-      active: false,
-      screen: 'numbers',
-      accent: '#e879f9',
-      icon: (
-        <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5" aria-hidden="true">
-          <path d="M5 6h10M5 10h6M5 14h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          <path d="M14 13l2 2-2 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      ),
-    },
-    {
-      labelKey: 'wordMemory',
-      active: false,
-      screen: 'wordMemory',
-      accent: '#f472b6',
-      icon: (
-        <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5" aria-hidden="true">
-          <path d="M4 5h12M4 9h8M4 13h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        </svg>
-      ),
-    },
-  ],
-];
+const MEMORY_CAT = {
+  labelKey: 'memory',
+  active: true,
+  screen: 'memory',
+  accent: '#8b5cf6',
+  icon: (
+    <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5" aria-hidden="true">
+      <rect x="2" y="2" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+      <rect x="12" y="2" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+      <rect x="2" y="12" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+      <rect x="12" y="12" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+    </svg>
+  ),
+};
+
+const FOCUS_CAT = {
+  labelKey: 'focus',
+  active: false,
+  screen: 'focus',
+  accent: '#c084fc',
+  icon: (
+    <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5" aria-hidden="true">
+      <circle cx="10" cy="10" r="7.5" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="10" cy="10" r="3.5" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="10" cy="10" r="1.5" fill="currentColor" />
+    </svg>
+  ),
+};
+
+const NUMBERS_CAT = {
+  labelKey: 'numbers',
+  active: false,
+  screen: 'numbers',
+  accent: '#e879f9',
+  icon: (
+    <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5" aria-hidden="true">
+      <path d="M5 6h10M5 10h6M5 14h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M14 13l2 2-2 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+};
+
+const WORD_MEMORY_CAT = {
+  labelKey: 'wordMemory',
+  active: false,
+  screen: 'wordMemory',
+  accent: '#f472b6',
+  icon: (
+    <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5" aria-hidden="true">
+      <path d="M4 5h12M4 9h8M4 13h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  ),
+};
 
 const SPATIAL_CAT = {
   labelKey: 'spatial',
@@ -72,14 +68,22 @@ const SPATIAL_CAT = {
   ),
 };
 
+/** Home: Memory, Focus, Numbers, Spatial — Word Memory lives under Games. */
+const CATEGORY_GRID_HOME = [[MEMORY_CAT, FOCUS_CAT], [NUMBERS_CAT, SPATIAL_CAT]];
+
+/** Games hub: Memory, Focus, Numbers, Word Memory + full-width Spatial row. */
+const CATEGORY_GRID_GAMES = [[MEMORY_CAT, FOCUS_CAT], [NUMBERS_CAT, WORD_MEMORY_CAT]];
+
 const btnClass =
   'btn-micro flex flex-col items-center justify-center gap-1 rounded-xl min-h-[52px] w-full cursor-pointer motion-reduce:transition-none';
 
 /**
  * @param {{ onNavigate: (screen: string) => void, sectionLabel?: string, showSpatial?: boolean }} props
+ * `showSpatial`: when true (Games screen), grid uses Word Memory in the 2×2 and adds Spatial as a fifth tile.
  */
 export default function TrainingGameGrid({ onNavigate, sectionLabel, showSpatial = false }) {
   const { t } = useLanguage();
+  const primaryGrid = showSpatial ? CATEGORY_GRID_GAMES : CATEGORY_GRID_HOME;
 
   const go = (screen) => {
     if (screen && typeof onNavigate === 'function') onNavigate(screen);
@@ -96,7 +100,7 @@ export default function TrainingGameGrid({ onNavigate, sectionLabel, showSpatial
         </p>
       )}
       <div className="grid w-full grid-cols-2 gap-2">
-        {CATEGORY_GRID.map((row) =>
+        {primaryGrid.map((row) =>
           row.map((cat) => {
             const accentRgb = cat.accent
               ? cat.accent.replace('#', '').match(/.{2}/g).map((h) => parseInt(h, 16)).join(',')

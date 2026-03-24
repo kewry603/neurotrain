@@ -12,11 +12,11 @@ const TOTAL_ROUNDS = 8;
 const ROUND_FEEDBACK_MS = 1300;
 
 /**
- * After a full 8-round session: Easy → Medium → Hard. Session-complete overlay
+ * After a full 8-round session: Easy → Medium → Hard → Expert. Session-complete overlay
  * uses this so "Go to Medium" / "Go to Hard" can call `beginSession(nextId)`
  * and skip the difficulty picker.
  */
-const NEXT_DIFFICULTY_AFTER_SESSION = { easy: 'medium', medium: 'hard' };
+const NEXT_DIFFICULTY_AFTER_SESSION = { easy: 'medium', medium: 'hard', hard: 'expert' };
 
 // ─── Phases ───────────────────────────────────────────────────────────────────
 // SELECT         → pick difficulty
@@ -64,9 +64,18 @@ const DIFFICULTIES = {
     color: '#ef4444',
     glow: 'rgba(239,68,68,0.65)',
   },
+  expert: {
+    id: 'expert',
+    gridSize: 5,
+    positions: 5,
+    previewMs: 1500,
+    emoji: '💎',
+    color: '#a855f7',
+    glow: 'rgba(168,85,247,0.65)',
+  },
 };
 
-const DIFF_ORDER = ['easy', 'medium', 'hard'];
+const DIFF_ORDER = ['easy', 'medium', 'hard', 'expert'];
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
 function shuffle(arr) {
@@ -94,7 +103,12 @@ function arraysEqualSorted(a, b) {
 
 // ─── Difficulty overlay ───────────────────────────────────────────────────────
 function DifficultyOverlay({ onSelect, onBack, t }) {
-  const tagKey = { easy: 'spatial.easyTag', medium: 'spatial.mediumTag', hard: 'spatial.hardTag' };
+  const tagKey = {
+    easy: 'spatial.easyTag',
+    medium: 'spatial.mediumTag',
+    hard: 'spatial.hardTag',
+    expert: 'spatial.expertTag',
+  };
 
   return (
     <div className="absolute inset-0 z-30 flex min-h-0 flex-col overflow-hidden"
@@ -176,7 +190,7 @@ function SpatialGrid({
   const isPreview = phase === 'preview';
   const isInput = phase === 'input';
 
-  const gap = gridSize === 4 ? 'gap-1.5' : 'gap-2.5';
+  const gap = gridSize >= 4 ? 'gap-1.5' : 'gap-2.5';
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-6 px-4 sm:px-5">
@@ -303,7 +317,13 @@ function SessionCompleteOverlay({
   const stars = score >= TOTAL_ROUNDS - 1 ? 3 : score >= Math.ceil(TOTAL_ROUNDS / 2) ? 2 : 1;
   const nextId = NEXT_DIFFICULTY_AFTER_SESSION[completedLevelId];
   const nextLabel =
-    nextId === 'medium' ? t('spatial.goToMedium') : nextId === 'hard' ? t('spatial.goToHard') : null;
+    nextId === 'medium'
+      ? t('spatial.goToMedium')
+      : nextId === 'hard'
+        ? t('spatial.goToHard')
+        : nextId === 'expert'
+          ? t('spatial.goToExpert')
+          : null;
 
   const primaryGradient =
     'w-full py-3 rounded-2xl font-display font-bold text-sm tracking-widest uppercase text-white active:scale-95 transition-transform duration-200';
@@ -486,7 +506,7 @@ export default function SpatialGameScreen({ onNavigate }) {
   }, [phase]);
 
   const beginSession = useCallback((diffId, options = {}) => {
-    if (diffId === 'hard' && !isPremium) {
+    if ((diffId === 'hard' || diffId === 'expert') && !isPremium) {
       setShowPremiumHardGate(true);
       return;
     }
@@ -518,7 +538,7 @@ export default function SpatialGameScreen({ onNavigate }) {
     const id = difficultyRef.current;
     const next = id ? NEXT_DIFFICULTY_AFTER_SESSION[id] : null;
     if (next) {
-      if (next === 'hard' && !isPremium) {
+      if ((next === 'hard' || next === 'expert') && !isPremium) {
         setShowPremiumHardGate(true);
         return;
       }

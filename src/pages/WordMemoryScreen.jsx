@@ -13,8 +13,8 @@ const TOTAL_ROUNDS = 8;
 /** Brief success / error flash before the next round (or session end) — no tap required. */
 const ROUND_FEEDBACK_MS = 1350;
 
-/** After session: Easy → Medium → Hard; Hard has no “next” button on the summary overlay. */
-const NEXT_DIFFICULTY_AFTER_SESSION = { easy: 'medium', medium: 'hard' };
+/** After session: Easy → Medium → Hard → Expert; Expert has no “next” on the summary overlay. */
+const NEXT_DIFFICULTY_AFTER_SESSION = { easy: 'medium', medium: 'hard', hard: 'expert' };
 
 // ─── Phases ─────────────────────────────────────────────────────────────────────
 // SELECT         → choose difficulty
@@ -61,7 +61,17 @@ const DIFFICULTIES = {
     emoji: '🔥',
     color: '#ef4444',
   },
+  expert: {
+    id: 'expert',
+    targets: 6,
+    distractors: 5,
+    previewMs: 2100,
+    emoji: '💎',
+    color: '#a855f7',
+  },
 };
+
+const DIFF_ORDER = ['easy', 'medium', 'hard', 'expert'];
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
 function shuffle(arr) {
@@ -100,7 +110,12 @@ function selectionMatchesTargets(selected, targets) {
 
 // ─── Overlays ───────────────────────────────────────────────────────────────────
 function DifficultyOverlay({ onSelect, onBack, t }) {
-  const tagKey = { easy: 'wordMemory.easyTag', medium: 'wordMemory.mediumTag', hard: 'wordMemory.hardTag' };
+  const tagKey = {
+    easy: 'wordMemory.easyTag',
+    medium: 'wordMemory.mediumTag',
+    hard: 'wordMemory.hardTag',
+    expert: 'wordMemory.expertTag',
+  };
   return (
     <div
       className="absolute inset-0 z-30 flex min-h-0 flex-col overflow-hidden"
@@ -134,7 +149,7 @@ function DifficultyOverlay({ onSelect, onBack, t }) {
           <p className="w-full text-center text-[11px] leading-relaxed text-white/40">{t('wordMemory.howToPlay')}</p>
         </div>
         <div className="flex w-full flex-col gap-2.5">
-          {['easy', 'medium', 'hard'].map((id) => {
+          {DIFF_ORDER.map((id) => {
             const d = DIFFICULTIES[id];
             return (
               <button
@@ -212,7 +227,13 @@ function SessionCompleteOverlay({
   const stars = score >= TOTAL_ROUNDS - 1 ? 3 : score >= Math.ceil(TOTAL_ROUNDS / 2) ? 2 : 1;
   const nextId = NEXT_DIFFICULTY_AFTER_SESSION[completedLevelId];
   const nextLabel =
-    nextId === 'medium' ? t('wordMemory.goToMedium') : nextId === 'hard' ? t('wordMemory.goToHard') : null;
+    nextId === 'medium'
+      ? t('wordMemory.goToMedium')
+      : nextId === 'hard'
+        ? t('wordMemory.goToHard')
+        : nextId === 'expert'
+          ? t('wordMemory.goToExpert')
+          : null;
   const primaryGradient =
     'w-full py-3 rounded-2xl font-display font-bold text-sm tracking-widest uppercase text-white transition-transform duration-200 active:scale-95';
   const secondaryBtn =
@@ -361,7 +382,7 @@ export default function WordMemoryScreen({ onNavigate }) {
 
   const beginSession = useCallback(
     (diffId) => {
-      if (diffId === 'hard' && !isPremium) {
+      if ((diffId === 'hard' || diffId === 'expert') && !isPremium) {
         setShowPremiumHardGate(true);
         return;
       }
@@ -390,7 +411,7 @@ export default function WordMemoryScreen({ onNavigate }) {
     const id = difficultyRef.current;
     const next = id ? NEXT_DIFFICULTY_AFTER_SESSION[id] : null;
     if (next) {
-      if (next === 'hard' && !isPremium) {
+      if ((next === 'hard' || next === 'expert') && !isPremium) {
         setShowPremiumHardGate(true);
         return;
       }
