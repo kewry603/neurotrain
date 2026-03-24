@@ -14,6 +14,13 @@ import { playSound, toggleMute, isMuted } from '../utils/sound';
 /** If set, MemoryGameScreen skips its own `start` so we don’t double with hero CTA. */
 const SESSION_START_SKIP_MEMORY_KEY = 'nt_skipSessionStartOnce_memory';
 
+/** i18n key for home header line 1 — uses device local hour (0–23). */
+function homeGreetingKeyFromLocalHour(h) {
+  if (h >= 5 && h < 12) return 'homeGreetingMorning'; // 5:00–11:59
+  if (h >= 12 && h < 18) return 'homeGreetingAfternoon'; // 12:00–17:59
+  return 'homeGreetingEvening'; // 18:00–4:59
+}
+
 export default function HomeScreen({ onNavigate, activeNav = 'home' }) {
   const { t } = useLanguage();
   const { isPremium } = usePremium();
@@ -49,6 +56,8 @@ export default function HomeScreen({ onNavigate, activeNav = 'home' }) {
     onNavigate('memory');
   };
 
+  const homeGreetingKey = homeGreetingKeyFromLocalHour(new Date().getHours());
+
   return (
     <div
       className="relative flex h-screen min-h-0 w-full flex-col overflow-hidden"
@@ -73,10 +82,10 @@ export default function HomeScreen({ onNavigate, activeNav = 'home' }) {
         style={{ background: 'radial-gradient(circle, rgba(124,58,237,0.5), transparent)' }}
       />
 
-      <header className="relative z-[3] flex flex-shrink-0 items-center justify-between px-4 pb-1 pt-[max(0.75rem,env(safe-area-inset-top,0px))] sm:px-5">
+      <header className="relative z-[3] flex flex-shrink-0 items-center justify-between px-4 pb-2 pt-[max(0.75rem,env(safe-area-inset-top,0px))] sm:px-5">
         <div>
-          <p className="text-xs font-medium uppercase tracking-widest text-slate-400">Good morning</p>
-          <p className="text-base font-bold text-white">Mr. Melo</p>
+          <p className="text-xs font-medium uppercase tracking-widest text-slate-400">{t(homeGreetingKey)}</p>
+          <p className="text-base font-bold text-white">{t('homeGreetingWelcome')}</p>
         </div>
         <div className="flex items-center gap-2">
           <MuteButton muted={muted} onToggle={handleMute} />
@@ -86,9 +95,9 @@ export default function HomeScreen({ onNavigate, activeNav = 'home' }) {
 
       {/* Main: scroll when content exceeds viewport (small phones / large text) */}
       <div className="app-scroll relative z-[3] flex min-h-0 min-w-0 flex-1 flex-col overflow-y-auto overflow-x-hidden px-4 sm:px-5">
-        <div className="flex w-full min-h-0 flex-col gap-4 py-2 pb-[max(1rem,env(safe-area-inset-bottom,0px))]">
+        <div className="flex w-full min-h-0 flex-col gap-5 py-2 pb-[max(1rem,env(safe-area-inset-bottom,0px))]">
           {/* Hero */}
-          <section className="flex flex-shrink-0 flex-col items-center pt-1">
+          <section className="flex flex-shrink-0 flex-col items-center pt-0.5">
             {/* Logo — softer, diffused glow (not neon) */}
             <div className="relative mb-2 animate-float motion-reduce:animate-none">
               <div
@@ -155,7 +164,7 @@ export default function HomeScreen({ onNavigate, activeNav = 'home' }) {
           </button>
 
           {/* Cards */}
-          <div className="flex shrink-0 flex-col gap-2">
+          <div className="flex shrink-0 flex-col gap-3">
             {!isPremium && (
               <div
                 className="rounded-2xl px-4 py-3"

@@ -172,13 +172,13 @@ export default function MindWellnessScreen({ onNavigate, activeNav = 'wellness' 
                       <button
                         type="button"
                         onClick={() => handleReadMore(article)}
-                        className="w-full rounded-xl py-2.5 text-xs font-bold uppercase tracking-widest text-white transition-opacity hover:opacity-95 active:scale-[0.99]"
+                        className="flex min-h-[44px] w-full touch-manipulation items-center justify-center rounded-xl px-3 py-2.5 text-xs font-bold uppercase tracking-widest text-white transition-opacity hover:opacity-95 active:scale-[0.99] motion-reduce:active:scale-100"
                         style={{
                           background: 'linear-gradient(90deg, #7c3aed, #a855f7, #ec4899)',
                           boxShadow: '0 0 16px rgba(168,85,247,0.25)',
                         }}
                       >
-                        {t('wellness.readMore')}
+                        {article.premium && !isPremium ? t('wellness.ctaPremiumArticle') : t('wellness.readMore')}
                       </button>
                     </div>
                   ))}

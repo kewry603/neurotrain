@@ -70,6 +70,7 @@ export default function ProgressCard({ compact = false, onViewDetails }) {
   const xpToNext = hydrated ? getXpToNextLevel(totalXp) : 20;
   const ringPct = hydrated ? getLevelProgressPercent(totalXp) : 0;
   const ringSize = compact ? 44 : 52;
+  const showProgressHint = hydrated && totalSessionsCompleted === 0;
 
   return (
     <div
@@ -88,13 +89,12 @@ export default function ProgressCard({ compact = false, onViewDetails }) {
           <button
             type="button"
             onClick={onViewDetails}
-            className="min-h-[44px] shrink-0 rounded-lg px-1 text-xs font-semibold text-fuchsia-300/95 transition-colors hover:text-fuchsia-200"
-            style={{ color: '#e879f9' }}
+            className="min-h-[44px] shrink-0 rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1.5 text-xs font-semibold text-fuchsia-200/95 transition-colors hover:border-white/15 hover:bg-white/[0.09] hover:text-fuchsia-100"
           >
             {t('viewDetails')} →
           </button>
         ) : (
-          <span className="text-xs font-semibold" style={{ color: '#e879f9' }}>
+          <span className="rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1.5 text-xs font-semibold text-fuchsia-200/95">
             {t('viewDetails')} →
           </span>
         )}
@@ -152,6 +152,10 @@ export default function ProgressCard({ compact = false, onViewDetails }) {
           compact={compact}
         />
       </div>
+
+      {showProgressHint && (
+        <p className="mt-1.5 text-center text-[10px] leading-snug text-white/45">{t('progressEmptyHint')}</p>
+      )}
     </div>
   );
 }

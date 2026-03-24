@@ -271,10 +271,16 @@ function SpatialGrid({
 // ─── Round feedback ───────────────────────────────────────────────────────────
 function RoundFeedbackOverlay({ isCorrect, t }) {
   return (
-    <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none"
-      style={{ background: 'rgba(18,14,46,0.92)', backdropFilter: 'blur(12px)' }}>
-      <div className="success-flash-inner relative flex flex-col items-center gap-3 px-6 text-center">
-        <div className="w-14 h-14 rounded-full flex items-center justify-center"
+    <div
+      className={`absolute inset-0 z-20 flex items-center justify-center pointer-events-none${isCorrect ? '' : ' nt-round-feedback-root--wrong'}`}
+      style={{ background: 'rgba(18,14,46,0.92)', backdropFilter: 'blur(12px)' }}
+    >
+      <div
+        className={`success-flash-inner relative flex flex-col items-center gap-3 px-6 text-center${
+          isCorrect ? ' nt-round-feedback-panel--correct' : ' nt-round-feedback-panel--wrong'
+        }`}
+      >
+        <div className="nt-feedback-result-icon w-14 h-14 rounded-full flex items-center justify-center"
           style={{
             background: isCorrect ? 'rgba(16,185,129,0.12)' : 'rgba(239,68,68,0.12)',
             border: `2px solid ${isCorrect ? 'rgba(16,185,129,0.5)' : 'rgba(239,68,68,0.4)'}`,

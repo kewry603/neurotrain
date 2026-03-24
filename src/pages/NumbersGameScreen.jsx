@@ -355,7 +355,7 @@ function Keypad({ onTap, onDelete, t }) {
         onClick={onDelete}
         className="w-full py-2.5 glass rounded-2xl flex items-center justify-center gap-2
           text-white/40 hover:text-white/70 text-xs font-semibold uppercase tracking-widest
-          transition-all duration-200"
+          touch-manipulation transition-all duration-200 active:scale-[0.98] motion-reduce:active:scale-100"
       >
         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24"
           stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -372,8 +372,10 @@ function Keypad({ onTap, onDelete, t }) {
 // ─── Brief round feedback (no buttons — auto-continues via parent effect) ──────
 function RoundFeedbackOverlay({ isCorrect, sequence, playerInput, t }) {
   return (
-    <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center px-4 sm:px-5"
-      style={{ background: 'rgba(18,14,46,0.92)', backdropFilter: 'blur(12px)' }}>
+    <div
+      className={`pointer-events-none absolute inset-0 z-20 flex items-center justify-center px-4 sm:px-5${isCorrect ? '' : ' nt-round-feedback-root--wrong'}`}
+      style={{ background: 'rgba(18,14,46,0.92)', backdropFilter: 'blur(12px)' }}
+    >
 
       <div className="absolute w-64 h-64 rounded-full blur-3xl opacity-18 pointer-events-none"
         style={{
@@ -382,9 +384,13 @@ function RoundFeedbackOverlay({ isCorrect, sequence, playerInput, t }) {
             : 'radial-gradient(circle, #ef4444, #a855f7)',
         }} />
 
-      <div className="success-flash-inner relative flex w-full flex-col items-center gap-4 px-5 text-center sm:px-6">
+      <div
+        className={`success-flash-inner relative flex w-full flex-col items-center gap-4 px-5 text-center sm:px-6${
+          isCorrect ? ' nt-round-feedback-panel--correct' : ' nt-round-feedback-panel--wrong'
+        }`}
+      >
 
-        <div className="w-14 h-14 rounded-full flex items-center justify-center"
+        <div className="nt-feedback-result-icon w-14 h-14 rounded-full flex items-center justify-center"
           style={{
             background: isCorrect ? 'rgba(16,185,129,0.12)' : 'rgba(239,68,68,0.12)',
             border: `2px solid ${isCorrect ? 'rgba(16,185,129,0.5)' : 'rgba(239,68,68,0.4)'}`,

@@ -53,6 +53,7 @@ export default function StatsScreen({ onNavigate, activeNav = 'stats' }) {
 
   const level = hydrated ? getLevelFromTotalXp(totalXp) : 1;
   const dash = '—';
+  const showStatsEmptyHint = hydrated && totalSessionsCompleted === 0;
 
   return (
     <div
@@ -89,7 +90,16 @@ export default function StatsScreen({ onNavigate, activeNav = 'stats' }) {
       </header>
 
       <div className="app-scroll relative z-[3] flex min-h-0 flex-1 flex-col overflow-y-auto px-4 pb-2 sm:px-5">
-        <p className="mb-3 text-center text-xs text-white/45">{t('statsSubtitle')}</p>
+        <p
+          className={`text-center text-xs text-white/45 ${showStatsEmptyHint ? 'mb-2' : 'mb-3'}`}
+        >
+          {t('statsSubtitle')}
+        </p>
+        {showStatsEmptyHint && (
+          <p className="mb-3 rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 py-2.5 text-center text-[11px] leading-snug text-white/55">
+            {t('statsEmptyHint')}
+          </p>
+        )}
 
         <button
           type="button"
@@ -130,6 +140,7 @@ export default function StatsScreen({ onNavigate, activeNav = 'stats' }) {
           <MetricCard
             label={t('progressAccuracyLabel')}
             value={hydrated ? `${overallAccuracy}%` : dash}
+            sub={hydrated && showStatsEmptyHint ? t('statsAccuracyPending') : undefined}
           />
           <MetricCard label={t('progressTotalXp')} value={hydrated ? String(totalXp) : dash} sub={t('statsLevelSub').replace('{n}', String(level))} />
         </div>

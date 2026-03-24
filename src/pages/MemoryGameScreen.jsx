@@ -319,10 +319,10 @@ function SuccessFlash({ roundInLevel, difficulty, seconds, moves, efficiency, t 
       <div className="pointer-events-none absolute h-72 w-72 rounded-full blur-3xl opacity-40"
         style={{ background: 'radial-gradient(circle, #a7f3d0 0%, #ccfbf1 65%, transparent 100%)' }} />
 
-      <div className="success-flash-inner relative flex w-full flex-col items-center gap-4 rounded-3xl border border-slate-200 bg-white px-5 py-6 text-center shadow-elevated sm:px-6">
+      <div className="success-flash-inner nt-memory-round-success-panel relative flex w-full flex-col items-center gap-4 rounded-3xl border border-slate-200 bg-white px-5 py-6 text-center shadow-elevated sm:px-6">
 
         {/* Check circle */}
-        <div className="w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0"
+        <div className="nt-feedback-result-icon w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0"
           style={{
             background: 'rgba(16,185,129,0.12)',
             border: '2px solid rgba(16,185,129,0.50)',
@@ -397,10 +397,10 @@ function LevelUpFlash({ nextDiffId, t }) {
       <div className="pointer-events-none absolute h-72 w-72 rounded-full blur-3xl opacity-35"
         style={{ background: `radial-gradient(circle, ${d.color} 0%, #ccfbf1 65%, transparent 100%)` }} />
 
-      <div className="level-up-flash-inner relative flex w-full flex-col items-center gap-4 rounded-3xl border border-slate-200 bg-white px-5 py-6 text-center shadow-elevated sm:px-6">
+      <div className="level-up-flash-inner nt-level-up-emphasis relative flex w-full flex-col items-center gap-4 rounded-3xl border border-slate-200 bg-white px-5 py-6 text-center shadow-elevated sm:px-6">
 
         {/* Up-arrow icon in next level's color */}
-        <div className="w-16 h-16 rounded-full flex items-center justify-center"
+        <div className="nt-feedback-result-icon w-16 h-16 rounded-full flex items-center justify-center"
           style={{
             background: `${d.color}18`,
             border: `2px solid ${d.color}65`,

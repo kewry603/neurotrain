@@ -391,7 +391,7 @@ function QuestionView({ question, lang, phase, selected, round, onAnswer, onCont
       {/* Result badge — appears only in RESULT phase */}
       {isResult ? (
         <div
-          className="flex items-center gap-1.5 rounded-full px-3 py-1.5"
+          className="nt-focus-result-chip flex items-center gap-1.5 rounded-full px-3 py-1.5"
           style={{
             background: isCorrect ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.1)',
             border:     `1px solid ${isCorrect ? 'rgba(16,185,129,0.4)' : 'rgba(239,68,68,0.35)'}`,

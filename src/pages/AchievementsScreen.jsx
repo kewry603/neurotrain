@@ -107,7 +107,9 @@ export default function AchievementsScreen({ onNavigate, activeNav = 'achievemen
               }}
             />
           </div>
-          <p className="mt-1.5 text-[10px] text-white/40">{t('achievements.progressHint')}</p>
+          <p className="mt-1.5 text-[10px] text-white/40">
+            {hydrated && unlockedCount === 0 ? t('achievements.progressHintFresh') : t('achievements.progressHint')}
+          </p>
         </div>
 
         <ul className="grid grid-cols-1 gap-2.5 pb-[max(0.5rem,env(safe-area-inset-bottom,0px))] sm:grid-cols-2">

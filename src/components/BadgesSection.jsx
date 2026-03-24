@@ -6,6 +6,8 @@ export default function BadgesSection({ compact = true }) {
   const { t } = useLanguage();
   const { hydrated, unlockedBadges = [] } = useProgress();
   const unlockedSet = new Set(unlockedBadges);
+  const unlockedCount = hydrated ? unlockedBadges.length : 0;
+  const showEmptyHint = hydrated && unlockedCount === 0;
 
   return (
     <div
@@ -19,6 +21,9 @@ export default function BadgesSection({ compact = true }) {
       }}
     >
       <h2 className="mb-1.5 text-xs font-bold uppercase tracking-wider text-white/80">{t('badgesTitle')}</h2>
+      {showEmptyHint && (
+        <p className="mb-1.5 text-[10px] leading-snug text-white/40">{t('badgesEmptyHint')}</p>
+      )}
       <ul className="flex max-h-[88px] flex-col gap-1 overflow-y-auto pr-0.5">
         {BADGE_IDS.map((id) => {
           const unlocked = hydrated && unlockedSet.has(id);

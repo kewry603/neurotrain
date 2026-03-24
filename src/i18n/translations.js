@@ -22,6 +22,8 @@ export const translations = {
     progressStreak: "Day Streak",
     progressScore: "Brain Score",
     progressCompleted: "Challenges Done",
+    progressEmptyHint:
+      "Your progress will appear here after your first session. Start training from Home to begin.",
     progressPlayerLevel: "Level",
     progressTotalXp: "Total XP",
     progressXpToNext: "XP to next Lv.",
@@ -31,6 +33,7 @@ export const translations = {
     streakDays: "🔥 {count} Day Streak",
     streakRewardShort: "Nice! Streak extended.",
     badgesTitle: "Badges",
+    badgesEmptyHint: "Train to unlock badges — your first one is close.",
     badges: {
       first_session: {
         name: "First session",
@@ -58,6 +61,7 @@ export const translations = {
       subtitle: "Unlock badges as you train and explore the app.",
       progressLabel: "Your progress",
       progressHint: "Train, read wellness articles, and hit daily goals to unlock more.",
+      progressHintFresh: "Complete any training session to unlock your first achievement.",
       locked: "Locked",
       viewAll: "View all achievements",
       items: {
@@ -111,8 +115,8 @@ export const translations = {
         },
       },
     },
-    statsOpenAchievements: "Achievements",
-    viewDetails: "View Details",
+    statsOpenAchievements: "View awards",
+    viewDetails: "View stats",
     readyLabel: "Ready",
     /** Home training category pills (Memory, Focus, …) */
     homeCategories: {
@@ -132,10 +136,16 @@ export const translations = {
     },
     homeMindWellnessTitle: "Mind & Wellness",
     homeMindWellnessSubtitle: "Tips, habits, and science for your brain.",
+    /** Home header — time-of-day (local device clock), no personal name */
+    homeGreetingMorning: "Good morning",
+    homeGreetingAfternoon: "Good afternoon",
+    homeGreetingEvening: "Good evening",
+    homeGreetingWelcome: "Welcome",
     wellness: {
       title: "Mind & Wellness",
       subtitle: "Short reads you can use today — some articles are free, others unlock with Premium.",
-      readMore: "Read more",
+      readMore: "Read article",
+      ctaPremiumArticle: "Unlock with Premium",
       premiumBadge: "Premium",
       backToList: "Articles",
       premiumLockedTitle: "Premium article",
@@ -209,7 +219,10 @@ export const translations = {
     homePremiumPromoBullet3: "Boost your progress",
     homePremiumPromoCta: "Go Premium",
     statsTitle: "Your stats",
-    statsSubtitle: "Training progress at a glance.",
+    statsSubtitle: "Your training progress at a glance.",
+    statsEmptyHint:
+      "Complete any training game to unlock your stats. Start from Home — numbers update as you play.",
+    statsAccuracyPending: "Updates after you play rounds in any game.",
     statsCurrentStreak: "Current streak",
     statsBestStreak: "Best streak",
     statsSessions: "Sessions completed",
@@ -412,23 +425,24 @@ export const translations = {
     },
     premium: {
       aboutLink: "About NeuroTrain",
+      aboutLinkHint: "App info, mission & contact",
       hardLockedTitle: "Hard mode",
       hardLockedMessage: "Hard mode is available in Premium",
-      goPremium: "Unlock Premium — start free preview",
-      unlockCta: "Unlock Premium",
+      goPremium: "Go Premium — free preview",
+      unlockCta: "Go Premium",
       premiumActiveCta: "Premium Active",
       close: "Not now",
       title: "NeuroTrain Premium",
       subtitle:
-        "Go beyond the basics: harder training modes, more to read, and a clearer view of how you’re improving — with new Premium perks on the roadmap.",
+        "Unlock Hard and Expert in every game, read the full Mind & Wellness library, and earn more XP for levels, streaks, and achievements. More Premium perks are on the way.",
       bulletHard:
-        "Hard Mode — unlock the toughest standard difficulty in every game: tighter timers, larger sets, and bigger challenges.",
+        "Hard mode — the toughest standard difficulty in each game: tighter timers, larger sets, bigger challenge.",
       bulletExpert:
-        "Expert Mode — in Memory, Flash Focus, Numbers, Spatial, and Word Memory, push past Hard for peak training.",
+        "Expert mode — in Memory, Flash Focus, Numbers, Spatial, and Word Memory, train one step above Hard.",
       bulletWellness:
-        "More Mind & Wellness — read the full premium article library: habits, focus, sleep, and mental fitness.",
+        "Mind & Wellness (Premium) — full article library on habits, focus, sleep, and mental fitness.",
       bulletProgress:
-        "Advanced progress — bigger XP rewards on Hard & Expert, with streaks, level, and achievements that grow as you level up.",
+        "Progress & rewards — higher XP on Hard and Expert; level up, build streaks, and unlock achievements.",
       bulletFuture:
         "Future Premium features — be first in line for new modes, content, and training tools as we ship them.",
       supportFooter: "Thank you for helping us build NeuroTrain — every Premium member supports future updates.",
@@ -460,6 +474,8 @@ export const translations = {
     progressStreak: "Días Seguidos",
     progressScore: "Puntuación",
     progressCompleted: "Desafíos Hechos",
+    progressEmptyHint:
+      "Tu progreso aparecerá aquí tras tu primera sesión. Empieza desde Inicio.",
     progressPlayerLevel: "Nivel",
     progressTotalXp: "XP total",
     progressXpToNext: "XP al próx. nivel",
@@ -469,6 +485,7 @@ export const translations = {
     streakDays: "🔥 {count} días seguidos",
     streakRewardShort: "¡Genial! Racha extendida.",
     badgesTitle: "Logros",
+    badgesEmptyHint: "Entrena para desbloquear logros — el primero está cerca.",
     badges: {
       first_session: {
         name: "Primera sesión",
@@ -496,6 +513,7 @@ export const translations = {
       subtitle: "Desbloquea insignias mientras entrenas y exploras la app.",
       progressLabel: "Tu progreso",
       progressHint: "Entrena, lee bienestar y cumple el reto diario para desbloquear más.",
+      progressHintFresh: "Completa cualquier sesión de entrenamiento para desbloquear tu primer logro.",
       locked: "Bloqueado",
       viewAll: "Ver todos los logros",
       items: {
@@ -549,8 +567,8 @@ export const translations = {
         },
       },
     },
-    statsOpenAchievements: "Logros",
-    viewDetails: "Ver Detalles",
+    statsOpenAchievements: "Ver logros",
+    viewDetails: "Ver estadísticas",
     readyLabel: "Listo",
     homeCategories: {
       memory: "🧠 Memoria",
@@ -569,10 +587,15 @@ export const translations = {
     },
     homeMindWellnessTitle: "Mente y bienestar",
     homeMindWellnessSubtitle: "Hábitos, consejos y ciencia para tu cerebro.",
+    homeGreetingMorning: "Buenos días",
+    homeGreetingAfternoon: "Buenas tardes",
+    homeGreetingEvening: "Buenas noches",
+    homeGreetingWelcome: "Bienvenido",
     wellness: {
       title: "Mente y bienestar",
       subtitle: "Lecturas breves para hoy: algunas son gratis; otras con Premium.",
-      readMore: "Leer más",
+      readMore: "Leer artículo",
+      ctaPremiumArticle: "Desbloquear con Premium",
       premiumBadge: "Premium",
       backToList: "Artículos",
       premiumLockedTitle: "Artículo Premium",
@@ -646,7 +669,10 @@ export const translations = {
     homePremiumPromoBullet3: "Impulsa tu progreso",
     homePremiumPromoCta: "Hazte Premium",
     statsTitle: "Tus estadísticas",
-    statsSubtitle: "Resumen de tu progreso.",
+    statsSubtitle: "Tu progreso de entrenamiento de un vistazo.",
+    statsEmptyHint:
+      "Completa cualquier juego de entrenamiento para ver tus estadísticas. Empieza desde Inicio; los números se actualizan al jugar.",
+    statsAccuracyPending: "Se actualiza cuando juegues rondas en cualquier juego.",
     statsCurrentStreak: "Racha actual",
     statsBestStreak: "Mejor racha",
     statsSessions: "Sesiones completadas",
@@ -849,23 +875,24 @@ export const translations = {
     },
     premium: {
       aboutLink: "Acerca de NeuroTrain",
+      aboutLinkHint: "Información de la app, misión y contacto",
       hardLockedTitle: "Modo Difícil",
       hardLockedMessage: "El modo Difícil está disponible en Premium",
-      goPremium: "Desbloquear Premium — vista previa gratis",
-      unlockCta: "Desbloquear Premium",
+      goPremium: "Hazte Premium — vista previa gratis",
+      unlockCta: "Hazte Premium",
       premiumActiveCta: "Premium activo",
       close: "Ahora no",
       title: "NeuroTrain Premium",
       subtitle:
-        "Pasa del entrenamiento básico: modos más exigentes, más lecturas y una visión más clara de tu progreso — con más ventajas Premium en camino.",
+        "Desbloquea Difícil y Experto en cada juego, lee toda la biblioteca de Mente y bienestar y gana más XP para nivel, rachas y logros. Más ventajas Premium en camino.",
       bulletHard:
-        "Modo Difícil — desbloquea la dificultad estándar más alta en cada juego: tiempos más ajustados, más elementos y mayor reto.",
+        "Modo Difícil — la dificultad estándar más alta en cada juego: tiempos más ajustados, más elementos, mayor reto.",
       bulletExpert:
-        "Modo Experto — en Memoria, Flash Focus, Números, Espacial y Memoria de palabras, un paso más allá de Difícil.",
+        "Modo Experto — en Memoria, Flash Focus, Números, Espacial y Memoria de palabras, un nivel por encima de Difícil.",
       bulletWellness:
-        "Más Mente y bienestar — accede a toda la biblioteca premium: hábitos, enfoque, sueño y salud mental.",
+        "Mente y bienestar (Premium) — biblioteca completa: hábitos, enfoque, sueño y salud mental.",
       bulletProgress:
-        "Progreso avanzado — más XP en Difícil y Experto, con rachas, nivel y logros que crecen contigo.",
+        "Progreso y recompensas — más XP en Difícil y Experto; sube de nivel, mantén rachas y desbloquea logros.",
       bulletFuture:
         "Funciones Premium futuras — prioridad para nuevos modos, contenido y herramientas de entrenamiento.",
       supportFooter: "Gracias por ayudarnos a mejorar NeuroTrain — cada miembro Premium apoya las próximas actualizaciones.",

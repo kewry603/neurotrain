@@ -177,12 +177,16 @@ function DifficultyOverlay({ onSelect, onBack, t }) {
 function RoundFeedbackOverlay({ isCorrect, t }) {
   return (
     <div
-      className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none"
+      className={`absolute inset-0 z-30 flex items-center justify-center pointer-events-none${isCorrect ? '' : ' nt-round-feedback-root--wrong'}`}
       style={{ background: 'rgba(18,14,46,0.88)', backdropFilter: 'blur(10px)' }}
     >
-      <div className="flex flex-col items-center gap-3 px-6 text-center">
+      <div
+        className={`success-flash-inner flex flex-col items-center gap-3 px-6 text-center${
+          isCorrect ? ' nt-round-feedback-panel--correct' : ' nt-round-feedback-panel--wrong'
+        }`}
+      >
         <div
-          className="w-14 h-14 rounded-full flex items-center justify-center"
+          className="nt-feedback-result-icon w-14 h-14 rounded-full flex items-center justify-center"
           style={{
             background: isCorrect ? 'rgba(16,185,129,0.2)' : 'rgba(248,113,113,0.15)',
             border: `1px solid ${isCorrect ? 'rgba(16,185,129,0.45)' : 'rgba(248,113,113,0.35)'}`,

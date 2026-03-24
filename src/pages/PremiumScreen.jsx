@@ -49,14 +49,11 @@ export default function PremiumScreen({ onNavigate, activeNav = 'premium' }) {
 
       <div className="app-scroll relative z-10 flex min-h-0 flex-1 flex-col overflow-y-auto px-4 pt-2 pb-6 sm:px-5">
         <h1
-          className="font-display mb-3 px-1 text-center text-3xl font-extrabold leading-tight text-white"
+          className="font-display mb-4 px-1 text-center text-3xl font-extrabold leading-tight text-white"
           style={{ textShadow: '0 2px 20px rgba(0,0,0,0.45), 0 0 40px rgba(124,58,237,0.15)' }}
         >
           {t('premium.title')}
         </h1>
-        <p className="mb-4 w-full text-center text-base leading-relaxed text-white/80">
-          {t('premium.subtitle')}
-        </p>
 
         <button
           type="button"
@@ -64,20 +61,27 @@ export default function PremiumScreen({ onNavigate, activeNav = 'premium' }) {
             playSound('tap');
             if (typeof onNavigate === 'function') onNavigate('about');
           }}
-          className="card-lift mb-8 flex w-full min-h-[52px] touch-manipulation items-center justify-center gap-2 rounded-2xl border border-violet-400/35 px-5 py-3.5 text-center shadow-lg transition-transform motion-reduce:transition-none active:scale-[0.99] motion-reduce:active:scale-100"
+          className="card-lift mb-5 flex w-full min-h-[56px] touch-manipulation items-center justify-between gap-3 rounded-2xl border-2 border-violet-300/40 px-4 py-3 text-left shadow-lg ring-2 ring-white/10 transition-transform motion-reduce:transition-none active:scale-[0.99] motion-reduce:active:scale-100 sm:px-5"
           style={{
-            background: 'linear-gradient(135deg, rgba(124,58,237,0.35) 0%, rgba(59,130,246,0.22) 50%, rgba(236,72,153,0.12) 100%)',
+            background: 'linear-gradient(135deg, rgba(124,58,237,0.42) 0%, rgba(59,130,246,0.26) 50%, rgba(236,72,153,0.14) 100%)',
             backdropFilter: 'blur(16px)',
             WebkitBackdropFilter: 'blur(16px)',
             boxShadow:
-              '0 0 28px rgba(124,58,237,0.35), 0 8px 28px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.12)',
+              '0 0 32px rgba(124,58,237,0.4), 0 8px 28px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.14)',
           }}
         >
-          <span className="font-display text-sm font-bold tracking-wide text-white">{t('premium.aboutLink')}</span>
-          <svg className="h-4 w-4 flex-shrink-0 text-white/90" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden>
+          <span className="min-w-0 flex-1">
+            <span className="font-display block text-sm font-bold tracking-wide text-white">{t('premium.aboutLink')}</span>
+            <span className="mt-0.5 block text-2xs font-medium leading-snug text-white/70">{t('premium.aboutLinkHint')}</span>
+          </span>
+          <svg className="h-5 w-5 flex-shrink-0 text-white/95" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden>
             <path d="M9 18l6-6-6-6" />
           </svg>
         </button>
+
+        <p className="mb-6 w-full text-center text-base leading-relaxed text-white/80">
+          {t('premium.subtitle')}
+        </p>
 
         <ul className="mb-8 w-full space-y-3 text-left">
           {[
